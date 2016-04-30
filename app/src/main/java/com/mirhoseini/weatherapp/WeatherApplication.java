@@ -3,8 +3,6 @@ package com.mirhoseini.weatherapp;
 import android.app.Application;
 import android.content.Context;
 
-import com.raizlabs.android.dbflow.config.FlowManager;
-
 import timber.log.Timber;
 
 /**

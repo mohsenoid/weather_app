@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Weather App</string>
+    <string name="city">City Name</string>
+    <string name="go">Go</string>
+    <string name="city_hint">Enter a city name</string>
+    <string name="offline_message">No Internet Connection, offline data!</string>
+    <string name="go_online">Go Online</string>
+    <string name="retry_message">Network error, offline data!</string>
+    <string name="load_retry">Retry</string>
+    <string name="city_error">Please enter a city name</string>
 </resources>

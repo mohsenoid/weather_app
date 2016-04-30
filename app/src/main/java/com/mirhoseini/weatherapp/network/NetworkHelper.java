@@ -60,7 +60,7 @@ public class NetworkHelper {
         api = retrofit.create(Api.class);
     }
 
-    public void loadWeather(String city, long start, long end, final OnNetworkFinishedListener<Pair<WeatherCurrent, WeatherForecast>> listener) {
+    public void loadWeather(String city, final OnNetworkFinishedListener<Pair<WeatherCurrent, WeatherForecast>> listener) {
         Timber.d("Started Loading Weather using City: City=%s", city);
 
         Observable.combineLatest(api.getWeather(city, Constants.API_KEY)

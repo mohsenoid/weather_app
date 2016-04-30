@@ -30,6 +30,7 @@ android {
 def support_version = "23.3.0"
 def retrofit_version = "2.0.0-beta4"
 def okhttp_version = "3.2.0"
+def butterknife_version = "8.0.1";
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
@@ -58,7 +59,9 @@ dependencies {
     compile "com.squareup.okhttp3:okhttp:${okhttp_version}"
     compile "com.squareup.okhttp3:logging-interceptor:${okhttp_version}"
 
-    compile 'com.jakewharton:butterknife:7.0.1'
+    compile "com.jakewharton:butterknife:${butterknife_version}"
+    apt "com.jakewharton:butterknife-compiler:${butterknife_version}"
+
     compile 'com.jakewharton.timber:timber:4.1.2'
 
 }
