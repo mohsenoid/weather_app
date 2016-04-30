@@ -5,6 +5,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class History {
 
@@ -25,7 +26,7 @@ public class History {
     private Clouds clouds;
     @SerializedName("weather")
     @Expose
-    private java.util.List<Weather> weather = new ArrayList<Weather>();
+    private List<Weather> weather = new ArrayList<Weather>();
     @SerializedName("dt")
     @Expose
     private Integer dt;

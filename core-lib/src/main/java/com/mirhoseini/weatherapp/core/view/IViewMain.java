@@ -18,8 +18,6 @@ public interface IViewMain {
 
     void showOfflineMessage();
 
-    void exit();
-
     void showExitMessage();
 
     void showConnectionError();

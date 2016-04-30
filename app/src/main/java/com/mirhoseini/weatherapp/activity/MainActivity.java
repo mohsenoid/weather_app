@@ -18,17 +18,20 @@ import com.mirhoseini.utils.Utils;
 import com.mirhoseini.weatherapp.BaseActivity;
 import com.mirhoseini.weatherapp.BuildConfig;
 import com.mirhoseini.weatherapp.R;
-import com.mirhoseini.weatherapp.core.network.INetwork;
 import com.mirhoseini.weatherapp.core.network.model.WeatherHistory;
 import com.mirhoseini.weatherapp.core.network.model.WeatherMix;
-import com.mirhoseini.weatherapp.core.presenter.IPresenter;
-import com.mirhoseini.weatherapp.core.presenter.Presenter;
+import com.mirhoseini.weatherapp.core.presentation.IPresenter;
+import com.mirhoseini.weatherapp.core.presentation.Presenter;
 import com.mirhoseini.weatherapp.core.service.WeatherService;
+import com.mirhoseini.weatherapp.core.utils.Constants;
+import com.mirhoseini.weatherapp.core.utils.ICacher;
 import com.mirhoseini.weatherapp.core.utils.IScheduler;
 import com.mirhoseini.weatherapp.core.view.IViewMain;
-import com.mirhoseini.weatherapp.core.network.NetworkHelper;
+import com.mirhoseini.weatherapp.utils.AppCacher;
 import com.mirhoseini.weatherapp.utils.AppScheduler;
-import com.mirhoseini.weatherapp.core.utils.Constants;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -41,9 +44,11 @@ import timber.log.Timber;
 public class MainActivity extends BaseActivity implements IViewMain {
 
     //We would inject these via Dagger in a real app
-    private WeatherService mWeatherService;
+    private WeatherService mNetworkService;
     private IScheduler mScheduler;
-    private INetwork mNetwork;
+    private ICacher mCacher;
+
+    private static boolean sDoubleBackToExitPressedOnce;
 
 
     IPresenter mPresenter;
@@ -67,13 +72,15 @@ public class MainActivity extends BaseActivity implements IViewMain {
 
             //TODO: load current location weather
             hideProgress();
-
+            
         } else {
             mPresenter.loadWeather(mCityEditText.getText().toString(), Utils.isConnected(mContext));
         }
 
         saveLastCity(mCityEditText.getText().toString());
         Utils.hideKeyboard(this, mCityEditText);
+
+        sDoubleBackToExitPressedOnce = false;
     }
 
     Context mContext;
@@ -87,9 +94,10 @@ public class MainActivity extends BaseActivity implements IViewMain {
 
         //Create or inject services
         mScheduler = new AppScheduler();
-        mWeatherService = new WeatherService();
+        mCacher = new AppCacher(this);
+        mNetworkService = new WeatherService(BuildConfig.DEBUG);
 
-        mPresenter = new Presenter(mWeatherService, mScheduler, this);
+        mPresenter = new Presenter(mCacher, mNetworkService, mScheduler);
 
         // binding Views using ButterKnife library
         ButterKnife.bind(this);
@@ -112,7 +120,9 @@ public class MainActivity extends BaseActivity implements IViewMain {
         Timber.d("Activity Resumed");
 
         super.onResume();
-        mPresenter.onResume();
+
+        sDoubleBackToExitPressedOnce = false;
+
 
         // dismiss no internet connection dialog in case of connection fixed
         if (mInternetConnectionDialog != null)
@@ -209,12 +219,6 @@ public class MainActivity extends BaseActivity implements IViewMain {
                 .show();
     }
 
-    @Override
-    public void exit() {
-        Timber.d("Exiting");
-
-        Utils.exit(this);
-    }
 
     @Override
     public void showExitMessage() {
@@ -258,9 +262,28 @@ public class MainActivity extends BaseActivity implements IViewMain {
     public void onBackPressed() {
         Timber.d("Activity Back Pressed");
 
-        if (mPresenter.onBackPressed()) {
-            super.onBackPressed();
+        // check for double back press to exit
+        if (sDoubleBackToExitPressedOnce) {
+            Timber.d("Exiting");
+
+            Utils.exit(this);
+        } else {
+
+            sDoubleBackToExitPressedOnce = true;
+
+            showExitMessage();
+
+            Timer t = new Timer();
+            t.schedule(new TimerTask() {
+
+                @Override
+                public void run() {
+                    sDoubleBackToExitPressedOnce = false;
+                }
+
+            }, 2500);
         }
+
     }
 
     @Override

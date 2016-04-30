@@ -54,6 +54,9 @@ dependencies {
     compile rootProject.ext.libraries.butterknife
     apt rootProject.ext.aptLibraries.butterknifeCompiler
 
+    compile rootProject.ext.libraries.dagger
+    apt rootProject.ext.aptLibraries.daggerCompiler
+
     compile rootProject.ext.libraries.timber
 
 }

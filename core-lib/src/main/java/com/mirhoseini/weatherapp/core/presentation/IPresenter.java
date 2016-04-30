@@ -1,15 +1,15 @@
-package com.mirhoseini.weatherapp.core.presenter;
+package com.mirhoseini.weatherapp.core.presentation;
+
+import com.mirhoseini.weatherapp.core.view.IViewMain;
 
 /**
  * Created by Mohsen on 30/04/16.
  */
 public interface IPresenter {
 
-    void onResume();
+    void setView(IViewMain view);
 
     void onDestroy();
-
-    boolean onBackPressed();
 
     void loadWeather(String city, boolean isConnected);
 
