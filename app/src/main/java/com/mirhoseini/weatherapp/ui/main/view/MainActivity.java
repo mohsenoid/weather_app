@@ -52,10 +52,18 @@ public class MainActivity extends BaseActivity implements MainView {
     @OnClick(R.id.go_button)
     public void submit(View view) {
         if (mCityEditText.getText().toString().isEmpty()) {
-            mCityEditText.setError(getString(R.string.city_error));
+//            mCityEditText.setError(getString(R.string.city_error));
+//            mCityEditText.requestFocus();
+
+            //TODO: load current location weather
+            hideProgress();
+
         } else {
             mMainPresenter.loadWeather(mCityEditText.getText().toString(), Utils.isConnected(mContext));
         }
+
+        saveLastCity(mCityEditText.getText().toString());
+        Utils.hideKeyboard(this, mCityEditText);
     }
 
     Context mContext;
@@ -75,7 +83,7 @@ public class MainActivity extends BaseActivity implements MainView {
         Timber.tag(TAG);
         Timber.d("Activity Created");
 
-        String lastCity;
+        String lastCity = "";
 
         if (savedInstanceState == null) { //load lastTimeSpan from SharePreferences
             lastCity = AppSettings.getString(this, Constants.LAST_CITY, "");
@@ -98,7 +106,8 @@ public class MainActivity extends BaseActivity implements MainView {
             mInternetConnectionDialog.dismiss();
 
         if (mCityEditText.getText().toString().isEmpty()) {
-            // load from location
+            //TODO: load from location
+            hideProgress();
         } else {
             mMainPresenter.loadWeather(mCityEditText.getText().toString(), Utils.isConnected(this));
         }
@@ -229,10 +238,11 @@ public class MainActivity extends BaseActivity implements MainView {
                 .setAction(R.string.load_retry, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (!mCityEditText.getText().toString().isEmpty()) {
-                            mMainPresenter.loadWeather(mCityEditText.getText().toString(), Utils.isConnected(mContext));
+                        if (mCityEditText.getText().toString().isEmpty()) {
+                            //TODO: load from location
+                            hideProgress();
                         } else {
-                            // load from location
+                            mMainPresenter.loadWeather(mCityEditText.getText().toString(), Utils.isConnected(mContext));
                         }
                     }
                 })
