@@ -2,10 +2,14 @@ package com.mirhoseini.weatherapp.core.service.model;
 
 import com.google.gson.annotations.Expose;
 
+import java.io.Serializable;
+
 /**
  * Created by Mohsen on 4/30/16.
  */
-public class WeatherMix {
+public class WeatherMix implements Serializable {
+    //TODO: replace Serializable with parcelable
+
     @Expose
     private WeatherCurrent mWeatherCurrent;
 

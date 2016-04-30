@@ -43,13 +43,14 @@ public class WeatherInteractor implements IInteractor {
             weatherSubject = ReplaySubject.create();
 
             weatherSubscription = Observable.concat(memoryWeather(), diskWeather(), networkWeather(city))
-                    .first(entity -> entity != null && isUpToDate(entity))
+                    .first(entity -> entity != null && isSameCity(city, entity) && isUpToDate(entity))
                     .subscribe(weatherSubject);
         }
 
         return weatherSubject.asObservable();
 
     }
+
 
     @Override
     public Observable<WeatherMix> loadWeather(long lat, long lon) {
@@ -57,13 +58,14 @@ public class WeatherInteractor implements IInteractor {
             weatherSubject = ReplaySubject.create();
 
             weatherSubscription = Observable.concat(memoryWeather(), diskWeather(), networkWeather(lat, lon))
-                    .first(entity -> entity != null && isUpToDate(entity))
+                    .first(entity -> entity != null && isSameCity(lat, lon, entity) && isUpToDate(entity))
                     .subscribe(weatherSubject);
         }
 
         return weatherSubject.asObservable();
 
     }
+
 
     @Override
     public Observable<WeatherHistory> loadWeatherHistory(String city, long start, long end) {
@@ -174,6 +176,14 @@ public class WeatherInteractor implements IInteractor {
 
     private boolean isUpToDate(WeatherHistory entity) {
         return mClock.millis() / 1000 - entity.getList().get(0).getDt() < Constants.STALE_MS;
+    }
+
+    private boolean isSameCity(String city, WeatherMix entity) {
+        return entity.getWeatherCurrent().getName().equalsIgnoreCase(city);
+    }
+
+    private boolean isSameCity(long lat, long lon, WeatherMix entity) {
+        return entity.getWeatherCurrent().getCoord().getLat() == lat && entity.getWeatherCurrent().getCoord().getLon() == lon;
     }
 
 

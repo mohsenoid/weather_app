@@ -4,10 +4,13 @@ package com.mirhoseini.weatherapp.core.service.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WeatherForecast {
+public class WeatherForecast implements Serializable {
+    //TODO: replace Serializable with parcelable
+
 
     @SerializedName("city")
     @Expose

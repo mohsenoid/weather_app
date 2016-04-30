@@ -1,4 +1,4 @@
-package com.mirhoseini.weatherapp.activity;
+package com.mirhoseini.weatherapp.ui.activity;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -18,15 +19,18 @@ import com.mirhoseini.utils.Utils;
 import com.mirhoseini.weatherapp.BaseActivity;
 import com.mirhoseini.weatherapp.BuildConfig;
 import com.mirhoseini.weatherapp.R;
-import com.mirhoseini.weatherapp.core.service.model.WeatherHistory;
-import com.mirhoseini.weatherapp.core.service.model.WeatherMix;
 import com.mirhoseini.weatherapp.core.presentation.IPresenter;
 import com.mirhoseini.weatherapp.core.presentation.Presenter;
 import com.mirhoseini.weatherapp.core.service.WeatherService;
+import com.mirhoseini.weatherapp.core.service.model.WeatherHistory;
+import com.mirhoseini.weatherapp.core.service.model.WeatherMix;
 import com.mirhoseini.weatherapp.core.utils.Constants;
 import com.mirhoseini.weatherapp.core.utils.ICacher;
 import com.mirhoseini.weatherapp.core.utils.IScheduler;
 import com.mirhoseini.weatherapp.core.view.IViewMain;
+import com.mirhoseini.weatherapp.ui.fragment.CurrentFragment;
+import com.mirhoseini.weatherapp.ui.fragment.ForecastFragment;
+import com.mirhoseini.weatherapp.ui.fragment.HistoryFragment;
 import com.mirhoseini.weatherapp.utils.AppCacher;
 import com.mirhoseini.weatherapp.utils.AppScheduler;
 
@@ -168,7 +172,14 @@ public class MainActivity extends BaseActivity implements IViewMain {
 
         mFragmentContainer.setVisibility(View.VISIBLE);
 
-        //TODO: show the weather result
+        mFragmentContainer.removeAllViews();
+
+        CurrentFragment currentFragment = CurrentFragment.newInstance(weatherMix.getWeatherCurrent());
+        ForecastFragment forecastFragment = ForecastFragment.newInstance(weatherMix.getWeatherForecast());
+
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.add(mFragmentContainer.getId(), currentFragment).commit();
+        fragmentTransaction.add(mFragmentContainer.getId(), forecastFragment).commit();
 
     }
 
@@ -179,8 +190,11 @@ public class MainActivity extends BaseActivity implements IViewMain {
 
         mFragmentContainer.setVisibility(View.VISIBLE);
 
-        //TODO: show the weather result
+        mFragmentContainer.removeAllViews();
 
+        HistoryFragment historyFragment = HistoryFragment.newInstance(weatherHistory);
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.add(mFragmentContainer.getId(), historyFragment).commit();
     }
 
     // save user last city

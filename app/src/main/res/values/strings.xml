@@ -8,4 +8,5 @@
     <string name="retry_message">Network error, offline data!</string>
     <string name="load_retry">Retry</string>
     <string name="city_error">Please enter a city name</string>
+
 </resources>
