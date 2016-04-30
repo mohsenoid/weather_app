@@ -1,7 +1,7 @@
 package com.mirhoseini.weatherapp.core.view;
 
-import com.mirhoseini.weatherapp.core.network.model.WeatherHistory;
-import com.mirhoseini.weatherapp.core.network.model.WeatherMix;
+import com.mirhoseini.weatherapp.core.service.model.WeatherHistory;
+import com.mirhoseini.weatherapp.core.service.model.WeatherMix;
 
 /**
  * Created by Mohsen on 30/04/16.

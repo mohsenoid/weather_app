@@ -1,8 +1,8 @@
 package com.mirhoseini.weatherapp.core.model;
 
 
-import com.mirhoseini.weatherapp.core.network.model.WeatherHistory;
-import com.mirhoseini.weatherapp.core.network.model.WeatherMix;
+import com.mirhoseini.weatherapp.core.service.model.WeatherHistory;
+import com.mirhoseini.weatherapp.core.service.model.WeatherMix;
 
 import rx.Observable;
 

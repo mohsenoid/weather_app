@@ -1,9 +1,9 @@
 package com.mirhoseini.weatherapp.core.model;
 
 
-import com.mirhoseini.weatherapp.core.network.INetworkService;
-import com.mirhoseini.weatherapp.core.network.model.WeatherHistory;
-import com.mirhoseini.weatherapp.core.network.model.WeatherMix;
+import com.mirhoseini.weatherapp.core.service.INetworkService;
+import com.mirhoseini.weatherapp.core.service.model.WeatherHistory;
+import com.mirhoseini.weatherapp.core.service.model.WeatherMix;
 import com.mirhoseini.weatherapp.core.utils.Constants;
 import com.mirhoseini.weatherapp.core.utils.ICacher;
 import com.mirhoseini.weatherapp.core.utils.IScheduler;
@@ -104,11 +104,47 @@ public class WeatherInteractor implements IInteractor {
 
 
     private Observable<WeatherMix> networkWeather(String city) {
-        return mNetworkService.loadWeather(city);
+        return mNetworkService.loadWeather(city)
+                .doOnNext(entity -> memoryCacheWeather = entity)
+                .flatMap(entity -> mDiskCache.saveWeather(entity).map(__ -> entity))
+                .subscribeOn(mScheduler.backgroundThread())
+                .observeOn(mScheduler.mainThread());
     }
 
     private Observable<WeatherMix> networkWeather(long lat, long lon) {
-        return mNetworkService.loadWeather(lat, lon);
+        return mNetworkService.loadWeather(lat, lon)
+                .doOnNext(entity -> memoryCacheWeather = entity)
+                .flatMap(entity -> mDiskCache.saveWeather(entity).map(__ -> entity))
+                .subscribeOn(mScheduler.backgroundThread())
+                .observeOn(mScheduler.mainThread());
+    }
+
+
+    private Observable<WeatherHistory> networkWeatherHistory(String city, long start, long end) {
+        return mNetworkService.loadWeatherHistory(city, start, end)
+                .doOnNext(entity -> memoryCacheWeatherHistory = entity)
+                .flatMap(entity -> mDiskCache.saveWeatherHistory(entity).map(__ -> entity))
+                .subscribeOn(mScheduler.backgroundThread())
+                .observeOn(mScheduler.mainThread());
+    }
+
+    private Observable<WeatherHistory> networkWeatherHistory(long lat, long lon, long start, long end) {
+        return mNetworkService.loadWeatherHistory(lat, lon, start, end)
+                .doOnNext(entity -> memoryCacheWeatherHistory = entity)
+                .flatMap(entity -> mDiskCache.saveWeatherHistory(entity).map(__ -> entity))
+                .subscribeOn(mScheduler.backgroundThread())
+                .observeOn(mScheduler.mainThread());
+    }
+
+    private Observable<WeatherHistory> diskWeatherHistory() {
+        return mDiskCache.getWeatherHistory()
+                .doOnNext(entity -> memoryCacheWeatherHistory = entity)
+                .subscribeOn(mScheduler.backgroundThread())
+                .observeOn(mScheduler.mainThread());
+    }
+
+    private Observable<WeatherHistory> memoryWeatherHistory() {
+        return Observable.just(memoryCacheWeatherHistory);
     }
 
     private Observable<WeatherMix> diskWeather() {
@@ -122,43 +158,22 @@ public class WeatherInteractor implements IInteractor {
         return Observable.just(memoryCacheWeather);
     }
 
-    private boolean isUpToDate(WeatherMix entity) {
-        return mClock.millis() - entity.getWeatherCurrent().getDt() < Constants.STALE_MS;
+    public void clearMemoryAndDiskCache() {
+        mDiskCache.clear();
+        clearMemoryCache();
     }
-
-    private boolean isUpToDate(WeatherHistory entity) {
-        return mClock.millis() - entity.getList().get(0).getDt() < Constants.STALE_MS;
-    }
-
 
     public void clearMemoryCache() {
         memoryCacheWeather = null;
         memoryCacheWeatherHistory = null;
     }
 
-    public void clearMemoryAndDiskCache() {
-        mDiskCache.clear();
-        clearMemoryCache();
+    private boolean isUpToDate(WeatherMix entity) {
+        return mClock.millis() / 1000 - entity.getWeatherCurrent().getDt() < Constants.STALE_MS;
     }
 
-
-    private Observable<WeatherHistory> networkWeatherHistory(String city, long start, long end) {
-        return mNetworkService.loadWeatherHistory(city, start, end);
-    }
-
-    private Observable<WeatherHistory> networkWeatherHistory(long lat, long lon, long start, long end) {
-        return mNetworkService.loadWeatherHistory(lat, lon, start, end);
-    }
-
-    private Observable<WeatherHistory> diskWeatherHistory() {
-        return mDiskCache.getWeatherHistory()
-                .doOnNext(entity -> memoryCacheWeatherHistory = entity)
-                .subscribeOn(mScheduler.backgroundThread())
-                .observeOn(mScheduler.mainThread());
-    }
-
-    private Observable<WeatherHistory> memoryWeatherHistory() {
-        return Observable.just(memoryCacheWeatherHistory);
+    private boolean isUpToDate(WeatherHistory entity) {
+        return mClock.millis() / 1000 - entity.getList().get(0).getDt() < Constants.STALE_MS;
     }
 
 

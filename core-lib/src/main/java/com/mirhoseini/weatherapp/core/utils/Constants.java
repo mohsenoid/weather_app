@@ -12,5 +12,6 @@ public class Constants {
     public static final String LAST_CITY = "last_city";
     public static final String LAST_WEATHER = "last_weather";
     public static final String LAST_WEATHER_HISTORY = "last_weather_history";
-    public static final long STALE_MS = 5 * 1000;
+    //cache validation time
+    public static final long STALE_MS = 30 * 1000;
 }

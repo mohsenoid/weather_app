@@ -1,5 +1,5 @@
 
-package com.mirhoseini.weatherapp.core.network.model;
+package com.mirhoseini.weatherapp.core.service.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -11,7 +11,7 @@ public class Forecast {
 
     @SerializedName("dt")
     @Expose
-    private Integer dt;
+    private long dt;
     @SerializedName("main")
     @Expose
     private Main main;
@@ -46,7 +46,7 @@ public class Forecast {
      * @param weather
      * @param main
      */
-    public Forecast(Integer dt, Main main, java.util.List<Weather> weather, Clouds clouds, Wind wind, Sys sys, String dtTxt) {
+    public Forecast(long dt, Main main, List<Weather> weather, Clouds clouds, Wind wind, Sys sys, String dtTxt) {
         this.dt = dt;
         this.main = main;
         this.weather = weather;
@@ -59,14 +59,14 @@ public class Forecast {
     /**
      * @return The dt
      */
-    public Integer getDt() {
+    public long getDt() {
         return dt;
     }
 
     /**
      * @param dt The dt
      */
-    public void setDt(Integer dt) {
+    public void setDt(long dt) {
         this.dt = dt;
     }
 

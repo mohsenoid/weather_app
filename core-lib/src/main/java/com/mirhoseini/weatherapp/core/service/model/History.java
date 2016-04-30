@@ -1,5 +1,5 @@
 
-package com.mirhoseini.weatherapp.core.network.model;
+package com.mirhoseini.weatherapp.core.service.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -29,7 +29,7 @@ public class History {
     private List<Weather> weather = new ArrayList<Weather>();
     @SerializedName("dt")
     @Expose
-    private Integer dt;
+    private long dt;
 
     /**
      * No args constructor for use in serialization
@@ -46,7 +46,7 @@ public class History {
      * @param weather
      * @param main
      */
-    public History(Integer time, Integer hrTime, Main main, Wind wind, Clouds clouds, java.util.List<Weather> weather, Integer dt) {
+    public History(Integer time, Integer hrTime, Main main, Wind wind, Clouds clouds, java.util.List<Weather> weather, long dt) {
         this.time = time;
         this.hrTime = hrTime;
         this.main = main;
@@ -143,14 +143,14 @@ public class History {
     /**
      * @return The dt
      */
-    public Integer getDt() {
+    public long getDt() {
         return dt;
     }
 
     /**
      * @param dt The dt
      */
-    public void setDt(Integer dt) {
+    public void setDt(long dt) {
         this.dt = dt;
     }
 

@@ -1,5 +1,5 @@
 
-package com.mirhoseini.weatherapp.core.network.model;
+package com.mirhoseini.weatherapp.core.service.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

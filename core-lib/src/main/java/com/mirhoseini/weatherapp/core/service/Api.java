@@ -1,9 +1,9 @@
-package com.mirhoseini.weatherapp.core.network;
+package com.mirhoseini.weatherapp.core.service;
 
 
-import com.mirhoseini.weatherapp.core.network.model.WeatherCurrent;
-import com.mirhoseini.weatherapp.core.network.model.WeatherForecast;
-import com.mirhoseini.weatherapp.core.network.model.WeatherHistory;
+import com.mirhoseini.weatherapp.core.service.model.WeatherCurrent;
+import com.mirhoseini.weatherapp.core.service.model.WeatherForecast;
+import com.mirhoseini.weatherapp.core.service.model.WeatherHistory;
 
 import retrofit2.http.GET;
 import retrofit2.http.Query;

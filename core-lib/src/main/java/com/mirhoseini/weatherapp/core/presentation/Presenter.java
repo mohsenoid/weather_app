@@ -4,7 +4,7 @@ package com.mirhoseini.weatherapp.core.presentation;
 import com.mirhoseini.weatherapp.core.model.Clock;
 import com.mirhoseini.weatherapp.core.model.IInteractor;
 import com.mirhoseini.weatherapp.core.model.WeatherInteractor;
-import com.mirhoseini.weatherapp.core.network.INetworkService;
+import com.mirhoseini.weatherapp.core.service.INetworkService;
 import com.mirhoseini.weatherapp.core.utils.ICacher;
 import com.mirhoseini.weatherapp.core.utils.IScheduler;
 import com.mirhoseini.weatherapp.core.view.IViewMain;
@@ -68,12 +68,26 @@ public class Presenter implements IPresenter {
                     }
                 },
                 throwable -> {
-                    if (mView != null) {
-                        mView.showToastMessage(throwable.getMessage());
-                        mView.showRetryMessage();
+                    if (isConnected) {
+
+                        if (mView != null) {
+                            mView.showToastMessage(throwable.getMessage());
+                            mView.showRetryMessage();
+                            mView.hideProgress();
+                        }
+                    } else {
+
+                        if (mView != null) {
+                            mView.showConnectionError();
+                            mView.hideProgress();
+                        }
                     }
                 },
-                mView::hideProgress);
+                () -> {
+                    if (mView != null) {
+                        mView.hideProgress();
+                    }
+                });
 
         //load data from network
 //        if (isConnected) {
@@ -106,12 +120,26 @@ public class Presenter implements IPresenter {
                     }
                 },
                 throwable -> {
-                    if (mView != null) {
-                        mView.showToastMessage(throwable.getMessage());
-                        mView.showRetryMessage();
+                    if (isConnected) {
+
+                        if (mView != null) {
+                            mView.showToastMessage(throwable.getMessage());
+                            mView.showRetryMessage();
+                            mView.hideProgress();
+                        }
+                    } else {
+
+                        if (mView != null) {
+                            mView.showConnectionError();
+                            mView.hideProgress();
+                        }
                     }
                 },
-                mView::hideProgress);
+                () -> {
+                    if (mView != null) {
+                        mView.hideProgress();
+                    }
+                });
 
 //        //load data from network
 //        if (isConnected) {
@@ -149,12 +177,26 @@ public class Presenter implements IPresenter {
                     }
                 },
                 throwable -> {
-                    if (mView != null) {
-                        mView.showToastMessage(throwable.getMessage());
-                        mView.showRetryMessage();
+                    if (isConnected) {
+
+                        if (mView != null) {
+                            mView.showToastMessage(throwable.getMessage());
+                            mView.showRetryMessage();
+                            mView.hideProgress();
+                        }
+                    } else {
+
+                        if (mView != null) {
+                            mView.showConnectionError();
+                            mView.hideProgress();
+                        }
                     }
                 },
-                mView::hideProgress);
+                () -> {
+                    if (mView != null) {
+                        mView.hideProgress();
+                    }
+                });
 
 
         //load data from network
@@ -193,12 +235,26 @@ public class Presenter implements IPresenter {
                     }
                 },
                 throwable -> {
-                    if (mView != null) {
-                        mView.showToastMessage(throwable.getMessage());
-                        mView.showRetryMessage();
+                    if (isConnected) {
+
+                        if (mView != null) {
+                            mView.showToastMessage(throwable.getMessage());
+                            mView.showRetryMessage();
+                            mView.hideProgress();
+                        }
+                    } else {
+
+                        if (mView != null) {
+                            mView.showConnectionError();
+                            mView.hideProgress();
+                        }
                     }
                 },
-                mView::hideProgress);
+                () -> {
+                    if (mView != null) {
+                        mView.hideProgress();
+                    }
+                });
 
         //load data from network
 //        if (isConnected) {

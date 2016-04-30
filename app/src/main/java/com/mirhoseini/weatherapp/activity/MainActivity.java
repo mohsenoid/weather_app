@@ -18,8 +18,8 @@ import com.mirhoseini.utils.Utils;
 import com.mirhoseini.weatherapp.BaseActivity;
 import com.mirhoseini.weatherapp.BuildConfig;
 import com.mirhoseini.weatherapp.R;
-import com.mirhoseini.weatherapp.core.network.model.WeatherHistory;
-import com.mirhoseini.weatherapp.core.network.model.WeatherMix;
+import com.mirhoseini.weatherapp.core.service.model.WeatherHistory;
+import com.mirhoseini.weatherapp.core.service.model.WeatherMix;
 import com.mirhoseini.weatherapp.core.presentation.IPresenter;
 import com.mirhoseini.weatherapp.core.presentation.Presenter;
 import com.mirhoseini.weatherapp.core.service.WeatherService;
@@ -72,7 +72,7 @@ public class MainActivity extends BaseActivity implements IViewMain {
 
             //TODO: load current location weather
             hideProgress();
-            
+
         } else {
             mPresenter.loadWeather(mCityEditText.getText().toString(), Utils.isConnected(mContext));
         }
@@ -98,6 +98,7 @@ public class MainActivity extends BaseActivity implements IViewMain {
         mNetworkService = new WeatherService(BuildConfig.DEBUG);
 
         mPresenter = new Presenter(mCacher, mNetworkService, mScheduler);
+        mPresenter.setView(this);
 
         // binding Views using ButterKnife library
         ButterKnife.bind(this);
