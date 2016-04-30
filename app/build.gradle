@@ -3,13 +3,13 @@ apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'com.neenbedankt.android-apt'
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.3"
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
 
     defaultConfig {
         applicationId "com.mirhoseini.weatherapp"
-        minSdkVersion 9
-        targetSdkVersion 23
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.compileSdkVersion
         versionCode 1
         versionName "1.0"
         vectorDrawables.useSupportLibrary = true
@@ -27,42 +27,33 @@ android {
     }
 }
 
-def support_version = "23.3.0"
-def retrofit_version = "2.0.0-beta4"
-def okhttp_version = "3.2.0"
-def butterknife_version = "8.0.1";
-
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'junit:junit:4.12'
-    testCompile 'org.mockito:mockito-core:1.10.19'
+    compile project(':core-lib')
 
-    androidTestCompile "com.android.support:support-annotations:${support_version}"
-    androidTestCompile 'com.android.support.test:runner:0.4.1'
-    androidTestCompile 'com.android.support.test:rules:0.4.1'
-    androidTestCompile 'org.hamcrest:hamcrest-library:1.1'
+    testCompile rootProject.ext.testLibraries.junit
+    testCompile rootProject.ext.testLibraries.mockito
 
-    compile "com.android.support:appcompat-v7:${support_version}"
-    compile "com.android.support:recyclerview-v7:${support_version}"
-    compile "com.android.support:support-v4:${support_version}"
-    compile "com.android.support:design:${support_version}"
-    compile "com.android.support:cardview-v7:${support_version}"
-    compile "com.android.support:support-vector-drawable:${support_version}"
+    androidTestCompile rootProject.ext.testLibraries.supportAnnotations
+    androidTestCompile rootProject.ext.testLibraries.supportTestRunner
+    androidTestCompile rootProject.ext.testLibraries.supportTestRules
+    androidTestCompile rootProject.ext.testLibraries.hamcrest
 
-    compile 'io.reactivex:rxandroid:1.1.0'
+    compile rootProject.ext.libraries.appCompat
+    compile rootProject.ext.libraries.androidSupport
+    compile rootProject.ext.libraries.vectorSupport
+    compile rootProject.ext.libraries.recyclerView
+    compile rootProject.ext.libraries.cardView
+    compile rootProject.ext.libraries.designSupport
 
-    compile 'com.mirhoseini.appsettings:appsettings:1.0.0'
-    compile 'com.mirhoseini.utils:utils:1.0.0'
+    compile rootProject.ext.libraries.rxandroid
 
-    compile "com.squareup.retrofit2:retrofit:${retrofit_version}"
-    compile "com.squareup.retrofit2:converter-gson:${retrofit_version}"
-    compile "com.squareup.retrofit2:adapter-rxjava:${retrofit_version}"
-    compile "com.squareup.okhttp3:okhttp:${okhttp_version}"
-    compile "com.squareup.okhttp3:logging-interceptor:${okhttp_version}"
+    compile rootProject.ext.libraries.appSettings
+    compile rootProject.ext.libraries.utils
 
-    compile "com.jakewharton:butterknife:${butterknife_version}"
-    apt "com.jakewharton:butterknife-compiler:${butterknife_version}"
+    compile rootProject.ext.libraries.butterknife
+    apt rootProject.ext.aptLibraries.butterknifeCompiler
 
-    compile 'com.jakewharton.timber:timber:4.1.2'
+    compile rootProject.ext.libraries.timber
 
 }

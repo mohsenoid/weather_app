@@ -10,8 +10,6 @@ import timber.log.Timber;
  */
 public class WeatherApplication extends Application {
 
-    private static final String TAG = WeatherApplication.class.getSimpleName();
-
     public static WeatherApplication get(Context context) {
         return (WeatherApplication) context.getApplicationContext();
     }
