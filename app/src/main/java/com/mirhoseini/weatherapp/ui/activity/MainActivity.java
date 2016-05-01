@@ -21,7 +21,7 @@ import com.mirhoseini.weatherapp.BuildConfig;
 import com.mirhoseini.weatherapp.R;
 import com.mirhoseini.weatherapp.WeatherApplication;
 import com.mirhoseini.weatherapp.core.presentation.IPresenter;
-import com.mirhoseini.weatherapp.core.presentation.Presenter;
+import com.mirhoseini.weatherapp.core.presentation.WeatherPresenter;
 import com.mirhoseini.weatherapp.core.service.WeatherNetworkService;
 import com.mirhoseini.weatherapp.core.service.model.WeatherHistory;
 import com.mirhoseini.weatherapp.core.service.model.WeatherMix;
@@ -104,7 +104,7 @@ public class MainActivity extends BaseActivity implements IViewMain, CurrentFrag
 
         mNetworkService = new WeatherNetworkService(BuildConfig.DEBUG);
 
-        mPresenter = new Presenter(mCacher, mNetworkService, mScheduler);
+        mPresenter = new WeatherPresenter(mCacher, mNetworkService, mScheduler);
         mPresenter.setView(this);
 
         // binding Views using ButterKnife library

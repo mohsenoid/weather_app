@@ -17,7 +17,7 @@ import rx.subscriptions.Subscriptions;
 /**
  * Created by Mohsen on 30/04/16.
  */
-public class Presenter implements IPresenter {
+public class WeatherPresenter implements IPresenter {
 
 
     IInteractor mInteractor;
@@ -25,7 +25,7 @@ public class Presenter implements IPresenter {
 
     private Subscription subscription = Subscriptions.empty();
 
-    public Presenter(ICacher cacher, INetworkService networkService, IScheduler scheduler) {
+    public WeatherPresenter(ICacher cacher, INetworkService networkService, IScheduler scheduler) {
 
         mInteractor = new WeatherInteractor(cacher, networkService, scheduler, Clock.REAL);
 
