@@ -24,16 +24,16 @@ This application was created by [Mohsen Mirhoseini Argi](http://mirhoseini.com),
 * Android Support Tools (recyclerView, cardView, vector,... ) v23.3.0
 * Retrofit v2.0.0-beta4
 * Okhttp v3.2.0
+* Dagger 2.4
+* RxJava 1.1.3
+* RxAndroid 1.1.0
 * Butterknife v8.0.1
+* Timber 4.1.2
 * AppSettings v1.0.1
 * AndroidUtils v1.0.0
 * jUnit v4.12
 * Android Test v0.4.1
 * Mockito v1.10.19
-* Dagger 2.4
-* RxJava 1.1.3
-* RxAndroid 1.1.0
-* Timber 4.1.2
 
 --------------------
 ### Important Notes ###
@@ -48,7 +48,7 @@ Some simple Test Cases was designed to test application UI functionality and inn
 
 ### Application Structure ###
 
-The Application is implemented and structured bases on the MVP pattern, contributed by [Antonio Leiva](http://antonioleiva.com/mvp-android/).
+The Application implemented and structured bases on the MVP pattern best practice, contributed by [Antonio Leiva](http://antonioleiva.com/mvp-android/).
 
 Whole application functionality is implemented in "Core-Lib" module using pure Java. The "App" module contain all codes required for application to load on Android.
 
@@ -61,6 +61,8 @@ The model (WeatherInteractor), would only be the gateway to the domain layer or 
 The networking and API call are managed by [Retrofit](http://square.github.io/retrofit/) and OkHttp as its httpclient, contributed by [Square](http://square.github.io). It also shows decent logs while application is running in Debug mode.
 
 Layout parts communications are managed by [RxJava](https://github.com/ReactiveX/RxJava) & [RxAndroid](https://github.com/ReactiveX/RxAndroid) contributed by [ReactiveX](http://reactivex.io).
+
+Dependency Injections are being managed by [Dagger](https://github.com/google/dagger) created by [Square](http://square.github.io) and now maintained by Google [Google](http://google.github.io/dagger/).
 
 The disk cache is managed using [AppSettings](https://github.com/mmirhoseini/app_settings) library, a wrapper for Android SharedPreferences, which takes advantage of HashMaps for faster save and retrieval from memory, developed and published on jCenter by [myself](http://mirhoseini.com).
 
