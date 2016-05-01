@@ -56,7 +56,7 @@ public class WeatherInteractorTests {
 
         mNewExpectedResult = new WeatherMix(new WeatherCurrent(), new WeatherForecast());
         mNewExpectedResult.getWeatherCurrent().setName("Berlin");
-        mNewExpectedResult.getWeatherCurrent().setDt(1000L);
+        mNewExpectedResult.getWeatherCurrent().setDt(Constants.STALE_MS + 1);
 
         when(mAppCacher.saveWeather(any())).thenReturn(Observable.just(null));
 
@@ -70,7 +70,7 @@ public class WeatherInteractorTests {
     public void testHitsMemoryCache() {
         when(mWeatherNetworkService.loadWeather(any(String.class))).thenReturn(Observable.just(mExpectedResult));
         when(mAppCacher.getWeather()).thenReturn(Observable.just(null));
-        when(mClock.millis()).thenReturn(1000L);
+        when(mClock.millis()).thenReturn(0L);
 
         // must load data from Network, cause Memory and disk cache are null
         TestSubscriber<WeatherMix> testSubscriberFirst = new TestSubscriber<>();
@@ -92,7 +92,7 @@ public class WeatherInteractorTests {
     public void testHitsDiskCache() {
         when(mWeatherNetworkService.loadWeather(any(String.class))).thenReturn(Observable.just(mExpectedResult));
         when(mAppCacher.getWeather()).thenReturn(Observable.just(null));
-        when(mClock.millis()).thenReturn(1000L);
+        when(mClock.millis()).thenReturn(0L);
 
         // must load data from Network, cause Memory and disk cache are null
         TestSubscriber<WeatherMix> testSubscriberFirst = new TestSubscriber<>();
@@ -115,7 +115,7 @@ public class WeatherInteractorTests {
     public void testCacheExpiry() {
         when(mWeatherNetworkService.loadWeather(any(String.class))).thenReturn(Observable.just(mNewExpectedResult));
         when(mAppCacher.getWeather()).thenReturn(Observable.just(mExpectedResult));
-        when(mClock.millis()).thenReturn(1000L);
+        when(mClock.millis()).thenReturn(0L);
 
         // load weather from Cache but is not expired yet
         TestSubscriber<WeatherMix> testSubscriberFirst = new TestSubscriber<>();
@@ -123,7 +123,7 @@ public class WeatherInteractorTests {
         testSubscriberFirst.assertNoErrors();
         testSubscriberFirst.assertReceivedOnNext(singletonList(mExpectedResult));
 
-        when(mClock.millis()).thenReturn(Constants.STALE_MS * 1000 - 1);
+        when(mClock.millis()).thenReturn(Constants.STALE_MS - 1);
 
         // load weather from Memory but is not expired yet
         TestSubscriber<WeatherMix> testSubscriberSecond = new TestSubscriber<>();
@@ -131,7 +131,7 @@ public class WeatherInteractorTests {
         testSubscriberSecond.assertNoErrors();
         testSubscriberSecond.assertReceivedOnNext(singletonList(mExpectedResult));
 
-        when(mClock.millis()).thenReturn(Constants.STALE_MS * 1000);
+        when(mClock.millis()).thenReturn(Constants.STALE_MS);
 
         // load weather from Memory but is not expired yet
         TestSubscriber<WeatherMix> testSubscriberThird = new TestSubscriber<>();

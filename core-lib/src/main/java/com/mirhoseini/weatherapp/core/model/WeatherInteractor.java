@@ -65,7 +65,10 @@ public class WeatherInteractor implements IInteractor {
 
     private Observable<WeatherMix> networkWeather(String city) {
         return mNetworkService.loadWeather(city)
-                .doOnNext(entity -> memoryCacheWeather = entity)
+                .doOnNext(entity -> {
+                    entity.setDt(mClock.millis());
+                    memoryCacheWeather = entity;
+                })
                 .flatMap(entity -> mDiskCache.saveWeather(entity).map(__ -> entity))
                 .subscribeOn(mScheduler.backgroundThread())
                 .observeOn(mScheduler.mainThread());
@@ -99,7 +102,7 @@ public class WeatherInteractor implements IInteractor {
     }
 
     private boolean isUpToDate(WeatherMix entity) {
-        return mClock.millis() / 1000 - entity.getWeatherCurrent().getDt() < Constants.STALE_MS;
+        return mClock.millis() - entity.getDt() < Constants.STALE_MS;
     }
 
     private boolean isSameCity(String city, WeatherMix entity) {

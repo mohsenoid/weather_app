@@ -16,6 +16,17 @@ public class WeatherMix implements Serializable {
     @Expose
     private WeatherForecast mWeatherForecast;
 
+    @Expose
+    private long dt;
+
+    public long getDt() {
+        return dt;
+    }
+
+    public void setDt(long dt) {
+        this.dt = dt;
+    }
+
     public WeatherMix(WeatherCurrent weatherCurrent, WeatherForecast weatherForecast) {
         mWeatherCurrent = weatherCurrent;
         mWeatherForecast = weatherForecast;
