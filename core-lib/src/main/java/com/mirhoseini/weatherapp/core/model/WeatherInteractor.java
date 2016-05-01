@@ -95,9 +95,6 @@ public class WeatherInteractor implements IInteractor {
 //    }
 
 
-
-
-
     private Observable<WeatherMix> networkWeather(String city) {
         return mNetworkService.loadWeather(city)
                 .doOnNext(entity -> memoryCacheWeather = entity)

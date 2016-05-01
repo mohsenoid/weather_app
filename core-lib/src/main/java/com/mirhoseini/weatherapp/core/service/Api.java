@@ -23,8 +23,8 @@ public interface Api {
 //    Observable<WeatherCurrent> getWeather(@Query("lat") long lat, @Query("lon") long lon, @Query("APPID") String apiKey, @Query("units") String units);
 
     // http://api.openweathermap.org/data/2.5/forecast?q=Tehran&APPID=ee498803643d25e7077f98d4d9849f5c
-    @GET("forecast")
-    Observable<WeatherForecast> getWeatherForecast(@Query("q") String city, @Query("APPID") String apiKey, @Query("units") String units);
+    @GET("forecast/daily")
+    Observable<WeatherForecast> getWeatherForecast(@Query("q") String city, @Query("APPID") String apiKey, @Query("units") String units, @Query("cnt") int count);
 
     // http://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&APPID=ee498803643d25e7077f98d4d9849f5c
 //    @GET("forecast")
