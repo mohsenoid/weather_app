@@ -26,4 +26,5 @@ public class AppScheduler implements IScheduler {
     public Scheduler backgroundThread() {
         return Schedulers.io();
     }
+
 }
