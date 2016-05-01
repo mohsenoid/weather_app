@@ -102,10 +102,6 @@ public class WeatherInteractor implements IInteractor {
         return mClock.millis() / 1000 - entity.getWeatherCurrent().getDt() < Constants.STALE_MS;
     }
 
-    private boolean isUpToDate(WeatherHistory entity) {
-        return mClock.millis() / 1000 - entity.getList().get(0).getDt() < Constants.STALE_MS;
-    }
-
     private boolean isSameCity(String city, WeatherMix entity) {
         return entity.getWeatherCurrent().getName().equalsIgnoreCase(city);
     }

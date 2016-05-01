@@ -15,5 +15,5 @@ public class Constants {
     public static final String CITY_DEFAULT_VALUE = "Berlin";
     public static final String LAST_WEATHER = "last_weather";
     //cache validation time
-    public static final long STALE_MS = 30 * 1000;
+    public static final long STALE_MS = 60 * 1000;
 }
