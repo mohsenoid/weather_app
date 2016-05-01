@@ -3,8 +3,6 @@ package com.mirhoseini.weatherapp;
 import com.mirhoseini.weatherapp.core.utils.ICacher;
 import com.mirhoseini.weatherapp.core.utils.IScheduler;
 import com.mirhoseini.weatherapp.ui.activity.MainActivity;
-import com.mirhoseini.weatherapp.utils.AppCacher;
-import com.mirhoseini.weatherapp.utils.AppScheduler;
 
 import javax.inject.Singleton;
 

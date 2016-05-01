@@ -10,11 +10,11 @@ import timber.log.Timber;
  */
 public class WeatherApplication extends Application {
 
+    private WeatherApplicationComponent component;
+
     public static WeatherApplication get(Context context) {
         return (WeatherApplication) context.getApplicationContext();
     }
-
-    private WeatherApplicationComponent component;
 
     protected WeatherApplicationModule getApplicationModule() {
         return new WeatherApplicationModule(this);

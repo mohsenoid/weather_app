@@ -1,9 +1,9 @@
-
 package com.mirhoseini.weatherapp.core.service.model;
 
-import javax.annotation.Generated;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import javax.annotation.Generated;
 
 @Generated("org.jsonschema2pojo")
 public class Temp {
@@ -28,108 +28,84 @@ public class Temp {
     private Double morn;
 
     /**
-     * 
-     * @return
-     *     The day
+     * @return The day
      */
     public Double getDay() {
         return day;
     }
 
     /**
-     * 
-     * @param day
-     *     The day
+     * @param day The day
      */
     public void setDay(Double day) {
         this.day = day;
     }
 
     /**
-     * 
-     * @return
-     *     The min
+     * @return The min
      */
     public Double getMin() {
         return min;
     }
 
     /**
-     * 
-     * @param min
-     *     The min
+     * @param min The min
      */
     public void setMin(Double min) {
         this.min = min;
     }
 
     /**
-     * 
-     * @return
-     *     The max
+     * @return The max
      */
     public Double getMax() {
         return max;
     }
 
     /**
-     * 
-     * @param max
-     *     The max
+     * @param max The max
      */
     public void setMax(Double max) {
         this.max = max;
     }
 
     /**
-     * 
-     * @return
-     *     The night
+     * @return The night
      */
     public Double getNight() {
         return night;
     }
 
     /**
-     * 
-     * @param night
-     *     The night
+     * @param night The night
      */
     public void setNight(Double night) {
         this.night = night;
     }
 
     /**
-     * 
-     * @return
-     *     The eve
+     * @return The eve
      */
     public Double getEve() {
         return eve;
     }
 
     /**
-     * 
-     * @param eve
-     *     The eve
+     * @param eve The eve
      */
     public void setEve(Double eve) {
         this.eve = eve;
     }
 
     /**
-     * 
-     * @return
-     *     The morn
+     * @return The morn
      */
     public Double getMorn() {
         return morn;
     }
 
     /**
-     * 
-     * @param morn
-     *     The morn
+     * @param morn The morn
      */
     public void setMorn(Double morn) {
         this.morn = morn;

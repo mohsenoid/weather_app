@@ -25,13 +25,10 @@ import butterknife.ButterKnife;
 
 public class ForecastFragment extends Fragment {
     private static final String ARG_WEATHER_FORECAST = "weather_forecast";
-
-    private WeatherForecast mWeatherForecast;
     SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat("dd/MM");
-
-
     @BindView(R.id.forecast_recycler)
     RecyclerView mForecastRecyclerView;
+    private WeatherForecast mWeatherForecast;
 
     public ForecastFragment() {
         // Required empty public constructor

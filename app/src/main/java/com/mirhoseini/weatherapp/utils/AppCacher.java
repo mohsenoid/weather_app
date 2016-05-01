@@ -4,7 +4,6 @@ import android.content.Context;
 
 import com.google.gson.Gson;
 import com.mirhoseini.appsettings.AppSettings;
-import com.mirhoseini.weatherapp.core.service.model.WeatherHistory;
 import com.mirhoseini.weatherapp.core.service.model.WeatherMix;
 import com.mirhoseini.weatherapp.core.utils.Constants;
 import com.mirhoseini.weatherapp.core.utils.ICacher;

@@ -19,38 +19,22 @@ import butterknife.OnClick;
 
 public class CurrentFragment extends Fragment {
     private static final String ARG_WEATHER_CURRENT = "weather_current";
-
-    private WeatherCurrent mWeatherCurrent;
-
     @BindView(R.id.name)
     TextView mNameTextView;
-
     @BindView(R.id.description)
     TextView mDescriptionTextView;
-
     @BindView(R.id.icon)
     AppCompatImageView mIconImageView;
-
     @BindView(R.id.temp)
     TextView mTempTextView;
-
     @BindView(R.id.windspeed)
     TextView mWindSpeedTextView;
-
     @BindView(R.id.temp_high)
     TextView mTempHighTextView;
-
     @BindView(R.id.temp_low)
     TextView mTempLowTextView;
+    private WeatherCurrent mWeatherCurrent;
     private String mCity;
-
-    @OnClick(R.id.history_button)
-    public void history(View view) {
-        if (mListener != null) {
-            mListener.onLoadHistory(mCity);
-        }
-    }
-
     private OnCurrentFragmentInteractionListener mListener;
 
     public CurrentFragment() {
@@ -63,6 +47,13 @@ public class CurrentFragment extends Fragment {
         args.putSerializable(ARG_WEATHER_CURRENT, weatherCurrent);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @OnClick(R.id.history_button)
+    public void history(View view) {
+        if (mListener != null) {
+            mListener.onLoadHistory(mCity);
+        }
     }
 
     @Override

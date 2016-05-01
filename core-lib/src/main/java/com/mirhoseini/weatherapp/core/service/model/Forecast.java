@@ -1,4 +1,3 @@
-
 package com.mirhoseini.weatherapp.core.service.model;
 
 import com.google.gson.annotations.Expose;

@@ -95,7 +95,7 @@
         android:layout_gravity="center_horizontal"
         android:gravity="center"
         android:padding="5dp"
-        android:text="Load History"
+        android:text="@string/last_days"
         android:textColor="@color/colorPrimary"/>
 
 </LinearLayout>

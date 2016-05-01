@@ -51,20 +51,14 @@ import timber.log.Timber;
  */
 public class MainActivity extends BaseActivity implements IViewMain, CurrentFragment.OnCurrentFragmentInteractionListener {
 
+    private static boolean sDoubleBackToExitPressedOnce;
     //We would inject these via Dagger
     @Inject
     IScheduler mScheduler;
     @Inject
     ICacher mCacher;
-
-    private WeatherNetworkService mNetworkService;
-
-    private static boolean sDoubleBackToExitPressedOnce;
-
     IPresenter mPresenter;
-
     AlertDialog mInternetConnectionDialog;
-
     @BindView(R.id.progress_container)
     ViewGroup mProgressContainer;
     @BindView(R.id.progress_message)
@@ -73,6 +67,8 @@ public class MainActivity extends BaseActivity implements IViewMain, CurrentFrag
     EditText mCityEditText;
     @BindView(R.id.fragment_container)
     ViewGroup mFragmentContainer;
+    Context mContext;
+    private WeatherNetworkService mNetworkService;
 
     @OnEditorAction(R.id.city_edittext)
     public boolean onEditorAction(TextView textView, int action, KeyEvent keyEvent) {
@@ -99,8 +95,6 @@ public class MainActivity extends BaseActivity implements IViewMain, CurrentFrag
 
         sDoubleBackToExitPressedOnce = false;
     }
-
-    Context mContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -189,8 +183,8 @@ public class MainActivity extends BaseActivity implements IViewMain, CurrentFrag
         ForecastFragment forecastFragment = ForecastFragment.newInstance(weatherMix.getWeatherForecast());
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.forecast_fragment, forecastFragment);
-        fragmentTransaction.replace(R.id.current_fragment, currentFragment);
+        fragmentTransaction.replace(R.id.current_fragment, currentFragment, "current");
+        fragmentTransaction.replace(R.id.forecast_fragment, forecastFragment, "forecast");
         fragmentTransaction.commit();
 
     }
@@ -205,7 +199,7 @@ public class MainActivity extends BaseActivity implements IViewMain, CurrentFrag
 
         HistoryFragment historyFragment = HistoryFragment.newInstance(weatherHistory);
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.add(mFragmentContainer.getId(), historyFragment).commit();
+        fragmentTransaction.replace(R.id.current_fragment, historyFragment).commit();
     }
 
     // save user last city
