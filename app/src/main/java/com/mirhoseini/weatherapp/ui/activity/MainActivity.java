@@ -119,7 +119,7 @@ public class MainActivity extends BaseActivity implements IViewMain, CurrentFrag
         String lastCity = "";
 
         if (savedInstanceState == null) { //load lastTimeSpan from SharePreferences
-            lastCity = AppSettings.getString(this, Constants.LAST_CITY, "");
+            lastCity = AppSettings.getString(this, Constants.LAST_CITY, Constants.CITY_DEFAULT_VALUE);
         } else { //load lastTimeSpan from saved state before UI change
             lastCity = savedInstanceState.getString(Constants.LAST_CITY);
         }

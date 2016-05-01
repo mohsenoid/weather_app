@@ -12,6 +12,7 @@ public class Constants {
     public static final String WEATHER_UNITS = "metric";
     public static final int FORECAST_COUNT = 5;
     public static final String LAST_CITY = "last_city";
+    public static final String CITY_DEFAULT_VALUE = "Berlin";
     public static final String LAST_WEATHER = "last_weather";
     //cache validation time
     public static final long STALE_MS = 30 * 1000;
