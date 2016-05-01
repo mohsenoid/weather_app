@@ -12,48 +12,45 @@ public class Forecast {
     @SerializedName("dt")
     @Expose
     private long dt;
-    @SerializedName("main")
+    @SerializedName("temp")
     @Expose
-    private Main main;
+    private Temp temp;
+    @SerializedName("pressure")
+    @Expose
+    private Double pressure;
+    @SerializedName("humidity")
+    @Expose
+    private Integer humidity;
     @SerializedName("weather")
     @Expose
-    private List<Weather> weather = new ArrayList<Weather>();
+    private java.util.List<Weather> weather = new ArrayList<Weather>();
+    @SerializedName("speed")
+    @Expose
+    private Double speed;
+    @SerializedName("deg")
+    @Expose
+    private Integer deg;
     @SerializedName("clouds")
     @Expose
-    private Clouds clouds;
-    @SerializedName("wind")
+    private Integer clouds;
+    @SerializedName("rain")
     @Expose
-    private Wind wind;
-    @SerializedName("sys")
+    private Double rain;
+    @SerializedName("snow")
     @Expose
-    private Sys sys;
-    @SerializedName("dt_txt")
-    @Expose
-    private String dtTxt;
+    private Double snow;
 
-    /**
-     * No args constructor for use in serialization
-     */
-    public Forecast() {
-    }
-
-    /**
-     * @param clouds
-     * @param dt
-     * @param wind
-     * @param sys
-     * @param dtTxt
-     * @param weather
-     * @param main
-     */
-    public Forecast(long dt, Main main, List<Weather> weather, Clouds clouds, Wind wind, Sys sys, String dtTxt) {
+    public Forecast(long dt, Temp temp, Double pressure, Integer humidity, List<Weather> weather, Double speed, Integer deg, Integer clouds, Double rain, Double snow) {
         this.dt = dt;
-        this.main = main;
+        this.temp = temp;
+        this.pressure = pressure;
+        this.humidity = humidity;
         this.weather = weather;
+        this.speed = speed;
+        this.deg = deg;
         this.clouds = clouds;
-        this.wind = wind;
-        this.sys = sys;
-        this.dtTxt = dtTxt;
+        this.rain = rain;
+        this.snow = snow;
     }
 
     /**
@@ -71,17 +68,45 @@ public class Forecast {
     }
 
     /**
-     * @return The main
+     * @return The temp
      */
-    public Main getMain() {
-        return main;
+    public Temp getTemp() {
+        return temp;
     }
 
     /**
-     * @param main The main
+     * @param temp The temp
      */
-    public void setMain(Main main) {
-        this.main = main;
+    public void setTemp(Temp temp) {
+        this.temp = temp;
+    }
+
+    /**
+     * @return The pressure
+     */
+    public Double getPressure() {
+        return pressure;
+    }
+
+    /**
+     * @param pressure The pressure
+     */
+    public void setPressure(Double pressure) {
+        this.pressure = pressure;
+    }
+
+    /**
+     * @return The humidity
+     */
+    public Integer getHumidity() {
+        return humidity;
+    }
+
+    /**
+     * @param humidity The humidity
+     */
+    public void setHumidity(Integer humidity) {
+        this.humidity = humidity;
     }
 
     /**
@@ -99,71 +124,73 @@ public class Forecast {
     }
 
     /**
+     * @return The speed
+     */
+    public Double getSpeed() {
+        return speed;
+    }
+
+    /**
+     * @param speed The speed
+     */
+    public void setSpeed(Double speed) {
+        this.speed = speed;
+    }
+
+    /**
+     * @return The deg
+     */
+    public Integer getDeg() {
+        return deg;
+    }
+
+    /**
+     * @param deg The deg
+     */
+    public void setDeg(Integer deg) {
+        this.deg = deg;
+    }
+
+    /**
      * @return The clouds
      */
-    public Clouds getClouds() {
+    public Integer getClouds() {
         return clouds;
     }
 
     /**
      * @param clouds The clouds
      */
-    public void setClouds(Clouds clouds) {
+    public void setClouds(Integer clouds) {
         this.clouds = clouds;
     }
 
     /**
-     * @return The wind
+     * @return The rain
      */
-    public Wind getWind() {
-        return wind;
+    public Double getRain() {
+        return rain;
     }
 
     /**
-     * @param wind The wind
+     * @param rain The rain
      */
-    public void setWind(Wind wind) {
-        this.wind = wind;
+    public void setRain(Double rain) {
+        this.rain = rain;
     }
 
     /**
-     * @return The sys
+     * @return The snow
      */
-    public Sys getSys() {
-        return sys;
+    public Double getSnow() {
+        return snow;
     }
 
     /**
-     * @param sys The sys
+     * @param snow The snow
      */
-    public void setSys(Sys sys) {
-        this.sys = sys;
-    }
-
-    /**
-     * @return The dtTxt
-     */
-    public String getDtTxt() {
-        return dtTxt;
-    }
-
-    /**
-     * @param dtTxt The dt_txt
-     */
-    public void setDtTxt(String dtTxt) {
-        this.dtTxt = dtTxt;
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        if (other == this) {
-            return true;
-        }
-        if ((other instanceof Forecast) == false) {
-            return false;
-        }
-        Forecast rhs = ((Forecast) other);
-        return dt == rhs.dt && main.equals(rhs.main);
+    public void setSnow(Double snow) {
+        this.snow = snow;
     }
 
 }

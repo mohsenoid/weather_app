@@ -79,7 +79,7 @@ public class WeatherNetworkService implements INetworkService {
     @Override
     public Observable<WeatherHistory> loadWeatherHistory(String city, long start, long end) {
 
-        return api.getWeatherHistory(city, Constants.HISTORY_TYPE, start / 1000, end / 1000, Constants.API_KEY, Constants.WEATHER_UNITS);
+        return api.getWeatherHistory(city, Constants.HISTORY_TYPE, start , end , Constants.API_KEY, Constants.WEATHER_UNITS);
 
     }
 

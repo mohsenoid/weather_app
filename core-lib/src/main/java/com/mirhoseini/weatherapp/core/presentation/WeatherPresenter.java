@@ -146,17 +146,17 @@ public class WeatherPresenter implements IPresenter {
     public void loadWeatherHistory(String city, boolean isConnected) {
 
         Calendar calendar = Calendar.getInstance();
-        long end = calendar.getTime().getTime();
+        long start = calendar.getTime().getTime();
 
         calendar.add(Calendar.DATE, -7);
-        long start = calendar.getTime().getTime();
+        long end = calendar.getTime().getTime();
 
         if (mView != null) {
             mView.showProgress();
             mView.showProgressMessage("Loading City Weather History...");
         }
 
-        subscription = mInteractor.loadWeatherHistory(city, start, end).subscribe(
+        subscription = mInteractor.loadWeatherHistory(city, start / 1000, end / 100).subscribe(
                 weatherHistory -> {
                     if (mView != null) {
                         mView.setWeatherHistoryValues(weatherHistory);

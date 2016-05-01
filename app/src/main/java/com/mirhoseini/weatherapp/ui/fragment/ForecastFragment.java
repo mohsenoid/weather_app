@@ -17,6 +17,9 @@ import com.mirhoseini.weatherapp.core.service.model.Forecast;
 import com.mirhoseini.weatherapp.core.service.model.WeatherForecast;
 import com.mirhoseini.weatherapp.utils.AppUtils;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -24,6 +27,8 @@ public class ForecastFragment extends Fragment {
     private static final String ARG_WEATHER_FORECAST = "weather_forecast";
 
     private WeatherForecast mWeatherForecast;
+    SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat("dd/MM");
+
 
     @BindView(R.id.forecast_recycler)
     RecyclerView mForecastRecyclerView;
@@ -54,14 +59,12 @@ public class ForecastFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_forecast, container, false);
         ButterKnife.bind(this, view);
 
-        ForecastAdapter adapter = new ForecastAdapter(mWeatherForecast);
-        mForecastRecyclerView.setAdapter(adapter);
-        mForecastRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        mForecastRecyclerView.setItemAnimator(new DefaultItemAnimator());
-
-//        mDescriptionTextView.setText(mWeatherForecast.getMessage());
-//        mIconImageView.setImageResource(convertIconToResource(weather.getIcon()));
-
+        if (mWeatherForecast != null) {
+            ForecastAdapter adapter = new ForecastAdapter(mWeatherForecast);
+            mForecastRecyclerView.setAdapter(adapter);
+            mForecastRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+            mForecastRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        }
         return view;
     }
 
@@ -103,9 +106,11 @@ public class ForecastFragment extends Fragment {
         @Override
         public void onBindViewHolder(ForecastHolder holder, int position) {
             Forecast forecast = mWeatherForecast.getList().get(position);
+
+            holder.getDateTextView().setText(mSimpleDateFormat.format(new Date(forecast.getDt() * 1000)));
             holder.getIconImageView().setImageResource(AppUtils.convertIconToResource(forecast.getWeather().get(0).getIcon()));
-            holder.getTempTextView().setText(forecast.getMain().getTemp() + "°C");
-            holder.getWindSpeedTextView().setText(forecast.getWind().getSpeed() + "m/s");
+            holder.getTempTextView().setText(forecast.getTemp().getDay() + "°C");
+            holder.getWindSpeedTextView().setText(forecast.getSpeed() + "m/s");
         }
 
         @Override
@@ -117,6 +122,8 @@ public class ForecastFragment extends Fragment {
     }
 
     public class ForecastHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.date)
+        TextView mDateTextView;
         @BindView(R.id.icon)
         AppCompatImageView mIconImageView;
         @BindView(R.id.temp)
@@ -136,6 +143,10 @@ public class ForecastFragment extends Fragment {
 
         public TextView getTempTextView() {
             return mTempTextView;
+        }
+
+        public TextView getDateTextView() {
+            return mDateTextView;
         }
 
         public TextView getWindSpeedTextView() {

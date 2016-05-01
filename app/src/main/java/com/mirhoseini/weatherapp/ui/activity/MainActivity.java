@@ -8,8 +8,10 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentTransaction;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,6 +43,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnEditorAction;
 import timber.log.Timber;
 
 /**
@@ -71,8 +74,19 @@ public class MainActivity extends BaseActivity implements IViewMain, CurrentFrag
     @BindView(R.id.fragment_container)
     ViewGroup mFragmentContainer;
 
+    @OnEditorAction(R.id.city_edittext)
+    public boolean onEditorAction(TextView textView, int action, KeyEvent keyEvent) {
+        if (action == EditorInfo.IME_ACTION_GO || keyEvent.getKeyCode()==KeyEvent.KEYCODE_ENTER) {
+            submit(textView);
+        }
+        return false;
+    }
+
     @OnClick(R.id.go_button)
     public void submit(View view) {
+        saveLastCity(mCityEditText.getText().toString());
+        Utils.hideKeyboard(this, mCityEditText);
+
         if (mCityEditText.getText().toString().isEmpty()) {
 //            mCityEditText.setError(getString(R.string.city_error));
 //            mCityEditText.requestFocus();
@@ -83,9 +97,6 @@ public class MainActivity extends BaseActivity implements IViewMain, CurrentFrag
         } else {
             mPresenter.loadWeather(mCityEditText.getText().toString(), Utils.isConnected(mContext));
         }
-
-        saveLastCity(mCityEditText.getText().toString());
-        Utils.hideKeyboard(this, mCityEditText);
 
         sDoubleBackToExitPressedOnce = false;
     }
@@ -172,15 +183,13 @@ public class MainActivity extends BaseActivity implements IViewMain, CurrentFrag
 
         mFragmentContainer.setVisibility(View.VISIBLE);
 
-        mFragmentContainer.removeAllViews();
-
         CurrentFragment currentFragment = CurrentFragment.newInstance(weatherMix.getWeatherCurrent());
         ForecastFragment forecastFragment = ForecastFragment.newInstance(weatherMix.getWeatherForecast());
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.add(mFragmentContainer.getId(), forecastFragment)
-                .add(mFragmentContainer.getId(), currentFragment)
-                .commit();
+        fragmentTransaction.replace(R.id.forecast_fragment, forecastFragment);
+        fragmentTransaction.replace(R.id.current_fragment, currentFragment);
+        fragmentTransaction.commit();
 
     }
 
@@ -298,7 +307,6 @@ public class MainActivity extends BaseActivity implements IViewMain, CurrentFrag
 
             }, 2500);
         }
-
     }
 
     @Override

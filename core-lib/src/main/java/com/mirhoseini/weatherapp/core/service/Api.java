@@ -30,7 +30,7 @@ public interface Api {
 //    @GET("forecast")
 //    Observable<WeatherForecast> getWeatherForecast(@Query("lat") long lat, @Query("lon") long lon, @Query("APPID") String apiKey, @Query("units") String units);
 
-    // http://api.openweathermap.org/data/2.5/history/city?q=Tehran&type=day&start=1461752800&end=1461952800&APPID=ee498803643d25e7077f98d4d9849f5c
+    //http://api.openweathermap.org/data/2.5/history/city?q=Berlin&type=hour&start=1461484800&end=1456819200&APPID=ee498803643d25e7077f98d4d9849f5c
     @GET("history")
     Observable<WeatherHistory> getWeatherHistory(@Query("q") String city, @Query("type") String type, @Query("start") long start, @Query("end") long end, @Query("APPID") String apiKey, @Query("units") String units);
 

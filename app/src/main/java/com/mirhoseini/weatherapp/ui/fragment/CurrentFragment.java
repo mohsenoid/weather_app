@@ -79,23 +79,24 @@ public class CurrentFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_current, container, false);
         ButterKnife.bind(this, view);
 
-        Weather weather = mWeatherCurrent.getWeather().get(0);
-        mCity = mWeatherCurrent.getName();
+        if (mWeatherCurrent != null) {
+            Weather weather = mWeatherCurrent.getWeather().get(0);
+            mCity = mWeatherCurrent.getName();
 
-        mNameTextView.setText(mCity);
+            mNameTextView.setText(mCity);
 
-        mDescriptionTextView.setText(weather.getDescription());
+            mDescriptionTextView.setText(weather.getDescription());
 
-        mTempTextView.setText(mWeatherCurrent.getMain().getTemp() + "°C");
+            mTempTextView.setText(mWeatherCurrent.getMain().getTemp() + "°C");
 
-        mIconImageView.setImageResource(convertIconToResource(weather.getIcon()));
+            mIconImageView.setImageResource(convertIconToResource(weather.getIcon()));
 
-        mWindSpeedTextView.setText(mWeatherCurrent.getWind().getSpeed() + "m/s");
+            mWindSpeedTextView.setText(mWeatherCurrent.getWind().getSpeed() + "m/s");
 
-        mTempHighTextView.setText(mWeatherCurrent.getMain().getTempMax() + "°C");
+            mTempHighTextView.setText(mWeatherCurrent.getMain().getTempMax() + "°C");
 
-        mTempLowTextView.setText(mWeatherCurrent.getMain().getTempMin() + "°C");
-
+            mTempLowTextView.setText(mWeatherCurrent.getMain().getTempMin() + "°C");
+        }
 
         return view;
     }

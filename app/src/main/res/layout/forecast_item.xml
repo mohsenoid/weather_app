@@ -6,6 +6,14 @@
               android:layout_margin="5dp"
               android:orientation="vertical">
 
+    <TextView
+        android:id="@+id/date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal|top"
+        android:text="date"
+        android:textAppearance="?android:attr/textAppearanceSmall"/>
+
     <android.support.v7.widget.AppCompatImageView
         android:id="@+id/icon"
         android:layout_width="match_parent"
