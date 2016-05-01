@@ -9,6 +9,8 @@ import com.mirhoseini.weatherapp.core.service.model.WeatherMix;
 import com.mirhoseini.weatherapp.core.utils.Constants;
 import com.mirhoseini.weatherapp.core.utils.ICacher;
 
+import javax.inject.Inject;
+
 import rx.Observable;
 
 /**
@@ -17,6 +19,7 @@ import rx.Observable;
 public class AppCacher implements ICacher {
     Context mContext;
 
+    @Inject
     public AppCacher(Context context) {
         mContext = context;
     }
@@ -47,35 +50,35 @@ public class AppCacher implements ICacher {
         });
     }
 
-    @Override
-    public Observable<WeatherHistory> getWeatherHistory() {
-        return Observable.defer(() -> {
-            Observable<WeatherHistory> result;
+//    @Override
+//    public Observable<WeatherHistory> getWeatherHistory() {
+//        return Observable.defer(() -> {
+//            Observable<WeatherHistory> result;
+//
+//            String data = AppSettings.getString(mContext, Constants.LAST_WEATHER_HISTORY, "");
+//            if (data.isEmpty()) {
+//                result = Observable.just(null);
+//            } else {
+//                Gson gson = new Gson();
+//                WeatherHistory weatherHistory = gson.fromJson(data, WeatherHistory.class);
+//                result = Observable.just(weatherHistory);
+//            }
+//            return result;
+//        });
+//    }
 
-            String data = AppSettings.getString(mContext, Constants.LAST_WEATHER_HISTORY, "");
-            if (data.isEmpty()) {
-                result = Observable.just(null);
-            } else {
-                Gson gson = new Gson();
-                WeatherHistory weatherHistory = gson.fromJson(data, WeatherHistory.class);
-                result = Observable.just(weatherHistory);
-            }
-            return result;
-        });
-    }
-
-    @Override
-    public Observable<Boolean> saveWeatherHistory(WeatherHistory value) {
-        return Observable.defer(() -> {
-            Gson gson = new Gson();
-            String data = gson.toJson(value);
-            return Observable.just(AppSettings.setValue(mContext, Constants.LAST_WEATHER_HISTORY, data));
-        });
-    }
+//    @Override
+//    public Observable<Boolean> saveWeatherHistory(WeatherHistory value) {
+//        return Observable.defer(() -> {
+//            Gson gson = new Gson();
+//            String data = gson.toJson(value);
+//            return Observable.just(AppSettings.setValue(mContext, Constants.LAST_WEATHER_HISTORY, data));
+//        });
+//    }
 
     @Override
     public void clear() {
         AppSettings.clearValue(mContext, Constants.LAST_WEATHER);
-        AppSettings.clearValue(mContext, Constants.LAST_WEATHER_HISTORY);
+//        AppSettings.clearValue(mContext, Constants.LAST_WEATHER_HISTORY);
     }
 }

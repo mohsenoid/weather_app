@@ -14,6 +14,20 @@ public class WeatherApplication extends Application {
         return (WeatherApplication) context.getApplicationContext();
     }
 
+    private WeatherApplicationComponent component;
+
+    protected WeatherApplicationModule getApplicationModule() {
+        return new WeatherApplicationModule(this);
+    }
+
+    public WeatherApplicationComponent getComponent() {
+        return component;
+    }
+
+    public void setComponent(WeatherApplicationComponent component) {
+        this.component = component;
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -22,6 +36,8 @@ public class WeatherApplication extends Application {
             Timber.plant(new Timber.DebugTree());
         }
 
+        component = DaggerWeatherApplicationComponent.builder()
+                .weatherApplicationModule(getApplicationModule())
+                .build();
     }
-
 }

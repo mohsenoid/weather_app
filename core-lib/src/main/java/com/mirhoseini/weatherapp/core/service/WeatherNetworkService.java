@@ -18,21 +18,21 @@ import rx.Observable;
 /**
  * Created by Mohsen on 30/04/16.
  */
-public class WeatherService implements INetworkService {
+public class WeatherNetworkService implements INetworkService {
 
     private final Retrofit retrofit;
     private final Api api;
 
-    static WeatherService instance;
+//    static WeatherNetworkService instance;
+//
+//    public static WeatherNetworkService getInstance(boolean isDebug) {
+//        if (instance == null)
+//            instance = new WeatherNetworkService(isDebug);
+//
+//        return instance;
+//    }
 
-    public static WeatherService getInstance(boolean isDebug) {
-        if (instance == null)
-            instance = new WeatherService(isDebug);
-
-        return instance;
-    }
-
-    public WeatherService(boolean isDebug) {
+    public WeatherNetworkService(boolean isDebug) {
         Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl(Constants.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -64,6 +64,8 @@ public class WeatherService implements INetworkService {
 
     }
 
+    // Weather can be loaded using GPS data, but removed because of time.
+    /*
     @Override
     public Observable<WeatherMix> loadWeather(long lat, long lon) {
 
@@ -72,18 +74,22 @@ public class WeatherService implements INetworkService {
                 , (weatherCurrent, weatherForecast) -> new WeatherMix(weatherCurrent, weatherForecast));
 
     }
+    */
 
     @Override
     public Observable<WeatherHistory> loadWeatherHistory(String city, long start, long end) {
 
-        return api.getWeatherHistory(city, Constants.HISTORY_TYPE, start, end, Constants.API_KEY);
+        return api.getWeatherHistory(city, Constants.HISTORY_TYPE, start / 1000, end / 1000, Constants.API_KEY);
 
     }
 
+    // Weather can be loaded using GPS data, but removed because of time.
+    /*
     @Override
     public Observable<WeatherHistory> loadWeatherHistory(long lat, long lon, long start, long end) {
 
         return api.getWeatherHistory(lat, lon, Constants.HISTORY_TYPE, start, end, Constants.API_KEY);
     }
+    */
 
 }

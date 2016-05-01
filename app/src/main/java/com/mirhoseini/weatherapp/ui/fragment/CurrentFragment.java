@@ -15,6 +15,7 @@ import com.mirhoseini.weatherapp.core.service.model.WeatherCurrent;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class CurrentFragment extends Fragment {
     private static final String ARG_WEATHER_CURRENT = "weather_current";
@@ -38,8 +39,16 @@ public class CurrentFragment extends Fragment {
 
     @BindView(R.id.temp_low)
     TextView mTempLowTextView;
+    private String mCity;
 
-//    private OnFragmentInteractionListener mListener;
+    @OnClick(R.id.history_button)
+    public void history(View view) {
+        if (mListener != null) {
+            mListener.onLoadHistory(mCity);
+        }
+    }
+
+    private OnCurrentFragmentInteractionListener mListener;
 
     public CurrentFragment() {
         // Required empty public constructor
@@ -68,8 +77,9 @@ public class CurrentFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         Weather weather = mWeatherCurrent.getWeather().get(0);
+        mCity = mWeatherCurrent.getName();
 
-        mNameTextView.setText(mWeatherCurrent.getName());
+        mNameTextView.setText(mCity);
         mDescriptionTextView.setText(weather.getDescription());
         mIconImageView.setImageResource(convertIconToResource(weather.getIcon()));
 
@@ -89,12 +99,12 @@ public class CurrentFragment extends Fragment {
         super.onAttach(context);
 
 
-//        if (context instanceof OnFragmentInteractionListener) {
-//            mListener = (OnFragmentInteractionListener) context;
-//        } else {
-//            throw new RuntimeException(context.toString()
-//                    + " must implement OnFragmentInteractionListener");
-//        }
+        if (context instanceof OnCurrentFragmentInteractionListener) {
+            mListener = (OnCurrentFragmentInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnCurrentFragmentInteractionListener");
+        }
     }
 
     private int convertIconToResource(String icon) {
@@ -131,10 +141,10 @@ public class CurrentFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-//        mListener = null;
+        mListener = null;
     }
 
-//    public interface OnFragmentInteractionListener {
-//        void onFragmentInteraction(Uri uri);
-//    }
+    public interface OnCurrentFragmentInteractionListener {
+        void onLoadHistory(String city);
+    }
 }

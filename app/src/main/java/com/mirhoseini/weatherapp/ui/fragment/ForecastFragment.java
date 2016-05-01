@@ -31,7 +31,7 @@ public class ForecastFragment extends Fragment {
     @BindView(R.id.icon)
     AppCompatImageView mIconImageView;
 
-//    private OnFragmentInteractionListener mListener;
+//    private OnCurrentFragmentInteractionListener mListener;
 
     public ForecastFragment() {
         // Required empty public constructor
@@ -56,7 +56,7 @@ public class ForecastFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_current, container, false);
+        View view = inflater.inflate(R.layout.fragment_forecast, container, false);
         ButterKnife.bind(this, view);
 
         mNameTextView.setText(mWeatherForecast.getCity().getName());
@@ -72,11 +72,11 @@ public class ForecastFragment extends Fragment {
         super.onAttach(context);
 
 
-//        if (context instanceof OnFragmentInteractionListener) {
-//            mListener = (OnFragmentInteractionListener) context;
+//        if (context instanceof OnCurrentFragmentInteractionListener) {
+//            mListener = (OnCurrentFragmentInteractionListener) context;
 //        } else {
 //            throw new RuntimeException(context.toString()
-//                    + " must implement OnFragmentInteractionListener");
+//                    + " must implement OnCurrentFragmentInteractionListener");
 //        }
     }
 
@@ -117,7 +117,7 @@ public class ForecastFragment extends Fragment {
 //        mListener = null;
     }
 
-//    public interface OnFragmentInteractionListener {
+//    public interface OnCurrentFragmentInteractionListener {
 //        void onFragmentInteraction(Uri uri);
 //    }
 }

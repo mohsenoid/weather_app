@@ -105,56 +105,56 @@ public class Presenter implements IPresenter {
 //        }
     }
 
-    @Override
-    public void loadWeather(long lat, long lon, boolean isConnected) {
-
-        if (mView != null) {
-            mView.showProgress();
-            mView.showProgressMessage("Loading Current Location Weather...");
-        }
-
-        subscription = mInteractor.loadWeather(lat, lon).subscribe(
-                weatherMix -> {
-                    if (mView != null) {
-                        mView.setWeatherValues(weatherMix);
-                    }
-                },
-                throwable -> {
-                    if (isConnected) {
-
-                        if (mView != null) {
-                            mView.showToastMessage(throwable.getMessage());
-                            mView.showRetryMessage();
-                            mView.hideProgress();
-                        }
-                    } else {
-
-                        if (mView != null) {
-                            mView.showConnectionError();
-                            mView.hideProgress();
-                        }
-                    }
-                },
-                () -> {
-                    if (mView != null) {
-                        mView.hideProgress();
-                    }
-                });
-
-//        //load data from network
-//        if (isConnected) {
+//    @Override
+//    public void loadWeather(long lat, long lon, boolean isConnected) {
 //
-//            mInteractor.loadWeather(lat, lon, this);
-//
-//        } else { // network connection is required
-//
-//            if (mView != null) {
-//                mView.showConnectionError();
-//                mView.hideProgress();
-//            }
-//
+//        if (mView != null) {
+//            mView.showProgress();
+//            mView.showProgressMessage("Loading Current Location Weather...");
 //        }
-    }
+//
+//        subscription = mInteractor.loadWeather(lat, lon).subscribe(
+//                weatherMix -> {
+//                    if (mView != null) {
+//                        mView.setWeatherValues(weatherMix);
+//                    }
+//                },
+//                throwable -> {
+//                    if (isConnected) {
+//
+//                        if (mView != null) {
+//                            mView.showToastMessage(throwable.getMessage());
+//                            mView.showRetryMessage();
+//                            mView.hideProgress();
+//                        }
+//                    } else {
+//
+//                        if (mView != null) {
+//                            mView.showConnectionError();
+//                            mView.hideProgress();
+//                        }
+//                    }
+//                },
+//                () -> {
+//                    if (mView != null) {
+//                        mView.hideProgress();
+//                    }
+//                });
+//
+////        //load data from network
+////        if (isConnected) {
+////
+////            mInteractor.loadWeather(lat, lon, this);
+////
+////        } else { // network connection is required
+////
+////            if (mView != null) {
+////                mView.showConnectionError();
+////                mView.hideProgress();
+////            }
+////
+////        }
+//    }
 
     @Override
     public void loadWeatherHistory(String city, boolean isConnected) {
@@ -214,62 +214,62 @@ public class Presenter implements IPresenter {
 //        }
     }
 
-    @Override
-    public void loadWeatherHostory(long lat, long lon, boolean isConnected) {
-
-        Calendar calendar = Calendar.getInstance();
-        long end = calendar.getTime().getTime();
-
-        calendar.add(Calendar.DATE, -7);
-        long start = calendar.getTime().getTime();
-
-        if (mView != null) {
-            mView.showProgress();
-            mView.showProgressMessage("Loading Current Location Weather History...");
-        }
-
-        subscription = mInteractor.loadWeatherHistory(lat, lon, start, end).subscribe(
-                weatherHistory -> {
-                    if (mView != null) {
-                        mView.setWeatherHistoryValues(weatherHistory);
-                    }
-                },
-                throwable -> {
-                    if (isConnected) {
-
-                        if (mView != null) {
-                            mView.showToastMessage(throwable.getMessage());
-                            mView.showRetryMessage();
-                            mView.hideProgress();
-                        }
-                    } else {
-
-                        if (mView != null) {
-                            mView.showConnectionError();
-                            mView.hideProgress();
-                        }
-                    }
-                },
-                () -> {
-                    if (mView != null) {
-                        mView.hideProgress();
-                    }
-                });
-
-        //load data from network
-//        if (isConnected) {
+//    @Override
+//    public void loadWeatherHostory(long lat, long lon, boolean isConnected) {
 //
-//            mInteractor.loadWeatherHistory(lat, lon, start, end, this);
+//        Calendar calendar = Calendar.getInstance();
+//        long end = calendar.getTime().getTime();
 //
-//        } else { // network connection is required
+//        calendar.add(Calendar.DATE, -7);
+//        long start = calendar.getTime().getTime();
 //
-//            if (mView != null) {
-//                mView.showConnectionError();
-//                mView.hideProgress();
-//            }
-//
+//        if (mView != null) {
+//            mView.showProgress();
+//            mView.showProgressMessage("Loading Current Location Weather History...");
 //        }
-    }
+//
+//        subscription = mInteractor.loadWeatherHistory(lat, lon, start, end).subscribe(
+//                weatherHistory -> {
+//                    if (mView != null) {
+//                        mView.setWeatherHistoryValues(weatherHistory);
+//                    }
+//                },
+//                throwable -> {
+//                    if (isConnected) {
+//
+//                        if (mView != null) {
+//                            mView.showToastMessage(throwable.getMessage());
+//                            mView.showRetryMessage();
+//                            mView.hideProgress();
+//                        }
+//                    } else {
+//
+//                        if (mView != null) {
+//                            mView.showConnectionError();
+//                            mView.hideProgress();
+//                        }
+//                    }
+//                },
+//                () -> {
+//                    if (mView != null) {
+//                        mView.hideProgress();
+//                    }
+//                });
+//
+//        //load data from network
+////        if (isConnected) {
+////
+////            mInteractor.loadWeatherHistory(lat, lon, start, end, this);
+////
+////        } else { // network connection is required
+////
+////            if (mView != null) {
+////                mView.showConnectionError();
+////                mView.hideProgress();
+////            }
+////
+////        }
+//    }
 
 //    @Override
 //    public void onNetworkSuccess(WeatherMix weatherMix) {

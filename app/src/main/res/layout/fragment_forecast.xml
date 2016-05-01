@@ -4,7 +4,7 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical"
-              tools:context="com.mirhoseini.weatherapp.ui.fragment.CurrentFragment">
+              tools:context="com.mirhoseini.weatherapp.ui.fragment.ForecastFragment">
 
     <TextView
         android:id="@+id/name"
@@ -65,12 +65,5 @@
             android:layout_weight="1"
             android:text="windspeed"/>
     </LinearLayout>
-
-    <Button
-        android:id="@+id/history_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="Load History"/>
 
 </LinearLayout>

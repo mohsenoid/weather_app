@@ -13,9 +13,9 @@ public interface IPresenter {
 
     void loadWeather(String city, boolean isConnected);
 
-    void loadWeather(long lat, long lon, boolean isConnected);
+//    void loadWeather(long lat, long lon, boolean isConnected);
 
     void loadWeatherHistory(String city, boolean isConnected);
 
-    void loadWeatherHostory(long lat, long lon, boolean isConnected);
+//    void loadWeatherHostory(long lat, long lon, boolean isConnected);
 }

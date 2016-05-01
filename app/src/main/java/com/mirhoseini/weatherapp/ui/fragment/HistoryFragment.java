@@ -15,7 +15,7 @@ public class HistoryFragment extends Fragment {
 
     private WeatherHistory mWeatherHistory;
 
-//    private OnFragmentInteractionListener mListener;
+//    private OnCurrentFragmentInteractionListener mListener;
 
     public HistoryFragment() {
         // Required empty public constructor
@@ -48,11 +48,11 @@ public class HistoryFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-//        if (context instanceof OnFragmentInteractionListener) {
-//            mListener = (OnFragmentInteractionListener) context;
+//        if (context instanceof OnCurrentFragmentInteractionListener) {
+//            mListener = (OnCurrentFragmentInteractionListener) context;
 //        } else {
 //            throw new RuntimeException(context.toString()
-//                    + " must implement OnFragmentInteractionListener");
+//                    + " must implement OnCurrentFragmentInteractionListener");
 //        }
     }
 
@@ -62,7 +62,7 @@ public class HistoryFragment extends Fragment {
 //        mListener = null;
     }
 
-//    public interface OnFragmentInteractionListener {
+//    public interface OnCurrentFragmentInteractionListener {
 //        void onFragmentInteraction(Uri uri);
 //    }
 }

@@ -19,9 +19,11 @@ import com.mirhoseini.utils.Utils;
 import com.mirhoseini.weatherapp.BaseActivity;
 import com.mirhoseini.weatherapp.BuildConfig;
 import com.mirhoseini.weatherapp.R;
+import com.mirhoseini.weatherapp.WeatherApplication;
+import com.mirhoseini.weatherapp.WeatherApplicationComponent;
 import com.mirhoseini.weatherapp.core.presentation.IPresenter;
 import com.mirhoseini.weatherapp.core.presentation.Presenter;
-import com.mirhoseini.weatherapp.core.service.WeatherService;
+import com.mirhoseini.weatherapp.core.service.WeatherNetworkService;
 import com.mirhoseini.weatherapp.core.service.model.WeatherHistory;
 import com.mirhoseini.weatherapp.core.service.model.WeatherMix;
 import com.mirhoseini.weatherapp.core.utils.Constants;
@@ -37,6 +39,8 @@ import com.mirhoseini.weatherapp.utils.AppScheduler;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -45,12 +49,15 @@ import timber.log.Timber;
 /**
  * Created by Mohsen on 30/04/16.
  */
-public class MainActivity extends BaseActivity implements IViewMain {
+public class MainActivity extends BaseActivity implements IViewMain, CurrentFragment.OnCurrentFragmentInteractionListener {
 
-    //We would inject these via Dagger in a real app
-    private WeatherService mNetworkService;
-    private IScheduler mScheduler;
-    private ICacher mCacher;
+    //We would inject these via Dagger
+    @Inject
+    IScheduler mScheduler;
+    @Inject
+    ICacher mCacher;
+
+    private WeatherNetworkService mNetworkService;
 
     private static boolean sDoubleBackToExitPressedOnce;
 
@@ -96,10 +103,10 @@ public class MainActivity extends BaseActivity implements IViewMain {
 
         mContext = this;
 
-        //Create or inject services
-        mScheduler = new AppScheduler();
-        mCacher = new AppCacher(this);
-        mNetworkService = new WeatherService(BuildConfig.DEBUG);
+        WeatherApplication app = (WeatherApplication) getApplication();
+        app.getComponent().inject(this);
+
+        mNetworkService = new WeatherNetworkService(BuildConfig.DEBUG);
 
         mPresenter = new Presenter(mCacher, mNetworkService, mScheduler);
         mPresenter.setView(this);
@@ -178,8 +185,8 @@ public class MainActivity extends BaseActivity implements IViewMain {
         ForecastFragment forecastFragment = ForecastFragment.newInstance(weatherMix.getWeatherForecast());
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.add(mFragmentContainer.getId(), currentFragment).commit();
         fragmentTransaction.add(mFragmentContainer.getId(), forecastFragment).commit();
+        fragmentTransaction.add(mFragmentContainer.getId(), currentFragment).commit();
 
     }
 
@@ -312,4 +319,8 @@ public class MainActivity extends BaseActivity implements IViewMain {
     }
 
 
+    @Override
+    public void onLoadHistory(String city) {
+        mPresenter.loadWeatherHistory(city, Utils.isConnected(this));
+    }
 }

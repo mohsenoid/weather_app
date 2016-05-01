@@ -13,9 +13,9 @@ public interface ICacher {
 
     Observable<Boolean> saveWeather(WeatherMix value);
 
-    Observable<WeatherHistory> getWeatherHistory();
+//    Observable<WeatherHistory> getWeatherHistory();
 
-    Observable<Boolean> saveWeatherHistory(WeatherHistory value);
+//    Observable<Boolean> saveWeatherHistory(WeatherHistory value);
 
     void clear();
 }
