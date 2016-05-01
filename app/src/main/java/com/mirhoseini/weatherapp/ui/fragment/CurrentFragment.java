@@ -31,6 +31,9 @@ public class CurrentFragment extends Fragment {
     @BindView(R.id.icon)
     AppCompatImageView mIconImageView;
 
+    @BindView(R.id.temp)
+    TextView mTempTextView;
+
     @BindView(R.id.windspeed)
     TextView mWindSpeedTextView;
 
@@ -80,14 +83,18 @@ public class CurrentFragment extends Fragment {
         mCity = mWeatherCurrent.getName();
 
         mNameTextView.setText(mCity);
+
         mDescriptionTextView.setText(weather.getDescription());
+
+        mTempTextView.setText(mWeatherCurrent.getMain().getTemp() + "°C");
+
         mIconImageView.setImageResource(convertIconToResource(weather.getIcon()));
 
-        mWindSpeedTextView.setText(mWeatherCurrent.getWind().getSpeed() + "");
+        mWindSpeedTextView.setText(mWeatherCurrent.getWind().getSpeed() + "m/s");
 
-        mTempHighTextView.setText(mWeatherCurrent.getSys().getSunrise() + "");
+        mTempHighTextView.setText(mWeatherCurrent.getMain().getTempMax() + "°C");
 
-        mTempLowTextView.setText(mWeatherCurrent.getSys().getSunset() + "");
+        mTempLowTextView.setText(mWeatherCurrent.getMain().getTempMin() + "°C");
 
 
         return view;

@@ -89,20 +89,6 @@ public class Presenter implements IPresenter {
                     }
                 });
 
-        //load data from network
-//        if (isConnected) {
-//
-//
-//            mInteractor.loadWeather(city, this);
-//
-//        } else { // network connection is required
-//
-//            if (mView != null) {
-//                mView.showConnectionError();
-//                mView.hideProgress();
-//            }
-//
-//        }
     }
 
 //    @Override

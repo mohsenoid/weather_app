@@ -20,7 +20,6 @@ import com.mirhoseini.weatherapp.BaseActivity;
 import com.mirhoseini.weatherapp.BuildConfig;
 import com.mirhoseini.weatherapp.R;
 import com.mirhoseini.weatherapp.WeatherApplication;
-import com.mirhoseini.weatherapp.WeatherApplicationComponent;
 import com.mirhoseini.weatherapp.core.presentation.IPresenter;
 import com.mirhoseini.weatherapp.core.presentation.Presenter;
 import com.mirhoseini.weatherapp.core.service.WeatherNetworkService;
@@ -33,8 +32,6 @@ import com.mirhoseini.weatherapp.core.view.IViewMain;
 import com.mirhoseini.weatherapp.ui.fragment.CurrentFragment;
 import com.mirhoseini.weatherapp.ui.fragment.ForecastFragment;
 import com.mirhoseini.weatherapp.ui.fragment.HistoryFragment;
-import com.mirhoseini.weatherapp.utils.AppCacher;
-import com.mirhoseini.weatherapp.utils.AppScheduler;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -60,7 +57,6 @@ public class MainActivity extends BaseActivity implements IViewMain, CurrentFrag
     private WeatherNetworkService mNetworkService;
 
     private static boolean sDoubleBackToExitPressedOnce;
-
 
     IPresenter mPresenter;
 
@@ -125,20 +121,6 @@ public class MainActivity extends BaseActivity implements IViewMain, CurrentFrag
         }
 
         mCityEditText.setText(lastCity);
-    }
-
-    @Override
-    protected void onResume() {
-        Timber.d("Activity Resumed");
-
-        super.onResume();
-
-        sDoubleBackToExitPressedOnce = false;
-
-
-        // dismiss no internet connection dialog in case of connection fixed
-        if (mInternetConnectionDialog != null)
-            mInternetConnectionDialog.dismiss();
 
         if (mCityEditText.getText().toString().isEmpty()) {
             //TODO: load from location
@@ -146,6 +128,18 @@ public class MainActivity extends BaseActivity implements IViewMain, CurrentFrag
         } else {
             mPresenter.loadWeather(mCityEditText.getText().toString(), Utils.isConnected(this));
         }
+    }
+
+    @Override
+    protected void onResume() {
+        Timber.d("Activity Resumed");
+        super.onResume();
+
+        sDoubleBackToExitPressedOnce = false;
+
+        // dismiss no internet connection dialog in case of connection fixed
+        if (mInternetConnectionDialog != null)
+            mInternetConnectionDialog.dismiss();
     }
 
 
@@ -172,7 +166,6 @@ public class MainActivity extends BaseActivity implements IViewMain, CurrentFrag
         mProgressContainer.setVisibility(View.INVISIBLE);
     }
 
-
     @Override
     public void setWeatherValues(WeatherMix weatherMix) {
         Timber.d("Setting Weather: %s", weatherMix.toString());
@@ -185,14 +178,14 @@ public class MainActivity extends BaseActivity implements IViewMain, CurrentFrag
         ForecastFragment forecastFragment = ForecastFragment.newInstance(weatherMix.getWeatherForecast());
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.add(mFragmentContainer.getId(), forecastFragment).commit();
-        fragmentTransaction.add(mFragmentContainer.getId(), currentFragment).commit();
+        fragmentTransaction.add(mFragmentContainer.getId(), forecastFragment)
+                .add(mFragmentContainer.getId(), currentFragment)
+                .commit();
 
     }
 
     @Override
     public void setWeatherHistoryValues(WeatherHistory weatherHistory) {
-
         Timber.d("Setting Weather History: %s", weatherHistory.toString());
 
         mFragmentContainer.setVisibility(View.VISIBLE);

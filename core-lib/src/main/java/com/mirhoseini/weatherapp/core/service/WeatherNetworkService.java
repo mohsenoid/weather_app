@@ -58,8 +58,8 @@ public class WeatherNetworkService implements INetworkService {
     @Override
     public Observable<WeatherMix> loadWeather(String city) {
 
-        return Observable.combineLatest(api.getWeather(city, Constants.API_KEY)
-                , api.getWeatherForecast(city, Constants.API_KEY)
+        return Observable.combineLatest(api.getWeather(city, Constants.API_KEY, Constants.UNITS)
+                , api.getWeatherForecast(city, Constants.API_KEY, Constants.UNITS)
                 , (weatherCurrent, weatherForecast) -> new WeatherMix(weatherCurrent, weatherForecast));
 
     }
@@ -79,7 +79,7 @@ public class WeatherNetworkService implements INetworkService {
     @Override
     public Observable<WeatherHistory> loadWeatherHistory(String city, long start, long end) {
 
-        return api.getWeatherHistory(city, Constants.HISTORY_TYPE, start / 1000, end / 1000, Constants.API_KEY);
+        return api.getWeatherHistory(city, Constants.HISTORY_TYPE, start / 1000, end / 1000, Constants.API_KEY, Constants.UNITS);
 
     }
 

@@ -10,19 +10,35 @@
         android:id="@+id/name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="name"/>
+        android:gravity="center_horizontal|bottom"
+        android:paddingTop="10dp"
+        android:text="name"
+        android:textAppearance="?android:attr/textAppearanceLarge"/>
 
-    <android.support.v7.widget.AppCompatImageView
-        android:id="@+id/icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/ic_moon"/>
 
     <TextView
         android:id="@+id/description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_horizontal|top"
+        android:paddingBottom="5dp"
         android:text="description"/>
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/icon"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_gravity="center"
+        android:padding="10dp"
+        app:srcCompat="@drawable/ic_moon"/>
+
+    <TextView
+        android:id="@+id/temp"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center_horizontal|top"
+        android:text="temp"
+        android:textAppearance="?android:attr/textAppearanceLarge"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -32,6 +48,7 @@
         <android.support.v7.widget.AppCompatImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:padding="5dp"
             app:srcCompat="@drawable/ic_wind"/>
 
         <TextView
@@ -39,11 +56,13 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:gravity="center_vertical"
             android:text="windspeed"/>
 
         <android.support.v7.widget.AppCompatImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:padding="5dp"
             app:srcCompat="@drawable/ic_temperature_high"/>
 
         <TextView
@@ -51,11 +70,13 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:gravity="center_vertical"
             android:text="windspeed"/>
 
         <android.support.v7.widget.AppCompatImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:padding="5dp"
             app:srcCompat="@drawable/ic_temperature_low"/>
 
         <TextView
@@ -63,14 +84,18 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:gravity="center_vertical"
             android:text="windspeed"/>
     </LinearLayout>
 
-    <Button
+    <TextView
         android:id="@+id/history_button"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="Load History"/>
+        android:gravity="center"
+        android:padding="5dp"
+        android:text="Load History"
+        android:textColor="@color/colorPrimary"/>
 
 </LinearLayout>

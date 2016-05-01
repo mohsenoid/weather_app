@@ -4,15 +4,18 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatImageView;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.mirhoseini.weatherapp.R;
-import com.mirhoseini.weatherapp.core.service.model.Weather;
-import com.mirhoseini.weatherapp.core.service.model.WeatherCurrent;
+import com.mirhoseini.weatherapp.core.service.model.Forecast;
 import com.mirhoseini.weatherapp.core.service.model.WeatherForecast;
+import com.mirhoseini.weatherapp.utils.AppUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -22,16 +25,8 @@ public class ForecastFragment extends Fragment {
 
     private WeatherForecast mWeatherForecast;
 
-    @BindView(R.id.name)
-    TextView mNameTextView;
-
-    @BindView(R.id.description)
-    TextView mDescriptionTextView;
-
-    @BindView(R.id.icon)
-    AppCompatImageView mIconImageView;
-
-//    private OnCurrentFragmentInteractionListener mListener;
+    @BindView(R.id.forecast_recycler)
+    RecyclerView mForecastRecyclerView;
 
     public ForecastFragment() {
         // Required empty public constructor
@@ -59,7 +54,11 @@ public class ForecastFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_forecast, container, false);
         ButterKnife.bind(this, view);
 
-        mNameTextView.setText(mWeatherForecast.getCity().getName());
+        ForecastAdapter adapter = new ForecastAdapter(mWeatherForecast);
+        mForecastRecyclerView.setAdapter(adapter);
+        mForecastRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        mForecastRecyclerView.setItemAnimator(new DefaultItemAnimator());
+
 //        mDescriptionTextView.setText(mWeatherForecast.getMessage());
 //        mIconImageView.setImageResource(convertIconToResource(weather.getIcon()));
 
@@ -80,44 +79,69 @@ public class ForecastFragment extends Fragment {
 //        }
     }
 
-    private int convertIconToResource(String icon) {
-        switch (icon) {
-            case "01d":
-                return R.drawable.ic_sun;
-            case "01n":
-                return R.drawable.ic_moon;
-            case "02d":
-                return R.drawable.ic_sun_cloudy;
-            case "02n":
-                return R.drawable.ic_moon_cloud;
-            case "03d":
-            case "03n":
-            case "04d":
-            case "04n":
-                return R.drawable.ic_cloud;
-            case "09d":
-            case "09n":
-            case "10d":
-            case "10n":
-                return R.drawable.ic_rain;
-            case "11d":
-            case "11n":
-                return R.drawable.ic_storm;
-            case "13d":
-            case "13n":
-                return R.drawable.ic_snow;
-            default:
-                return 0;
-        }
-    }
-
     @Override
     public void onDetach() {
         super.onDetach();
 //        mListener = null;
     }
 
-//    public interface OnCurrentFragmentInteractionListener {
-//        void onFragmentInteraction(Uri uri);
-//    }
+    private class ForecastAdapter extends RecyclerView.Adapter<ForecastHolder> {
+        WeatherForecast mWeatherForecast;
+
+        public ForecastAdapter(WeatherForecast weatherForecast) {
+            mWeatherForecast = weatherForecast;
+        }
+
+
+        @Override
+        public ForecastHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.forecast_item, parent, false);
+            return new ForecastHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(ForecastHolder holder, int position) {
+            Forecast forecast = mWeatherForecast.getList().get(position);
+            holder.getIconImageView().setImageResource(AppUtils.convertIconToResource(forecast.getWeather().get(0).getIcon()));
+            holder.getTempTextView().setText(forecast.getMain().getTemp() + "°C");
+            holder.getWindSpeedTextView().setText(forecast.getWind().getSpeed() + "m/s");
+        }
+
+        @Override
+        public int getItemCount() {
+            return mWeatherForecast.getList().size();
+        }
+
+
+    }
+
+    public class ForecastHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.icon)
+        AppCompatImageView mIconImageView;
+        @BindView(R.id.temp)
+        TextView mTempTextView;
+        @BindView(R.id.windspeed)
+        TextView mWindSpeedTextView;
+
+        public ForecastHolder(View itemView) {
+            super(itemView);
+
+            ButterKnife.bind(this, itemView);
+        }
+
+        public AppCompatImageView getIconImageView() {
+            return mIconImageView;
+        }
+
+        public TextView getTempTextView() {
+            return mTempTextView;
+        }
+
+        public TextView getWindSpeedTextView() {
+            return mWindSpeedTextView;
+        }
+
+    }
+
 }
