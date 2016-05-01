@@ -76,7 +76,7 @@ public class MainActivity extends BaseActivity implements IViewMain, CurrentFrag
 
     @OnEditorAction(R.id.city_edittext)
     public boolean onEditorAction(TextView textView, int action, KeyEvent keyEvent) {
-        if (action == EditorInfo.IME_ACTION_GO || keyEvent.getKeyCode()==KeyEvent.KEYCODE_ENTER) {
+        if (action == EditorInfo.IME_ACTION_GO || keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
             submit(textView);
         }
         return false;
@@ -84,7 +84,6 @@ public class MainActivity extends BaseActivity implements IViewMain, CurrentFrag
 
     @OnClick(R.id.go_button)
     public void submit(View view) {
-        saveLastCity(mCityEditText.getText().toString());
         Utils.hideKeyboard(this, mCityEditText);
 
         if (mCityEditText.getText().toString().isEmpty()) {
@@ -180,6 +179,9 @@ public class MainActivity extends BaseActivity implements IViewMain, CurrentFrag
     @Override
     public void setWeatherValues(WeatherMix weatherMix) {
         Timber.d("Setting Weather: %s", weatherMix.toString());
+
+        saveLastCity(weatherMix.getWeatherCurrent().getName());
+
 
         mFragmentContainer.setVisibility(View.VISIBLE);
 
