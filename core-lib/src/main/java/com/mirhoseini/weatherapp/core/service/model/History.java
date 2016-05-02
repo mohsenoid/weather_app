@@ -6,6 +6,9 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Created by Mohsen on 30/04/16.
+ */
 public class History {
 
     @SerializedName("time")

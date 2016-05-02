@@ -2,6 +2,7 @@
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
+              android:orientation="vertical"
               tools:context="com.mirhoseini.weatherapp.ui.fragment.ForecastFragment">
 
 
@@ -10,5 +11,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:listitem="@layout/forecast_item"/>
+
+    <TextView
+        android:id="@+id/history_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:enabled="false"
+        android:gravity="center"
+        android:padding="5dp"
+        android:text="@string/last_days"
+        android:textColor="@color/selector_button"/>
 
 </LinearLayout>

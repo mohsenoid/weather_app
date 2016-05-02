@@ -23,15 +23,6 @@ public class WeatherNetworkService implements INetworkService {
     private final Retrofit retrofit;
     private final Api api;
 
-//    static WeatherNetworkService instance;
-//
-//    public static WeatherNetworkService getInstance(boolean isDebug) {
-//        if (instance == null)
-//            instance = new WeatherNetworkService(isDebug);
-//
-//        return instance;
-//    }
-
     public WeatherNetworkService(boolean isDebug) {
         Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl(Constants.BASE_URL)
@@ -41,7 +32,7 @@ public class WeatherNetworkService implements INetworkService {
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
         httpClient.connectTimeout(30, TimeUnit.SECONDS);
 
-        //show retrofit logs if app is in Debug
+        //show retrofit logs if app is in Debug mode
         if (isDebug) {
             HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
             logging.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -59,7 +50,7 @@ public class WeatherNetworkService implements INetworkService {
     public Observable<WeatherMix> loadWeather(String city) {
 
         return Observable.combineLatest(api.getWeather(city, Constants.API_KEY, Constants.WEATHER_UNITS)
-                , api.getWeatherForecast(city, Constants.API_KEY, Constants.WEATHER_UNITS, Constants.FORECAST_COUNT)
+                , api.getWeatherForecast(city, Constants.API_KEY, Constants.WEATHER_UNITS, Constants.FORECAST_DAY_COUNT)
                 , (weatherCurrent, weatherForecast) -> new WeatherMix(weatherCurrent, weatherForecast));
 
     }

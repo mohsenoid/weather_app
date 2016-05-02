@@ -49,16 +49,20 @@ import timber.log.Timber;
 /**
  * Created by Mohsen on 30/04/16.
  */
-public class MainActivity extends BaseActivity implements IViewMain, CurrentFragment.OnCurrentFragmentInteractionListener {
+public class MainActivity extends BaseActivity implements IViewMain, ForecastFragment.OnCurrentFragmentInteractionListener {
 
-    private static boolean sDoubleBackToExitPressedOnce;
-    //We would inject these via Dagger
+    static boolean sDoubleBackToExitPressedOnce;
+    Context mContext;
+    IPresenter mPresenter;
+    WeatherNetworkService mNetworkService;
+    AlertDialog mInternetConnectionDialog;
+    //injecting dependencies via Dagger
     @Inject
     IScheduler mScheduler;
     @Inject
     ICacher mCacher;
-    IPresenter mPresenter;
-    AlertDialog mInternetConnectionDialog;
+
+    //injecting views via Butterknife
     @BindView(R.id.progress_container)
     ViewGroup mProgressContainer;
     @BindView(R.id.progress_message)
@@ -67,8 +71,7 @@ public class MainActivity extends BaseActivity implements IViewMain, CurrentFrag
     EditText mCityEditText;
     @BindView(R.id.fragment_container)
     ViewGroup mFragmentContainer;
-    Context mContext;
-    private WeatherNetworkService mNetworkService;
+
 
     @OnEditorAction(R.id.city_edittext)
     public boolean onEditorAction(TextView textView, int action, KeyEvent keyEvent) {
@@ -80,20 +83,20 @@ public class MainActivity extends BaseActivity implements IViewMain, CurrentFrag
 
     @OnClick(R.id.go_button)
     public void submit(View view) {
-        Utils.hideKeyboard(this, mCityEditText);
+        //hide keyboard for better UX
+        Utils.hideKeyboard(mContext, mCityEditText);
 
-        if (mCityEditText.getText().toString().isEmpty()) {
-//            mCityEditText.setError(getString(R.string.city_error));
-//            mCityEditText.requestFocus();
+        getWeatherData(mCityEditText.getText().toString());
+    }
 
-            //TODO: load current location weather
+    private void getWeatherData(String city) {
+        if (city == null || city.isEmpty()) {
+            //current user location can be loaded using GPS data for next version
             hideProgress();
-
         } else {
-            mPresenter.loadWeather(mCityEditText.getText().toString(), Utils.isConnected(mContext));
+            //load city weather data
+            mPresenter.loadWeather(city, Utils.isConnected(mContext));
         }
-
-        sDoubleBackToExitPressedOnce = false;
     }
 
     @Override
@@ -106,32 +109,30 @@ public class MainActivity extends BaseActivity implements IViewMain, CurrentFrag
         WeatherApplication app = (WeatherApplication) getApplication();
         app.getComponent().inject(this);
 
+        //network service shows network request logs if app is in debug mode
         mNetworkService = new WeatherNetworkService(BuildConfig.DEBUG);
 
         mPresenter = new WeatherPresenter(mCacher, mNetworkService, mScheduler);
         mPresenter.setView(this);
 
-        // binding Views using ButterKnife library
+        // binding Views using ButterKnife
         ButterKnife.bind(this);
 
         Timber.d("Activity Created");
 
+
+        //load last city from Memory using savedInstanceState or DiskCache using sharedPreferences
         String lastCity = "";
 
-        if (savedInstanceState == null) { //load lastTimeSpan from SharePreferences
-            lastCity = AppSettings.getString(this, Constants.LAST_CITY, Constants.CITY_DEFAULT_VALUE);
-        } else { //load lastTimeSpan from saved state before UI change
-            lastCity = savedInstanceState.getString(Constants.LAST_CITY);
+        if (savedInstanceState == null) { //load lastCity from sharePreferences
+            lastCity = AppSettings.getString(mContext, Constants.KEY_LAST_CITY, Constants.CITY_DEFAULT_VALUE);
+        } else { //load lastCity from saved state before UI change
+            lastCity = savedInstanceState.getString(Constants.KEY_LAST_CITY);
         }
 
         mCityEditText.setText(lastCity);
 
-        if (mCityEditText.getText().toString().isEmpty()) {
-            //TODO: load from location
-            hideProgress();
-        } else {
-            mPresenter.loadWeather(mCityEditText.getText().toString(), Utils.isConnected(this));
-        }
+        getWeatherData(lastCity);
     }
 
     @Override
@@ -141,7 +142,7 @@ public class MainActivity extends BaseActivity implements IViewMain, CurrentFrag
 
         sDoubleBackToExitPressedOnce = false;
 
-        // dismiss no internet connection dialog in case of connection fixed
+        // dismiss no internet connection dialog in case of getting back from setting and connection fixed
         if (mInternetConnectionDialog != null)
             mInternetConnectionDialog.dismiss();
     }
@@ -151,6 +152,7 @@ public class MainActivity extends BaseActivity implements IViewMain, CurrentFrag
     protected void onDestroy() {
         Timber.d("Activity Destroyed");
 
+        // call destroy to remove references to objects
         mPresenter.onDestroy();
         super.onDestroy();
     }
@@ -174,11 +176,12 @@ public class MainActivity extends BaseActivity implements IViewMain, CurrentFrag
     public void setWeatherValues(WeatherMix weatherMix) {
         Timber.d("Setting Weather: %s", weatherMix.toString());
 
+        // save last loaded data city name to disk cache for better UX
         saveLastCity(weatherMix.getWeatherCurrent().getName());
-
 
         mFragmentContainer.setVisibility(View.VISIBLE);
 
+        // load data to corresponding fragment
         CurrentFragment currentFragment = CurrentFragment.newInstance(weatherMix.getWeatherCurrent());
         ForecastFragment forecastFragment = ForecastFragment.newInstance(weatherMix.getWeatherForecast());
 
@@ -195,8 +198,6 @@ public class MainActivity extends BaseActivity implements IViewMain, CurrentFrag
 
         mFragmentContainer.setVisibility(View.VISIBLE);
 
-        mFragmentContainer.removeAllViews();
-
         HistoryFragment historyFragment = HistoryFragment.newInstance(weatherHistory);
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.current_fragment, historyFragment).commit();
@@ -206,14 +207,14 @@ public class MainActivity extends BaseActivity implements IViewMain, CurrentFrag
     private void saveLastCity(String city) {
         Timber.d("Saving Last City");
 
-        AppSettings.setValue(this, Constants.LAST_CITY, city);
+        AppSettings.setValue(mContext, Constants.KEY_LAST_CITY, city);
     }
 
     @Override
     public void showToastMessage(String message) {
         Timber.d("Showing Toast Message: %s", message);
 
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+        Toast.makeText(mContext, message, Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -244,7 +245,7 @@ public class MainActivity extends BaseActivity implements IViewMain, CurrentFrag
     public void showExitMessage() {
         Timber.d("Showing Exit Message");
 
-        Toast.makeText(this, R.string.msg_exit, Toast.LENGTH_SHORT).show();
+        Toast.makeText(mContext, R.string.msg_exit, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -254,7 +255,7 @@ public class MainActivity extends BaseActivity implements IViewMain, CurrentFrag
         if (mInternetConnectionDialog != null)
             mInternetConnectionDialog.dismiss();
 
-        mInternetConnectionDialog = Utils.showNoInternetConnectionDialog(this, false);
+        mInternetConnectionDialog = Utils.showNoInternetConnectionDialog(mContext, false);
     }
 
     @Override
@@ -265,12 +266,7 @@ public class MainActivity extends BaseActivity implements IViewMain, CurrentFrag
                 .setAction(R.string.load_retry, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (mCityEditText.getText().toString().isEmpty()) {
-                            //TODO: load from location
-                            hideProgress();
-                        } else {
-                            mPresenter.loadWeather(mCityEditText.getText().toString(), Utils.isConnected(mContext));
-                        }
+                        getWeatherData(mCityEditText.getText().toString());
                     }
                 })
                 .setActionTextColor(Color.RED)
@@ -286,7 +282,7 @@ public class MainActivity extends BaseActivity implements IViewMain, CurrentFrag
         if (sDoubleBackToExitPressedOnce) {
             Timber.d("Exiting");
 
-            Utils.exit(this);
+            Utils.exit(mContext);
         } else {
 
             sDoubleBackToExitPressedOnce = true;
@@ -312,12 +308,13 @@ public class MainActivity extends BaseActivity implements IViewMain, CurrentFrag
         super.onSaveInstanceState(outState);
 
         //save TimeSpan selected by user before data loaded and saved to SharedPreferences
-        outState.putString(Constants.LAST_CITY, mCityEditText.getText().toString());
+        outState.putString(Constants.KEY_LAST_CITY, mCityEditText.getText().toString());
     }
 
 
     @Override
     public void onLoadHistory(String city) {
-        mPresenter.loadWeatherHistory(city, Utils.isConnected(this));
+        // load city weather history, call from forecast fragment
+        mPresenter.loadWeatherHistory(city, Utils.isConnected(mContext));
     }
 }

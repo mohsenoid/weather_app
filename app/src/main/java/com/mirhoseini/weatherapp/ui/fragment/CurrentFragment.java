@@ -1,6 +1,5 @@
 package com.mirhoseini.weatherapp.ui.fragment;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatImageView;
@@ -12,11 +11,14 @@ import android.widget.TextView;
 import com.mirhoseini.weatherapp.R;
 import com.mirhoseini.weatherapp.core.service.model.Weather;
 import com.mirhoseini.weatherapp.core.service.model.WeatherCurrent;
+import com.mirhoseini.weatherapp.utils.AppUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
+/**
+ * Created by Mohsen on 30/04/16.
+ */
 public class CurrentFragment extends Fragment {
     private static final String ARG_WEATHER_CURRENT = "weather_current";
     @BindView(R.id.name)
@@ -34,8 +36,6 @@ public class CurrentFragment extends Fragment {
     @BindView(R.id.temp_low)
     TextView mTempLowTextView;
     private WeatherCurrent mWeatherCurrent;
-    private String mCity;
-    private OnCurrentFragmentInteractionListener mListener;
 
     public CurrentFragment() {
         // Required empty public constructor
@@ -47,13 +47,6 @@ public class CurrentFragment extends Fragment {
         args.putSerializable(ARG_WEATHER_CURRENT, weatherCurrent);
         fragment.setArguments(args);
         return fragment;
-    }
-
-    @OnClick(R.id.history_button)
-    public void history(View view) {
-        if (mListener != null) {
-            mListener.onLoadHistory(mCity);
-        }
     }
 
     @Override
@@ -70,17 +63,18 @@ public class CurrentFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_current, container, false);
         ButterKnife.bind(this, view);
 
+        // load weather data to view
         if (mWeatherCurrent != null) {
-            Weather weather = mWeatherCurrent.getWeather().get(0);
-            mCity = mWeatherCurrent.getName();
 
-            mNameTextView.setText(mCity);
+            Weather weather = mWeatherCurrent.getWeather().get(0);
+
+            mNameTextView.setText(mWeatherCurrent.getName());
 
             mDescriptionTextView.setText(weather.getDescription());
 
             mTempTextView.setText(mWeatherCurrent.getMain().getTemp() + "°C");
 
-            mIconImageView.setImageResource(convertIconToResource(weather.getIcon()));
+            mIconImageView.setImageResource(AppUtils.convertIconToResource(weather.getIcon()));
 
             mWindSpeedTextView.setText(mWeatherCurrent.getWind().getSpeed() + "m/s");
 
@@ -92,58 +86,4 @@ public class CurrentFragment extends Fragment {
         return view;
     }
 
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-
-
-        if (context instanceof OnCurrentFragmentInteractionListener) {
-            mListener = (OnCurrentFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnCurrentFragmentInteractionListener");
-        }
-    }
-
-    private int convertIconToResource(String icon) {
-        switch (icon) {
-            case "01d":
-                return R.drawable.ic_sun;
-            case "01n":
-                return R.drawable.ic_moon;
-            case "02d":
-                return R.drawable.ic_sun_cloudy;
-            case "02n":
-                return R.drawable.ic_moon_cloud;
-            case "03d":
-            case "03n":
-            case "04d":
-            case "04n":
-                return R.drawable.ic_cloud;
-            case "09d":
-            case "09n":
-            case "10d":
-            case "10n":
-                return R.drawable.ic_rain;
-            case "11d":
-            case "11n":
-                return R.drawable.ic_storm;
-            case "13d":
-            case "13n":
-                return R.drawable.ic_snow;
-            default:
-                return 0;
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    public interface OnCurrentFragmentInteractionListener {
-        void onLoadHistory(String city);
-    }
 }

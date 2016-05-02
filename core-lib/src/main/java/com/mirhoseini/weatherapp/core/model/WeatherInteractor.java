@@ -98,7 +98,6 @@ public class WeatherInteractor implements IInteractor {
 
     public void clearMemoryCache() {
         memoryCacheWeather = null;
-//        memoryCacheWeatherHistory = null;
     }
 
     private boolean isUpToDate(WeatherMix entity) {

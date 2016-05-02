@@ -9,9 +9,8 @@ import javax.inject.Singleton;
 import dagger.Component;
 
 /**
- * Created by Mohsen on 5/1/16.
+ * Created by Mohsen on 30/04/16.
  */
-
 @Component(modules = WeatherApplicationModule.class)
 @Singleton
 public interface WeatherApplicationComponent {

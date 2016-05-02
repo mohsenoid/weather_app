@@ -48,7 +48,7 @@ public class WeatherPresenter implements IPresenter {
 
     @Override
     public void onDestroy() {
-        //delete all references with UI destruction
+        //delete all references in case of UI destruction
         mView = null;
         mInteractor.onDestroy();
         mInteractor = null;
@@ -99,6 +99,7 @@ public class WeatherPresenter implements IPresenter {
         Calendar calendar = Calendar.getInstance();
         long start = calendar.getTime().getTime();
 
+        // last 7-Day
         calendar.add(Calendar.DATE, -7);
         long end = calendar.getTime().getTime();
 

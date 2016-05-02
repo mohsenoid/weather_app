@@ -3,6 +3,9 @@ package com.mirhoseini.weatherapp.core.service.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * Created by Mohsen on 30/04/16.
+ */
 public class Wind {
 
     @SerializedName("speed")

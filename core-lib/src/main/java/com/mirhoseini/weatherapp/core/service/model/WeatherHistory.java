@@ -7,8 +7,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Created by Mohsen on 30/04/16.
+ */
 public class WeatherHistory implements Serializable {
-    //TODO: replace Serializable with parcelable
+    //TODO: replace Serializable with Parcelable for better performance
 
     @SerializedName("message")
     @Expose

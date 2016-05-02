@@ -22,13 +22,20 @@ import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
+/**
+ * Created by Mohsen on 30/04/16.
+ */
 public class ForecastFragment extends Fragment {
     private static final String ARG_WEATHER_FORECAST = "weather_forecast";
     SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat("dd/MM");
     @BindView(R.id.forecast_recycler)
     RecyclerView mForecastRecyclerView;
     private WeatherForecast mWeatherForecast;
+
+    private OnCurrentFragmentInteractionListener mListener;
+    private String mCity;
 
     public ForecastFragment() {
         // Required empty public constructor
@@ -40,6 +47,13 @@ public class ForecastFragment extends Fragment {
         args.putSerializable(ARG_WEATHER_FORECAST, weatherForecast);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @OnClick(R.id.history_button)
+    public void history(View view) {
+        if (mListener != null) {
+            mListener.onLoadHistory(mCity);
+        }
     }
 
     @Override
@@ -56,7 +70,10 @@ public class ForecastFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_forecast, container, false);
         ButterKnife.bind(this, view);
 
+        // load weather forecast data recyclerView using adapter
         if (mWeatherForecast != null) {
+            mCity = mWeatherForecast.getCity().getName();
+
             ForecastAdapter adapter = new ForecastAdapter(mWeatherForecast);
             mForecastRecyclerView.setAdapter(adapter);
             mForecastRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
@@ -65,24 +82,27 @@ public class ForecastFragment extends Fragment {
         return view;
     }
 
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
 
 
-//        if (context instanceof OnCurrentFragmentInteractionListener) {
-//            mListener = (OnCurrentFragmentInteractionListener) context;
-//        } else {
-//            throw new RuntimeException(context.toString()
-//                    + " must implement OnCurrentFragmentInteractionListener");
-//        }
+        if (context instanceof OnCurrentFragmentInteractionListener) {
+            mListener = (OnCurrentFragmentInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnCurrentFragmentInteractionListener");
+        }
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-//        mListener = null;
+        mListener = null;
+    }
+
+    public interface OnCurrentFragmentInteractionListener {
+        void onLoadHistory(String city);
     }
 
     private class ForecastAdapter extends RecyclerView.Adapter<ForecastHolder> {

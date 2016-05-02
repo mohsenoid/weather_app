@@ -10,6 +10,9 @@ import android.view.ViewGroup;
 import com.mirhoseini.weatherapp.R;
 import com.mirhoseini.weatherapp.core.service.model.WeatherHistory;
 
+/**
+ * Created by Mohsen on 30/04/16.
+ */
 public class HistoryFragment extends Fragment {
     private static final String ARG_WEATHER_HISTORY = "weather_history";
 

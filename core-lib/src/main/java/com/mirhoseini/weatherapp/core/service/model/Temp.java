@@ -3,9 +3,9 @@ package com.mirhoseini.weatherapp.core.service.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import javax.annotation.Generated;
-
-@Generated("org.jsonschema2pojo")
+/**
+ * Created by Mohsen on 30/04/16.
+ */
 public class Temp {
 
     @SerializedName("day")

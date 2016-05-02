@@ -5,10 +5,10 @@ import com.google.gson.annotations.Expose;
 import java.io.Serializable;
 
 /**
- * Created by Mohsen on 4/30/16.
+ * Created by Mohsen on 30/04/16.
  */
 public class WeatherMix implements Serializable {
-    //TODO: replace Serializable with parcelable
+    //TODO: replace Serializable with Parcelable for better performance
 
     @Expose
     private WeatherCurrent mWeatherCurrent;
@@ -19,17 +19,17 @@ public class WeatherMix implements Serializable {
     @Expose
     private long dt;
 
+    public WeatherMix(WeatherCurrent weatherCurrent, WeatherForecast weatherForecast) {
+        mWeatherCurrent = weatherCurrent;
+        mWeatherForecast = weatherForecast;
+    }
+
     public long getDt() {
         return dt;
     }
 
     public void setDt(long dt) {
         this.dt = dt;
-    }
-
-    public WeatherMix(WeatherCurrent weatherCurrent, WeatherForecast weatherForecast) {
-        mWeatherCurrent = weatherCurrent;
-        mWeatherForecast = weatherForecast;
     }
 
     public WeatherCurrent getWeatherCurrent() {

@@ -13,7 +13,7 @@ import org.junit.Test;
 
 
 /**
- * Created by Mohsen on 24/03/16.
+ * Created by Mohsen on 30/04/16.
  */
 public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActivity> {
 
@@ -36,8 +36,8 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
 
     @Test
     public void testPreConditions() {
-        assertNotNull("city EditText not displayed",mCityEditText);
-        assertNotNull("go Button not displayed",mGoButton);
+        assertNotNull("city EditText not displayed", mCityEditText);
+        assertNotNull("go Button not displayed", mGoButton);
     }
 
     @Test

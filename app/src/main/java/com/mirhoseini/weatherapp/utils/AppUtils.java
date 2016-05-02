@@ -3,9 +3,11 @@ package com.mirhoseini.weatherapp.utils;
 import com.mirhoseini.weatherapp.R;
 
 /**
- * Created by Mohsen on 5/1/16.
+ * Created by Mohsen on 30/04/16.
  */
 public class AppUtils {
+
+    //convert API icon to corresponding in app vector assets
     public static int convertIconToResource(String icon) {
         switch (icon) {
             case "01d":
