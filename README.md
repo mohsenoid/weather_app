@@ -38,7 +38,7 @@ This application was created by [Mohsen Mirhoseini Argi](http://mirhoseini.com),
 --------------------
 ### Important Notes ###
 
-The application has one Main Activity which is responsible for presenting weather data for a specific city using its two fragments.
+The application has one Main Activity which is responsible for presenting weather data for a specific city using its two fragments. Current weather and forecast weather APIs' call are merged using RxJava.
 
 All activity lifecycle and network behaviours are implemented, and according to device size and situation user get a good view and UX. In case having update cache data in Memory or Disk, app do not call Network. If no internet connection, a dialog popup and ask user to turn on it's network.
 
@@ -67,3 +67,9 @@ Dependency Injections are being managed by [Dagger](https://github.com/google/da
 The disk cache is managed using [AppSettings](https://github.com/mmirhoseini/app_settings) library, a wrapper for Android SharedPreferences, which takes advantage of HashMaps for faster save and retrieval from memory, developed and published on jCenter by [myself](http://mirhoseini.com).
 
 Whole projects Dependencies are placed in "libraries.gradle" to avoid version conflicts and redundant in different modules.
+
+API provide some icons for different weather conditions, which was converting to in app Vector assets for a better UI.
+
+A part of the application feature was last 7-Day weather history which has been disabled because of openweather payment policy, and the [API was not free](http://openweathermap.org/price).
+ 
+Chachin data to Disk using share preferences was perform by converting weather model to json using Gson, to reach a fast response but it is better to use Parcelable for transfering objects in Android. 
