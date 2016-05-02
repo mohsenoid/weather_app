@@ -3,13 +3,15 @@ package com.mirhoseini.weatherapp.core.service.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Mohsen on 30/04/16.
  */
-public class Forecast {
+public class Forecast implements Serializable {
+    //TODO: replace Serializable with Parcelable for better performance
 
     @SerializedName("dt")
     @Expose

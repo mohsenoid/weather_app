@@ -3,10 +3,13 @@ package com.mirhoseini.weatherapp.core.service.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 /**
  * Created by Mohsen on 30/04/16.
  */
-public class Main {
+public class Main implements Serializable {
+    //TODO: replace Serializable with Parcelable for better performance
 
     @SerializedName("temp")
     @Expose
