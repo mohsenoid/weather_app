@@ -4,6 +4,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * Created by Mohsen on 30/04/16.
@@ -137,16 +138,21 @@ public class City implements Serializable {
         this.sys = sys;
     }
 
-    @Override
-    public boolean equals(Object other) {
-        if (other == this) {
-            return true;
-        }
-        if ((other instanceof City) == false) {
-            return false;
-        }
-        City rhs = ((City) other);
-        return id == rhs.id;
-    }
-
+//    @Override
+//    public boolean equals(Object other) {
+//        if (other == this) {
+//            return true;
+//        }
+//        if ((other instanceof City) == false) {
+//            return false;
+//        }
+//        City rhs = ((City) other);
+//        return id == rhs.id;
+//    }
+//
+//    public int hashCode() {
+//        // you pick a hard-coded, randomly chosen, non-zero, odd number
+//        // ideally different for each class
+//        return Objects.hashCode(id,name,coord,country,population,sys,name);
+//    }
 }

@@ -158,16 +158,16 @@ public class History implements Serializable {
         this.dt = dt;
     }
 
-    @Override
-    public boolean equals(Object other) {
-        if (other == this) {
-            return true;
-        }
-        if ((other instanceof History) == false) {
-            return false;
-        }
-        History rhs = ((History) other);
-        return time == rhs.time && hrTime == rhs.hrTime && main.equals(rhs.main);
-    }
+//    @Override
+//    public boolean equals(Object other) {
+//        if (other == this) {
+//            return true;
+//        }
+//        if ((other instanceof History) == false) {
+//            return false;
+//        }
+//        History rhs = ((History) other);
+//        return time == rhs.time && hrTime == rhs.hrTime && main.equals(rhs.main);
+//    }
 
 }

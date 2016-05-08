@@ -157,16 +157,16 @@ public class Main implements Serializable {
     }
 
 
-    @Override
-    public boolean equals(Object other) {
-        if (other == this) {
-            return true;
-        }
-        if ((other instanceof Main) == false) {
-            return false;
-        }
-        Main rhs = ((Main) other);
-        return temp == rhs.temp && pressure == rhs.pressure && humidity == rhs.humidity && tempMin == rhs.tempMin && tempMax == rhs.tempMax && seaLevel == rhs.seaLevel && grndLevel == rhs.grndLevel;
-    }
+//    @Override
+//    public boolean equals(Object other) {
+//        if (other == this) {
+//            return true;
+//        }
+//        if ((other instanceof Main) == false) {
+//            return false;
+//        }
+//        Main rhs = ((Main) other);
+//        return temp == rhs.temp && pressure == rhs.pressure && humidity == rhs.humidity && tempMin == rhs.tempMin && tempMax == rhs.tempMax && seaLevel == rhs.seaLevel && grndLevel == rhs.grndLevel;
+//    }
 
 }

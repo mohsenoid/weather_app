@@ -60,4 +60,9 @@ dependencies {
 
     compile rootProject.ext.libraries.timber
 
+    compile rootProject.ext.libraries.stetho
+    compile(rootProject.ext.libraries.stethoTimber) {
+        exclude group: "com.jakewharton.timber", module: "timber"
+    }
+
 }

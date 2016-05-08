@@ -48,17 +48,17 @@ public class WeatherMix implements Serializable {
         mWeatherForecast = weatherForecast;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        WeatherMix that = (WeatherMix) o;
-
-        if (mWeatherCurrent != null ? !mWeatherCurrent.equals(that.mWeatherCurrent) : that.mWeatherCurrent != null)
-            return false;
-        return mWeatherForecast != null ? mWeatherForecast.equals(that.mWeatherForecast) : that.mWeatherForecast == null;
-
-    }
+//    @Override
+//    public boolean equals(Object o) {
+//        if (this == o) return true;
+//        if (o == null || getClass() != o.getClass()) return false;
+//
+//        WeatherMix that = (WeatherMix) o;
+//
+//        if (mWeatherCurrent != null ? !mWeatherCurrent.equals(that.mWeatherCurrent) : that.mWeatherCurrent != null)
+//            return false;
+//        return mWeatherForecast != null ? mWeatherForecast.equals(that.mWeatherForecast) : that.mWeatherForecast == null;
+//
+//    }
 
 }

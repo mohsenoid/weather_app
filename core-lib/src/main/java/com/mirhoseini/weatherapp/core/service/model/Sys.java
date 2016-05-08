@@ -117,16 +117,16 @@ public class Sys implements Serializable {
         this.pod = pod;
     }
 
-    @Override
-    public boolean equals(Object other) {
-        if (other == this) {
-            return true;
-        }
-        if ((other instanceof Sys) == false) {
-            return false;
-        }
-        Sys rhs = ((Sys) other);
-        return message == rhs.message && country.equalsIgnoreCase(rhs.country) && sunrise == rhs.sunrise && sunset == rhs.sunset && pod.equals(rhs.pod);
-    }
+//    @Override
+//    public boolean equals(Object other) {
+//        if (other == this) {
+//            return true;
+//        }
+//        if ((other instanceof Sys) == false) {
+//            return false;
+//        }
+//        Sys rhs = ((Sys) other);
+//        return message == rhs.message && country.equalsIgnoreCase(rhs.country) && sunrise == rhs.sunrise && sunset == rhs.sunset && pod.equals(rhs.pod);
+//    }
 
 }

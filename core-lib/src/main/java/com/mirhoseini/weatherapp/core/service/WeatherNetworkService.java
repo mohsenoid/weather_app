@@ -1,6 +1,7 @@
 package com.mirhoseini.weatherapp.core.service;
 
 
+import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.mirhoseini.weatherapp.core.service.model.WeatherHistory;
 import com.mirhoseini.weatherapp.core.service.model.WeatherMix;
 import com.mirhoseini.weatherapp.core.utils.Constants;
@@ -37,6 +38,7 @@ public class WeatherNetworkService implements INetworkService {
             HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
             logging.setLevel(HttpLoggingInterceptor.Level.BODY);
             httpClient.addInterceptor(logging);
+            httpClient.networkInterceptors().add(new StethoInterceptor());
         }
 
         builder.client(httpClient.build());
