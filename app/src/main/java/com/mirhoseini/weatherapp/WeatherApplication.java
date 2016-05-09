@@ -36,9 +36,10 @@ public class WeatherApplication extends Application {
         super.onCreate();
 
         if (BuildConfig.DEBUG) {
+            Stetho.initializeWithDefaults(this);
+
             Timber.plant(new Timber.DebugTree());
             Timber.plant(new StethoTree());
-            Stetho.initializeWithDefaults(this);
         }
 
         component = DaggerWeatherApplicationComponent.builder()

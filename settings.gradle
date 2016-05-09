@@ -1,2 +1,2 @@
 include ':weather-app', ':core-lib'
-project(':weather-app').projectDir=new File('app')
+project(':weather-app').projectDir = new File('app')

@@ -19,6 +19,15 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            manifestPlaceholders = [
+                    appName: "@string/app_name",
+            ]
+        }
+
+        debug {
+            manifestPlaceholders = [
+                    appName: "@string/app_name_debug",
+            ]
         }
     }
     compileOptions {
