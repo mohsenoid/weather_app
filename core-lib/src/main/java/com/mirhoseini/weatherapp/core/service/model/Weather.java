@@ -99,16 +99,16 @@ public class Weather implements Serializable {
         this.icon = icon;
     }
 
-    @Override
-    public boolean equals(Object other) {
-        if (other == this) {
-            return true;
-        }
-        if ((other instanceof Weather) == false) {
-            return false;
-        }
-        Weather rhs = ((Weather) other);
-        return id == rhs.id && main == rhs.main && description.equalsIgnoreCase(rhs.description) && icon.equalsIgnoreCase(rhs.icon);
-    }
+//    @Override
+//    public boolean equals(Object other) {
+//        if (other == this) {
+//            return true;
+//        }
+//        if ((other instanceof Weather) == false) {
+//            return false;
+//        }
+//        Weather rhs = ((Weather) other);
+//        return id == rhs.id && main == rhs.main && description.equalsIgnoreCase(rhs.description) && icon.equalsIgnoreCase(rhs.icon);
+//    }
 
 }

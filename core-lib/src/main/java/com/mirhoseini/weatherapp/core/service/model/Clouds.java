@@ -47,16 +47,21 @@ public class Clouds implements Serializable {
         return "";
     }
 
-    @Override
-    public boolean equals(Object other) {
-        if (other == this) {
-            return true;
-        }
-        if ((other instanceof Clouds) == false) {
-            return false;
-        }
-        Clouds rhs = ((Clouds) other);
-        return all == rhs.all;
-    }
+//    @Override
+//    public boolean equals(Object other) {
+//        if (other == this) {
+//            return true;
+//        }
+//        if ((other instanceof Clouds) == false) {
+//            return false;
+//        }
+//        Clouds rhs = ((Clouds) other);
+//        return all == rhs.all;
+//    }
+//
+//    @Override
+//    public int hashCode() {
+//        return all.hashCode();
+//    }
 
 }

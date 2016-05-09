@@ -234,16 +234,16 @@ public class WeatherCurrent implements Serializable {
         this.cod = cod;
     }
 
-    @Override
-    public boolean equals(Object other) {
-        if (other == this) {
-            return true;
-        }
-        if ((other instanceof WeatherCurrent) == false) {
-            return false;
-        }
-        WeatherCurrent rhs = ((WeatherCurrent) other);
-        return coord.equals(rhs.coord);
-    }
+//    @Override
+//    public boolean equals(Object other) {
+//        if (other == this) {
+//            return true;
+//        }
+//        if ((other instanceof WeatherCurrent) == false) {
+//            return false;
+//        }
+//        WeatherCurrent rhs = ((WeatherCurrent) other);
+//        return coord.equals(rhs.coord);
+//    }
 
 }

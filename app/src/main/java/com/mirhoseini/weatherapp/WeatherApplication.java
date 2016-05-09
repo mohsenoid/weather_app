@@ -3,6 +3,9 @@ package com.mirhoseini.weatherapp;
 import android.app.Application;
 import android.content.Context;
 
+import com.facebook.stetho.Stetho;
+import com.facebook.stetho.timber.StethoTree;
+
 import timber.log.Timber;
 
 /**
@@ -34,6 +37,8 @@ public class WeatherApplication extends Application {
 
         if (BuildConfig.DEBUG) {
             Timber.plant(new Timber.DebugTree());
+            Timber.plant(new StethoTree());
+            Stetho.initializeWithDefaults(this);
         }
 
         component = DaggerWeatherApplicationComponent.builder()

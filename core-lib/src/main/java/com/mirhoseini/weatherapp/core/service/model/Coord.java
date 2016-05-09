@@ -61,16 +61,21 @@ public class Coord implements Serializable {
         this.lat = lat;
     }
 
-    @Override
-    public boolean equals(Object other) {
-        if (other == this) {
-            return true;
-        }
-        if ((other instanceof Coord) == false) {
-            return false;
-        }
-        Coord rhs = ((Coord) other);
-        return lon == rhs.lon && lat == rhs.lat;
-    }
+//    @Override
+//    public boolean equals(Object other) {
+//        if (other == this) {
+//            return true;
+//        }
+//        if ((other instanceof Coord) == false) {
+//            return false;
+//        }
+//        Coord rhs = ((Coord) other);
+//        return lon == rhs.lon && lat == rhs.lat;
+//    }
+//
+//    @Override
+//    public int hashCode() {
+//        return lat.hashCode() + lon.hashCode();
+//    }
 
 }

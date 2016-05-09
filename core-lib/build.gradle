@@ -12,6 +12,10 @@ dependencies {
     compile rootProject.ext.libraries.retrofit
     compile rootProject.ext.libraries.retrofitConverter
     compile rootProject.ext.libraries.retrofitAdapter
+
     compile rootProject.ext.libraries.okhttp
     compile rootProject.ext.libraries.okhttpLogging
+
+    compile rootProject.ext.libraries.stetho
+    compile rootProject.ext.libraries.stethoOkhttp
 }

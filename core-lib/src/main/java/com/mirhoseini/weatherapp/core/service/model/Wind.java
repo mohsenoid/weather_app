@@ -62,16 +62,16 @@ public class Wind implements Serializable {
     }
 
 
-    @Override
-    public boolean equals(Object other) {
-        if (other == this) {
-            return true;
-        }
-        if ((other instanceof Wind) == false) {
-            return false;
-        }
-        Wind rhs = ((Wind) other);
-        return speed == rhs.speed && deg == rhs.deg;
-    }
+//    @Override
+//    public boolean equals(Object other) {
+//        if (other == this) {
+//            return true;
+//        }
+//        if ((other instanceof Wind) == false) {
+//            return false;
+//        }
+//        Wind rhs = ((Wind) other);
+//        return speed == rhs.speed && deg == rhs.deg;
+//    }
 
 }

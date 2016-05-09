@@ -139,16 +139,16 @@ public class WeatherHistory implements Serializable {
         this.list = list;
     }
 
-    @Override
-    public boolean equals(Object other) {
-        if (other == this) {
-            return true;
-        }
-        if ((other instanceof WeatherHistory) == false) {
-            return false;
-        }
-        WeatherHistory rhs = ((WeatherHistory) other);
-        return cod == rhs.cod && cityId == rhs.cityId;
-    }
+//    @Override
+//    public boolean equals(Object other) {
+//        if (other == this) {
+//            return true;
+//        }
+//        if ((other instanceof WeatherHistory) == false) {
+//            return false;
+//        }
+//        WeatherHistory rhs = ((WeatherHistory) other);
+//        return cod == rhs.cod && cityId == rhs.cityId;
+//    }
 
 }
