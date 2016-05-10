@@ -10,7 +10,7 @@
     <uses-sdk tools:overrideLibrary="timber.log"/>
 
     <application
-        android:name=".WeatherApplication"
+        android:name=".WeatherApplicationImpl"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="${appName}"

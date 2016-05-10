@@ -3,16 +3,10 @@ package com.mirhoseini.weatherapp;
 import android.app.Application;
 import android.content.Context;
 
-import com.facebook.stetho.Stetho;
-import com.facebook.stetho.timber.StethoTree;
-
-import timber.log.Timber;
-
 /**
- * Created by Mohsen on 30/04/16.
+ * Created by Mohsen on 5/9/16.
  */
-public class WeatherApplication extends Application {
-
+public abstract class WeatherApplication extends Application {
     private WeatherApplicationComponent component;
 
     public static WeatherApplication get(Context context) {
@@ -35,15 +29,12 @@ public class WeatherApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
-        if (BuildConfig.DEBUG) {
-            Stetho.initializeWithDefaults(this);
-
-            Timber.plant(new Timber.DebugTree());
-            Timber.plant(new StethoTree());
-        }
+        initApplication();
 
         component = DaggerWeatherApplicationComponent.builder()
                 .weatherApplicationModule(getApplicationModule())
                 .build();
     }
+
+    abstract void initApplication();
 }
