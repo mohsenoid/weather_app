@@ -110,6 +110,14 @@ public class WeatherInteractor implements IInteractor {
 
     @Override
     public void onDestroy() {
+        if (weatherSubscription != null && !weatherSubscription.isUnsubscribed()) {
+            weatherSubscription.unsubscribe();
+        }
+
+        if (weatherHistorySubscription != null && !weatherHistorySubscription.isUnsubscribed()) {
+            weatherHistorySubscription.unsubscribe();
+        }
+
         mNetworkService = null;
         mDiskCache = null;
         mScheduler = null;

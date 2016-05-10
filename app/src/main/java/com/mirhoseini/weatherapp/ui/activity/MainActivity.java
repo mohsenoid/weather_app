@@ -188,7 +188,7 @@ public class MainActivity extends BaseActivity implements IViewMain, ForecastFra
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.current_fragment, currentFragment, "current");
         fragmentTransaction.replace(R.id.forecast_fragment, forecastFragment, "forecast");
-        fragmentTransaction.commit();
+        fragmentTransaction.commitAllowingStateLoss();
 
     }
 
@@ -305,10 +305,10 @@ public class MainActivity extends BaseActivity implements IViewMain, ForecastFra
     protected void onSaveInstanceState(Bundle outState) {
         Timber.d("Activity Saving Instance State");
 
-        super.onSaveInstanceState(outState);
-
         //save TimeSpan selected by user before data loaded and saved to SharedPreferences
         outState.putString(Constants.KEY_LAST_CITY, mCityEditText.getText().toString());
+
+        super.onSaveInstanceState(outState);
     }
 
 
