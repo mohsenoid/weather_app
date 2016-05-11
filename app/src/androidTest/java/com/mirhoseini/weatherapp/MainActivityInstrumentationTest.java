@@ -15,13 +15,13 @@ import org.junit.Test;
 /**
  * Created by Mohsen on 30/04/16.
  */
-public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActivity> {
+public class MainActivityInstrumentationTest extends ActivityInstrumentationTestCase2<MainActivity> {
 
     private MainActivity mActivity;
     private EditText mCityEditText;
     private Button mGoButton;
 
-    public MainActivityTest() {
+    public MainActivityInstrumentationTest() {
         super(MainActivity.class);
     }
 

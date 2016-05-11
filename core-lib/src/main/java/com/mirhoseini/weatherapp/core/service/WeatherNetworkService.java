@@ -51,9 +51,22 @@ public class WeatherNetworkService implements INetworkService {
     @Override
     public Observable<WeatherMix> loadWeather(String city) {
 
-        return Observable.combineLatest(api.getWeather(city, Constants.API_KEY, Constants.WEATHER_UNITS)
-                , api.getWeatherForecast(city, Constants.API_KEY, Constants.WEATHER_UNITS, Constants.FORECAST_DAY_COUNT)
-                , (weatherCurrent, weatherForecast) -> new WeatherMix(weatherCurrent, weatherForecast));
+        return Observable.combineLatest(
+                api.getWeather(city, Constants.API_KEY, Constants.WEATHER_UNITS),
+                api.getWeatherForecast(city, Constants.API_KEY, Constants.WEATHER_UNITS, Constants.FORECAST_DAY_COUNT),
+                (weatherCurrent, weatherForecast) -> new WeatherMix(weatherCurrent, weatherForecast));
+
+
+//        return Observable.zip(
+//                api.getWeather(city, Constants.API_KEY, Constants.WEATHER_UNITS),
+//                api.getWeatherForecast(city, Constants.API_KEY, Constants.WEATHER_UNITS, Constants.FORECAST_DAY_COUNT),
+//                new Func2<WeatherCurrent, WeatherForecast, WeatherMix>() {
+//                    @Override
+//                    public WeatherMix call(WeatherCurrent weatherCurrent, WeatherForecast weatherForecast) {
+//                        return new WeatherMix(weatherCurrent, weatherForecast);
+//                    }
+//                });
+
 
     }
 
