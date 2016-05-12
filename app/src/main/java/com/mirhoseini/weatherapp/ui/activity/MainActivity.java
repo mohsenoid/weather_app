@@ -16,6 +16,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.CustomEvent;
 import com.mirhoseini.appsettings.AppSettings;
 import com.mirhoseini.utils.Utils;
 import com.mirhoseini.weatherapp.BaseActivity;
@@ -83,6 +85,8 @@ public class MainActivity extends BaseActivity implements IViewMain, ForecastFra
 
     @OnClick(R.id.go_button)
     public void submit(View view) {
+        Answers.getInstance().logCustom(new CustomEvent("Pressed Go Button").putCustomAttribute("City Name", mCityEditText.getText().toString()));
+
         //hide keyboard for better UX
         Utils.hideKeyboard(mContext, mCityEditText);
 

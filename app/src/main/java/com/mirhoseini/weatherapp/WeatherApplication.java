@@ -3,6 +3,11 @@ package com.mirhoseini.weatherapp;
 import android.app.Application;
 import android.content.Context;
 
+import com.crashlytics.android.Crashlytics;
+import com.crashlytics.android.answers.Answers;
+
+import io.fabric.sdk.android.Fabric;
+
 /**
  * Created by Mohsen on 5/9/16.
  */
@@ -30,6 +35,9 @@ public abstract class WeatherApplication extends Application {
         super.onCreate();
 
         initApplication();
+
+        Fabric.with(this, new Crashlytics());
+        Fabric.with(this, new Answers());
 
         component = DaggerWeatherApplicationComponent.builder()
                 .weatherApplicationModule(getApplicationModule())
