@@ -26,6 +26,7 @@ import com.mirhoseini.weatherapp.R;
 import com.mirhoseini.weatherapp.WeatherApplication;
 import com.mirhoseini.weatherapp.core.presentation.IPresenter;
 import com.mirhoseini.weatherapp.core.presentation.WeatherPresenter;
+import com.mirhoseini.weatherapp.core.service.INetworkService;
 import com.mirhoseini.weatherapp.core.service.WeatherNetworkService;
 import com.mirhoseini.weatherapp.core.service.model.WeatherHistory;
 import com.mirhoseini.weatherapp.core.service.model.WeatherMix;
@@ -55,14 +56,18 @@ public class MainActivity extends BaseActivity implements IViewMain, ForecastFra
 
     static boolean sDoubleBackToExitPressedOnce;
     Context mContext;
-    IPresenter mPresenter;
-    WeatherNetworkService mNetworkService;
+
     AlertDialog mInternetConnectionDialog;
+
     //injecting dependencies via Dagger
     @Inject
     IScheduler mScheduler;
     @Inject
     ICacher mCacher;
+    @Inject
+    INetworkService mNetworkService;
+    @Inject
+    IPresenter mPresenter;
 
     //injecting views via Butterknife
     @BindView(R.id.progress_container)
@@ -113,10 +118,6 @@ public class MainActivity extends BaseActivity implements IViewMain, ForecastFra
         WeatherApplication app = (WeatherApplication) getApplication();
         app.getComponent().inject(this);
 
-        //network service shows network request logs if app is in debug mode
-        mNetworkService = new WeatherNetworkService(BuildConfig.DEBUG);
-
-        mPresenter = new WeatherPresenter(mCacher, mNetworkService, mScheduler);
         mPresenter.setView(this);
 
         // binding Views using ButterKnife

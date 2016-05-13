@@ -1,6 +1,10 @@
 package com.mirhoseini.weatherapp;
 
 import com.mirhoseini.weatherapp.core.model.Clock;
+import com.mirhoseini.weatherapp.core.presentation.IPresenter;
+import com.mirhoseini.weatherapp.core.presentation.WeatherPresenter;
+import com.mirhoseini.weatherapp.core.service.INetworkService;
+import com.mirhoseini.weatherapp.core.service.WeatherNetworkService;
 import com.mirhoseini.weatherapp.core.utils.ICacher;
 import com.mirhoseini.weatherapp.core.utils.IScheduler;
 import com.mirhoseini.weatherapp.utils.AppCacher;
@@ -39,4 +43,14 @@ public class WeatherApplicationModule {
         return Clock.REAL;
     }
 
+    @Provides
+    public IPresenter provideWeatherPresenter(ICacher cacher, INetworkService networkService, IScheduler scheduler) {
+        return new WeatherPresenter(cacher, networkService, scheduler);
+    }
+
+    @Provides
+    @Singleton
+    public INetworkService provideWeatherNetworkService() {
+        return new WeatherNetworkService(BuildConfig.DEBUG);
+    }
 }
