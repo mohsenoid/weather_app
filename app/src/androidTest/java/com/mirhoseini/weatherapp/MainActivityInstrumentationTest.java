@@ -7,22 +7,25 @@ import android.widget.TextView;
 
 import com.mirhoseini.utils.Utils;
 import com.mirhoseini.weatherapp.core.utils.Constants;
-import com.mirhoseini.weatherapp.ui.activity.MainActivity;
+import com.mirhoseini.weatherapp.ui.activity.MainViewActivity;
 
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
 
 /**
  * Created by Mohsen on 30/04/16.
  */
-public class MainActivityInstrumentationTest extends ActivityInstrumentationTestCase2<MainActivity> {
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+public class MainActivityInstrumentationTest extends ActivityInstrumentationTestCase2<MainViewActivity> {
 
-    private MainActivity mActivity;
+    private MainViewActivity mActivity;
     private EditText mCityEditText;
     private Button mGoButton;
 
     public MainActivityInstrumentationTest() {
-        super(MainActivity.class);
+        super(MainViewActivity.class);
     }
 
     public void setUp() throws Exception {
@@ -30,18 +33,18 @@ public class MainActivityInstrumentationTest extends ActivityInstrumentationTest
 
         setActivityInitialTouchMode(false);
         mActivity = getActivity();
-        mCityEditText = (EditText) mActivity.findViewById(R.id.city_edittext);
-        mGoButton = (Button) mActivity.findViewById(R.id.go_button);
+        mCityEditText = (EditText) mActivity.findViewById(R.id.city);
+        mGoButton = (Button) mActivity.findViewById(R.id.go);
     }
 
     @Test
-    public void testPreConditions() {
+    public void stage1_testPreConditions() {
         assertNotNull("city EditText not displayed", mCityEditText);
         assertNotNull("go Button not displayed", mGoButton);
     }
 
     @Test
-    public void testWeatherValue() throws InterruptedException {
+    public void stage2_testWeatherValue() throws InterruptedException {
         assertTrue("no internet connection", Utils.isConnected(mActivity));
 
         mActivity.runOnUiThread(new Runnable() {
