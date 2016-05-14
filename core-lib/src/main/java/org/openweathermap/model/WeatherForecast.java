@@ -1,4 +1,4 @@
-package com.mirhoseini.weatherapp.core.service.model;
+package org.openweathermap.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -27,7 +27,7 @@ public class WeatherForecast implements Serializable {
     private Integer cnt;
     @SerializedName("list")
     @Expose
-    private List<Forecast> list = new ArrayList<Forecast>();
+    private List<org.openweathermap.model.Forecast> list = new ArrayList<org.openweathermap.model.Forecast>();
 
     /**
      * No args constructor for use in serialization
@@ -42,7 +42,7 @@ public class WeatherForecast implements Serializable {
      * @param list
      * @param city
      */
-    public WeatherForecast(City city, String cod, Double message, Integer cnt, List<Forecast> list) {
+    public WeatherForecast(City city, String cod, Double message, Integer cnt, List<org.openweathermap.model.Forecast> list) {
         this.city = city;
         this.cod = cod;
         this.message = message;
@@ -109,14 +109,14 @@ public class WeatherForecast implements Serializable {
     /**
      * @return The list
      */
-    public List<Forecast> getList() {
+    public List<org.openweathermap.model.Forecast> getList() {
         return list;
     }
 
     /**
      * @param list The list
      */
-    public void setList(List<Forecast> list) {
+    public void setList(List<org.openweathermap.model.Forecast> list) {
         this.list = list;
     }
 

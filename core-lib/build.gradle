@@ -6,8 +6,8 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile rootProject.ext.libraries.rxjava
 
-    testCompile rootProject.ext.testLibraries.junit
-    testCompile rootProject.ext.testLibraries.mockito
+//    testCompile rootProject.ext.testLibraries.junit
+//    testCompile rootProject.ext.testLibraries.mockito
 
     compile rootProject.ext.libraries.retrofit
     compile rootProject.ext.libraries.retrofitConverter

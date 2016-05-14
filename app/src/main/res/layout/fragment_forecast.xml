@@ -3,7 +3,7 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical"
-              tools:context="com.mirhoseini.weatherapp.ui.fragment.ForecastFragment">
+              tools:context=".ui.fragment.ForecastWeatherFragment">
 
 
     <android.support.v7.widget.RecyclerView

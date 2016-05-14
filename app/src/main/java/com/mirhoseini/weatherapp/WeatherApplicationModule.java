@@ -1,14 +1,16 @@
 package com.mirhoseini.weatherapp;
 
+import android.content.Context;
+
 import com.mirhoseini.weatherapp.core.model.Clock;
-import com.mirhoseini.weatherapp.core.presentation.IPresenter;
 import com.mirhoseini.weatherapp.core.presentation.WeatherPresenter;
-import com.mirhoseini.weatherapp.core.service.INetworkService;
-import com.mirhoseini.weatherapp.core.service.WeatherNetworkService;
-import com.mirhoseini.weatherapp.core.utils.ICacher;
-import com.mirhoseini.weatherapp.core.utils.IScheduler;
-import com.mirhoseini.weatherapp.utils.AppCacher;
-import com.mirhoseini.weatherapp.utils.AppScheduler;
+import com.mirhoseini.weatherapp.core.presentation.WeatherPresenterImpl;
+import com.mirhoseini.weatherapp.core.service.WeatherService;
+import com.mirhoseini.weatherapp.core.service.WeatherServiceImpl;
+import com.mirhoseini.weatherapp.core.utils.CacheProvider;
+import com.mirhoseini.weatherapp.core.utils.SchedulerProvider;
+import com.mirhoseini.weatherapp.utils.AppCacheProvider;
+import com.mirhoseini.weatherapp.utils.AppSchedulerProvider;
 
 import javax.inject.Singleton;
 
@@ -20,22 +22,28 @@ import dagger.Provides;
  */
 @Module
 public class WeatherApplicationModule {
-    private WeatherApplication app;
+    private WeatherApplication weatherApplication;
 
-    public WeatherApplicationModule(WeatherApplication app) {
-        this.app = app;
+    public WeatherApplicationModule(WeatherApplication weatherApplication) {
+        this.weatherApplication = weatherApplication;
     }
 
     @Provides
     @Singleton
-    public ICacher provideAppCacher() {
-        return new AppCacher(app);
+    public Context provideContext() {
+        return weatherApplication.getApplicationContext();
     }
 
     @Provides
     @Singleton
-    public IScheduler provideAppScheduler() {
-        return new AppScheduler();
+    public CacheProvider provideAppCache() {
+        return new AppCacheProvider(weatherApplication);
+    }
+
+    @Provides
+    @Singleton
+    public SchedulerProvider provideAppScheduler() {
+        return new AppSchedulerProvider();
     }
 
     @Provides
@@ -44,13 +52,13 @@ public class WeatherApplicationModule {
     }
 
     @Provides
-    public IPresenter provideWeatherPresenter(ICacher cacher, INetworkService networkService, IScheduler scheduler) {
-        return new WeatherPresenter(cacher, networkService, scheduler);
+    public WeatherPresenter provideWeatherPresenter(CacheProvider cacheProvider, WeatherService weatherService, SchedulerProvider schedulerProvider) {
+        return new WeatherPresenterImpl(cacheProvider, weatherService, schedulerProvider);
     }
 
     @Provides
     @Singleton
-    public INetworkService provideWeatherNetworkService() {
-        return new WeatherNetworkService(BuildConfig.DEBUG);
+    public WeatherService provideWeatherNetworkService() {
+        return new WeatherServiceImpl(BuildConfig.DEBUG);
     }
 }

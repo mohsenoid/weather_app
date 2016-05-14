@@ -2,8 +2,8 @@ package com.mirhoseini.weatherapp.core.service;
 
 
 import com.facebook.stetho.okhttp3.StethoInterceptor;
-import com.mirhoseini.weatherapp.core.service.model.WeatherHistory;
-import com.mirhoseini.weatherapp.core.service.model.WeatherMix;
+import org.openweathermap.model.WeatherHistory;
+import org.openweathermap.model.WeatherMix;
 import com.mirhoseini.weatherapp.core.utils.Constants;
 
 import java.util.concurrent.TimeUnit;
@@ -19,12 +19,12 @@ import rx.Observable;
 /**
  * Created by Mohsen on 30/04/16.
  */
-public class WeatherNetworkService implements INetworkService {
+public class WeatherServiceImpl implements WeatherService {
 
     private final Retrofit retrofit;
     private final Api api;
 
-    public WeatherNetworkService(boolean isDebug) {
+    public WeatherServiceImpl(boolean isDebug) {
         Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl(Constants.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())

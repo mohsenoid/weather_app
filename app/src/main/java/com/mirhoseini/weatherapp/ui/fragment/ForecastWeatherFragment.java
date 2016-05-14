@@ -13,9 +13,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.mirhoseini.weatherapp.R;
-import com.mirhoseini.weatherapp.core.service.model.Forecast;
-import com.mirhoseini.weatherapp.core.service.model.WeatherForecast;
-import com.mirhoseini.weatherapp.utils.AppUtils;
+import org.openweathermap.model.Forecast;
+import org.openweathermap.model.WeatherForecast;
+import com.mirhoseini.weatherapp.utils.WeatherUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -27,7 +27,7 @@ import butterknife.OnClick;
 /**
  * Created by Mohsen on 30/04/16.
  */
-public class ForecastFragment extends Fragment {
+public class ForecastWeatherFragment extends Fragment {
     private static final String ARG_WEATHER_FORECAST = "weather_forecast";
     SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat("dd/MM");
     @BindView(R.id.forecast_recycler)
@@ -37,12 +37,12 @@ public class ForecastFragment extends Fragment {
     private OnCurrentFragmentInteractionListener mListener;
     private String mCity;
 
-    public ForecastFragment() {
+    public ForecastWeatherFragment() {
         // Required empty public constructor
     }
 
-    public static ForecastFragment newInstance(WeatherForecast weatherForecast) {
-        ForecastFragment fragment = new ForecastFragment();
+    public static ForecastWeatherFragment newInstance(WeatherForecast weatherForecast) {
+        ForecastWeatherFragment fragment = new ForecastWeatherFragment();
         Bundle args = new Bundle();
         args.putSerializable(ARG_WEATHER_FORECAST, weatherForecast);
         fragment.setArguments(args);
@@ -125,7 +125,7 @@ public class ForecastFragment extends Fragment {
             Forecast forecast = mWeatherForecast.getList().get(position);
 
             holder.getDateTextView().setText(mSimpleDateFormat.format(new Date(forecast.getDt() * 1000)));
-            holder.getIconImageView().setImageResource(AppUtils.convertIconToResource(forecast.getWeather().get(0).getIcon()));
+            holder.getIconImageView().setImageResource(WeatherUtils.convertIconToResource(forecast.getWeather().get(0).getIcon()));
             holder.getTempTextView().setText(forecast.getTemp().getDay() + "°C");
             holder.getWindSpeedTextView().setText(forecast.getSpeed() + "m/s");
         }

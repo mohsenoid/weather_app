@@ -1,4 +1,4 @@
-package com.mirhoseini.weatherapp.core.service.model;
+package org.openweathermap.model;
 
 import com.google.gson.annotations.Expose;
 
@@ -14,12 +14,12 @@ public class WeatherMix implements Serializable {
     private WeatherCurrent mWeatherCurrent;
 
     @Expose
-    private WeatherForecast mWeatherForecast;
+    private org.openweathermap.model.WeatherForecast mWeatherForecast;
 
     @Expose
     private long dt;
 
-    public WeatherMix(WeatherCurrent weatherCurrent, WeatherForecast weatherForecast) {
+    public WeatherMix(WeatherCurrent weatherCurrent, org.openweathermap.model.WeatherForecast weatherForecast) {
         mWeatherCurrent = weatherCurrent;
         mWeatherForecast = weatherForecast;
     }
@@ -40,11 +40,11 @@ public class WeatherMix implements Serializable {
         mWeatherCurrent = weatherCurrent;
     }
 
-    public WeatherForecast getWeatherForecast() {
+    public org.openweathermap.model.WeatherForecast getWeatherForecast() {
         return mWeatherForecast;
     }
 
-    public void setWeatherForecast(WeatherForecast weatherForecast) {
+    public void setWeatherForecast(org.openweathermap.model.WeatherForecast weatherForecast) {
         mWeatherForecast = weatherForecast;
     }
 

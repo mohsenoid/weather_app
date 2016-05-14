@@ -5,7 +5,7 @@ import com.mirhoseini.weatherapp.R;
 /**
  * Created by Mohsen on 30/04/16.
  */
-public class AppUtils {
+public class WeatherUtils {
 
     //convert API icon to corresponding in app vector assets
     public static int convertIconToResource(String icon) {

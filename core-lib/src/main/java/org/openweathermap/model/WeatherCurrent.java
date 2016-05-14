@@ -1,4 +1,4 @@
-package com.mirhoseini.weatherapp.core.service.model;
+package org.openweathermap.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -18,25 +18,25 @@ public class WeatherCurrent implements Serializable {
     private Coord coord;
     @SerializedName("weather")
     @Expose
-    private List<Weather> weather = new ArrayList<Weather>();
+    private List<org.openweathermap.model.Weather> weather = new ArrayList<org.openweathermap.model.Weather>();
     @SerializedName("base")
     @Expose
     private String base;
     @SerializedName("main")
     @Expose
-    private Main main;
+    private org.openweathermap.model.Main main;
     @SerializedName("wind")
     @Expose
     private Wind wind;
     @SerializedName("clouds")
     @Expose
-    private Clouds clouds;
+    private org.openweathermap.model.Clouds clouds;
     @SerializedName("dt")
     @Expose
     private long dt;
     @SerializedName("sys")
     @Expose
-    private Sys sys;
+    private org.openweathermap.model.Sys sys;
     @SerializedName("id")
     @Expose
     private Integer id;
@@ -66,7 +66,7 @@ public class WeatherCurrent implements Serializable {
      * @param weather
      * @param main
      */
-    public WeatherCurrent(Coord coord, List<Weather> weather, String base, Main main, Wind wind, Clouds clouds, long dt, Sys sys, Integer id, String name, Integer cod) {
+    public WeatherCurrent(Coord coord, List<org.openweathermap.model.Weather> weather, String base, org.openweathermap.model.Main main, Wind wind, org.openweathermap.model.Clouds clouds, long dt, org.openweathermap.model.Sys sys, Integer id, String name, Integer cod) {
         this.coord = coord;
         this.weather = weather;
         this.base = base;
@@ -97,14 +97,14 @@ public class WeatherCurrent implements Serializable {
     /**
      * @return The weather
      */
-    public List<Weather> getWeather() {
+    public List<org.openweathermap.model.Weather> getWeather() {
         return weather;
     }
 
     /**
      * @param weather The weather
      */
-    public void setWeather(List<Weather> weather) {
+    public void setWeather(List<org.openweathermap.model.Weather> weather) {
         this.weather = weather;
     }
 
@@ -125,14 +125,14 @@ public class WeatherCurrent implements Serializable {
     /**
      * @return The main
      */
-    public Main getMain() {
+    public org.openweathermap.model.Main getMain() {
         return main;
     }
 
     /**
      * @param main The main
      */
-    public void setMain(Main main) {
+    public void setMain(org.openweathermap.model.Main main) {
         this.main = main;
     }
 
@@ -153,14 +153,14 @@ public class WeatherCurrent implements Serializable {
     /**
      * @return The clouds
      */
-    public Clouds getClouds() {
+    public org.openweathermap.model.Clouds getClouds() {
         return clouds;
     }
 
     /**
      * @param clouds The clouds
      */
-    public void setClouds(Clouds clouds) {
+    public void setClouds(org.openweathermap.model.Clouds clouds) {
         this.clouds = clouds;
     }
 
@@ -181,14 +181,14 @@ public class WeatherCurrent implements Serializable {
     /**
      * @return The sys
      */
-    public Sys getSys() {
+    public org.openweathermap.model.Sys getSys() {
         return sys;
     }
 
     /**
      * @param sys The sys
      */
-    public void setSys(Sys sys) {
+    public void setSys(org.openweathermap.model.Sys sys) {
         this.sys = sys;
     }
 

@@ -4,9 +4,9 @@ import android.content.Context;
 
 import com.google.gson.Gson;
 import com.mirhoseini.appsettings.AppSettings;
-import com.mirhoseini.weatherapp.core.service.model.WeatherMix;
+import org.openweathermap.model.WeatherMix;
+import com.mirhoseini.weatherapp.core.utils.CacheProvider;
 import com.mirhoseini.weatherapp.core.utils.Constants;
-import com.mirhoseini.weatherapp.core.utils.ICacher;
 
 import javax.inject.Inject;
 
@@ -15,11 +15,11 @@ import rx.Observable;
 /**
  * Created by Mohsen on 30/04/16.
  */
-public class AppCacher implements ICacher {
+public class AppCacheProvider implements CacheProvider {
     Context mContext;
 
     @Inject
-    public AppCacher(Context context) {
+    public AppCacheProvider(Context context) {
         mContext = context;
     }
 

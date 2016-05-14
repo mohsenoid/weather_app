@@ -1,7 +1,6 @@
 package com.mirhoseini.weatherapp.ui.activity;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -21,22 +20,20 @@ import com.crashlytics.android.answers.CustomEvent;
 import com.mirhoseini.appsettings.AppSettings;
 import com.mirhoseini.utils.Utils;
 import com.mirhoseini.weatherapp.BaseActivity;
-import com.mirhoseini.weatherapp.BuildConfig;
 import com.mirhoseini.weatherapp.R;
 import com.mirhoseini.weatherapp.WeatherApplication;
-import com.mirhoseini.weatherapp.core.presentation.IPresenter;
 import com.mirhoseini.weatherapp.core.presentation.WeatherPresenter;
-import com.mirhoseini.weatherapp.core.service.INetworkService;
-import com.mirhoseini.weatherapp.core.service.WeatherNetworkService;
-import com.mirhoseini.weatherapp.core.service.model.WeatherHistory;
-import com.mirhoseini.weatherapp.core.service.model.WeatherMix;
+import com.mirhoseini.weatherapp.core.service.WeatherService;
+
+import org.openweathermap.model.WeatherHistory;
+import org.openweathermap.model.WeatherMix;
+import com.mirhoseini.weatherapp.core.utils.CacheProvider;
 import com.mirhoseini.weatherapp.core.utils.Constants;
-import com.mirhoseini.weatherapp.core.utils.ICacher;
-import com.mirhoseini.weatherapp.core.utils.IScheduler;
-import com.mirhoseini.weatherapp.core.view.IViewMain;
-import com.mirhoseini.weatherapp.ui.fragment.CurrentFragment;
-import com.mirhoseini.weatherapp.ui.fragment.ForecastFragment;
-import com.mirhoseini.weatherapp.ui.fragment.HistoryFragment;
+import com.mirhoseini.weatherapp.core.utils.SchedulerProvider;
+import com.mirhoseini.weatherapp.core.view.MainView;
+import com.mirhoseini.weatherapp.ui.fragment.CurrentWeatherFragment;
+import com.mirhoseini.weatherapp.ui.fragment.ForecastWeatherFragment;
+import com.mirhoseini.weatherapp.ui.fragment.HistoryWeatherFragment;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -52,35 +49,35 @@ import timber.log.Timber;
 /**
  * Created by Mohsen on 30/04/16.
  */
-public class MainActivity extends BaseActivity implements IViewMain, ForecastFragment.OnCurrentFragmentInteractionListener {
+public class MainActivity extends BaseActivity implements MainView, ForecastWeatherFragment.OnCurrentFragmentInteractionListener {
 
-    static boolean sDoubleBackToExitPressedOnce;
-    Context mContext;
+    static boolean doubleBackToExitPressedOnce;
 
-    AlertDialog mInternetConnectionDialog;
+
+    AlertDialog internetConnectionDialog;
 
     //injecting dependencies via Dagger
     @Inject
-    IScheduler mScheduler;
+    SchedulerProvider schedulerProvider;
     @Inject
-    ICacher mCacher;
+    CacheProvider cacheProvider;
     @Inject
-    INetworkService mNetworkService;
+    WeatherService weatherService;
     @Inject
-    IPresenter mPresenter;
+    WeatherPresenter weatherPresenter;
 
     //injecting views via Butterknife
     @BindView(R.id.progress_container)
-    ViewGroup mProgressContainer;
+    ViewGroup progressContainer;
     @BindView(R.id.progress_message)
-    TextView mProgressMessage;
-    @BindView(R.id.city_edittext)
-    EditText mCityEditText;
+    TextView progressMessage;
+    @BindView(R.id.city)
+    EditText city;
     @BindView(R.id.fragment_container)
-    ViewGroup mFragmentContainer;
+    ViewGroup fragmentContainer;
 
 
-    @OnEditorAction(R.id.city_edittext)
+    @OnEditorAction(R.id.city)
     public boolean onEditorAction(TextView textView, int action, KeyEvent keyEvent) {
         if (action == EditorInfo.IME_ACTION_GO || keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
             submit(textView);
@@ -88,14 +85,14 @@ public class MainActivity extends BaseActivity implements IViewMain, ForecastFra
         return false;
     }
 
-    @OnClick(R.id.go_button)
+    @OnClick(R.id.go)
     public void submit(View view) {
-        Answers.getInstance().logCustom(new CustomEvent("Pressed Go Button").putCustomAttribute("City Name", mCityEditText.getText().toString()));
+        Answers.getInstance().logCustom(new CustomEvent("Pressed Go Button").putCustomAttribute("City Name", city.getText().toString()));
 
         //hide keyboard for better UX
-        Utils.hideKeyboard(mContext, mCityEditText);
+        Utils.hideKeyboard(this, city);
 
-        getWeatherData(mCityEditText.getText().toString());
+        getWeatherData(city.getText().toString());
     }
 
     private void getWeatherData(String city) {
@@ -104,7 +101,7 @@ public class MainActivity extends BaseActivity implements IViewMain, ForecastFra
             hideProgress();
         } else {
             //load city weather data
-            mPresenter.loadWeather(city, Utils.isConnected(mContext));
+            weatherPresenter.loadWeather(city, Utils.isConnected(this));
         }
     }
 
@@ -113,12 +110,10 @@ public class MainActivity extends BaseActivity implements IViewMain, ForecastFra
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mContext = this;
-
         WeatherApplication app = (WeatherApplication) getApplication();
         app.getComponent().inject(this);
 
-        mPresenter.setView(this);
+        weatherPresenter.setView(this);
 
         // binding Views using ButterKnife
         ButterKnife.bind(this);
@@ -130,12 +125,12 @@ public class MainActivity extends BaseActivity implements IViewMain, ForecastFra
         String lastCity = "";
 
         if (savedInstanceState == null) { //load lastCity from sharePreferences
-            lastCity = AppSettings.getString(mContext, Constants.KEY_LAST_CITY, Constants.CITY_DEFAULT_VALUE);
+            lastCity = AppSettings.getString(this, Constants.KEY_LAST_CITY, Constants.CITY_DEFAULT_VALUE);
         } else { //load lastCity from saved state before UI change
             lastCity = savedInstanceState.getString(Constants.KEY_LAST_CITY);
         }
 
-        mCityEditText.setText(lastCity);
+        city.setText(lastCity);
 
         getWeatherData(lastCity);
     }
@@ -145,11 +140,11 @@ public class MainActivity extends BaseActivity implements IViewMain, ForecastFra
         Timber.d("Activity Resumed");
         super.onResume();
 
-        sDoubleBackToExitPressedOnce = false;
+        doubleBackToExitPressedOnce = false;
 
         // dismiss no internet connection dialog in case of getting back from setting and connection fixed
-        if (mInternetConnectionDialog != null)
-            mInternetConnectionDialog.dismiss();
+        if (internetConnectionDialog != null)
+            internetConnectionDialog.dismiss();
     }
 
 
@@ -158,7 +153,7 @@ public class MainActivity extends BaseActivity implements IViewMain, ForecastFra
         Timber.d("Activity Destroyed");
 
         // call destroy to remove references to objects
-        mPresenter.onDestroy();
+        weatherPresenter.onDestroy();
         super.onDestroy();
     }
 
@@ -166,15 +161,15 @@ public class MainActivity extends BaseActivity implements IViewMain, ForecastFra
     public void showProgress() {
         Timber.d("Showing Progress");
 
-        mProgressContainer.setVisibility(View.VISIBLE);
-        mFragmentContainer.setVisibility(View.INVISIBLE);
+        progressContainer.setVisibility(View.VISIBLE);
+        fragmentContainer.setVisibility(View.INVISIBLE);
     }
 
     @Override
     public void hideProgress() {
         Timber.d("Hiding Progress");
 
-        mProgressContainer.setVisibility(View.INVISIBLE);
+        progressContainer.setVisibility(View.INVISIBLE);
     }
 
     @Override
@@ -184,15 +179,15 @@ public class MainActivity extends BaseActivity implements IViewMain, ForecastFra
         // save last loaded data city name to disk cache for better UX
         saveLastCity(weatherMix.getWeatherCurrent().getName());
 
-        mFragmentContainer.setVisibility(View.VISIBLE);
+        fragmentContainer.setVisibility(View.VISIBLE);
 
         // load data to corresponding fragment
-        CurrentFragment currentFragment = CurrentFragment.newInstance(weatherMix.getWeatherCurrent());
-        ForecastFragment forecastFragment = ForecastFragment.newInstance(weatherMix.getWeatherForecast());
+        CurrentWeatherFragment currentWeatherFragment = CurrentWeatherFragment.newInstance(weatherMix.getWeatherCurrent());
+        ForecastWeatherFragment forecastWeatherFragment = ForecastWeatherFragment.newInstance(weatherMix.getWeatherForecast());
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.current_fragment, currentFragment, "current");
-        fragmentTransaction.replace(R.id.forecast_fragment, forecastFragment, "forecast");
+        fragmentTransaction.replace(R.id.current_fragment, currentWeatherFragment, "current");
+        fragmentTransaction.replace(R.id.forecast_fragment, forecastWeatherFragment, "forecast");
         fragmentTransaction.commitAllowingStateLoss();
 
     }
@@ -201,43 +196,43 @@ public class MainActivity extends BaseActivity implements IViewMain, ForecastFra
     public void setWeatherHistoryValues(WeatherHistory weatherHistory) {
         Timber.d("Setting Weather History: %s", weatherHistory.toString());
 
-        mFragmentContainer.setVisibility(View.VISIBLE);
+        fragmentContainer.setVisibility(View.VISIBLE);
 
-        HistoryFragment historyFragment = HistoryFragment.newInstance(weatherHistory);
+        HistoryWeatherFragment historyWeatherFragment = HistoryWeatherFragment.newInstance(weatherHistory);
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.current_fragment, historyFragment).commit();
+        fragmentTransaction.replace(R.id.current_fragment, historyWeatherFragment).commit();
     }
 
     // save user last city
     private void saveLastCity(String city) {
         Timber.d("Saving Last City");
 
-        AppSettings.setValue(mContext, Constants.KEY_LAST_CITY, city);
+        AppSettings.setValue(this, Constants.KEY_LAST_CITY, city);
     }
 
     @Override
     public void showToastMessage(String message) {
         Timber.d("Showing Toast Message: %s", message);
 
-        Toast.makeText(mContext, message, Toast.LENGTH_LONG).show();
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void showProgressMessage(String message) {
         Timber.d("Showing Progress Message: %s", message);
 
-        mProgressMessage.setText(message);
+        progressMessage.setText(message);
     }
 
     @Override
     public void showOfflineMessage() {
         Timber.d("Showing Offline Message");
 
-        Snackbar.make(mCityEditText, R.string.offline_message, Snackbar.LENGTH_LONG)
+        Snackbar.make(city, R.string.offline_message, Snackbar.LENGTH_LONG)
                 .setAction(R.string.go_online, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mContext.startActivity(new Intent(
+                        startActivity(new Intent(
                                 Settings.ACTION_WIFI_SETTINGS));
                     }
                 })
@@ -250,28 +245,28 @@ public class MainActivity extends BaseActivity implements IViewMain, ForecastFra
     public void showExitMessage() {
         Timber.d("Showing Exit Message");
 
-        Toast.makeText(mContext, R.string.msg_exit, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, R.string.msg_exit, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void showConnectionError() {
         Timber.d("Showing Connection Error Message");
 
-        if (mInternetConnectionDialog != null)
-            mInternetConnectionDialog.dismiss();
+        if (internetConnectionDialog != null)
+            internetConnectionDialog.dismiss();
 
-        mInternetConnectionDialog = Utils.showNoInternetConnectionDialog(mContext, false);
+        internetConnectionDialog = Utils.showNoInternetConnectionDialog(this, false);
     }
 
     @Override
     public void showRetryMessage() {
         Timber.d("Showing Retry Message");
 
-        Snackbar.make(mCityEditText, R.string.retry_message, Snackbar.LENGTH_LONG)
+        Snackbar.make(city, R.string.retry_message, Snackbar.LENGTH_LONG)
                 .setAction(R.string.load_retry, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        getWeatherData(mCityEditText.getText().toString());
+                        getWeatherData(city.getText().toString());
                     }
                 })
                 .setActionTextColor(Color.RED)
@@ -284,13 +279,13 @@ public class MainActivity extends BaseActivity implements IViewMain, ForecastFra
         Timber.d("Activity Back Pressed");
 
         // check for double back press to exit
-        if (sDoubleBackToExitPressedOnce) {
+        if (doubleBackToExitPressedOnce) {
             Timber.d("Exiting");
 
-            Utils.exit(mContext);
+            Utils.exit(this);
         } else {
 
-            sDoubleBackToExitPressedOnce = true;
+            doubleBackToExitPressedOnce = true;
 
             showExitMessage();
 
@@ -299,7 +294,7 @@ public class MainActivity extends BaseActivity implements IViewMain, ForecastFra
 
                 @Override
                 public void run() {
-                    sDoubleBackToExitPressedOnce = false;
+                    doubleBackToExitPressedOnce = false;
                 }
 
             }, 2500);
@@ -311,7 +306,7 @@ public class MainActivity extends BaseActivity implements IViewMain, ForecastFra
         Timber.d("Activity Saving Instance State");
 
         //save TimeSpan selected by user before data loaded and saved to SharedPreferences
-        outState.putString(Constants.KEY_LAST_CITY, mCityEditText.getText().toString());
+        outState.putString(Constants.KEY_LAST_CITY, city.getText().toString());
 
         super.onSaveInstanceState(outState);
     }
@@ -320,6 +315,6 @@ public class MainActivity extends BaseActivity implements IViewMain, ForecastFra
     @Override
     public void onLoadHistory(String city) {
         // load city weather history, call from forecast fragment
-        mPresenter.loadWeatherHistory(city, Utils.isConnected(mContext));
+        weatherPresenter.loadWeatherHistory(city, Utils.isConnected(this));
     }
 }

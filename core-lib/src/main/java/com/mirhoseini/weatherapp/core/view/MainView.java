@@ -1,12 +1,12 @@
 package com.mirhoseini.weatherapp.core.view;
 
-import com.mirhoseini.weatherapp.core.service.model.WeatherHistory;
-import com.mirhoseini.weatherapp.core.service.model.WeatherMix;
+import org.openweathermap.model.WeatherHistory;
+import org.openweathermap.model.WeatherMix;
 
 /**
  * Created by Mohsen on 30/04/16.
  */
-public interface IViewMain {
+public interface MainView {
 
     void showProgress();
 

@@ -8,24 +8,24 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.mirhoseini.weatherapp.R;
-import com.mirhoseini.weatherapp.core.service.model.WeatherHistory;
+import org.openweathermap.model.WeatherHistory;
 
 /**
  * Created by Mohsen on 30/04/16.
  */
-public class HistoryFragment extends Fragment {
+public class HistoryWeatherFragment extends Fragment {
     private static final String ARG_WEATHER_HISTORY = "weather_history";
 
     private WeatherHistory mWeatherHistory;
 
 //    private OnCurrentFragmentInteractionListener mListener;
 
-    public HistoryFragment() {
+    public HistoryWeatherFragment() {
         // Required empty public constructor
     }
 
-    public static HistoryFragment newInstance(WeatherHistory weatherHistory) {
-        HistoryFragment fragment = new HistoryFragment();
+    public static HistoryWeatherFragment newInstance(WeatherHistory weatherHistory) {
+        HistoryWeatherFragment fragment = new HistoryWeatherFragment();
         Bundle args = new Bundle();
         args.putSerializable(ARG_WEATHER_HISTORY, weatherHistory);
         fragment.setArguments(args);

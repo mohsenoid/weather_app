@@ -1,6 +1,6 @@
 package com.mirhoseini.weatherapp.utils;
 
-import com.mirhoseini.weatherapp.core.utils.IScheduler;
+import com.mirhoseini.weatherapp.core.utils.SchedulerProvider;
 
 import javax.inject.Inject;
 
@@ -11,10 +11,10 @@ import rx.schedulers.Schedulers;
 /**
  * Created by Mohsen on 30/04/16.
  */
-public class AppScheduler implements IScheduler {
+public class AppSchedulerProvider implements SchedulerProvider {
 
     @Inject
-    public AppScheduler() {
+    public AppSchedulerProvider() {
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.mirhoseini.weatherapp.core.service.model;
+package org.openweathermap.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

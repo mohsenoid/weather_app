@@ -9,9 +9,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.mirhoseini.weatherapp.R;
-import com.mirhoseini.weatherapp.core.service.model.Weather;
-import com.mirhoseini.weatherapp.core.service.model.WeatherCurrent;
-import com.mirhoseini.weatherapp.utils.AppUtils;
+import org.openweathermap.model.Weather;
+import org.openweathermap.model.WeatherCurrent;
+import com.mirhoseini.weatherapp.utils.WeatherUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -19,7 +19,7 @@ import butterknife.ButterKnife;
 /**
  * Created by Mohsen on 30/04/16.
  */
-public class CurrentFragment extends Fragment {
+public class CurrentWeatherFragment extends Fragment {
     private static final String ARG_WEATHER_CURRENT = "weather_current";
     @BindView(R.id.name)
     TextView mNameTextView;
@@ -37,12 +37,12 @@ public class CurrentFragment extends Fragment {
     TextView mTempLowTextView;
     private WeatherCurrent mWeatherCurrent;
 
-    public CurrentFragment() {
+    public CurrentWeatherFragment() {
         // Required empty public constructor
     }
 
-    public static CurrentFragment newInstance(WeatherCurrent weatherCurrent) {
-        CurrentFragment fragment = new CurrentFragment();
+    public static CurrentWeatherFragment newInstance(WeatherCurrent weatherCurrent) {
+        CurrentWeatherFragment fragment = new CurrentWeatherFragment();
         Bundle args = new Bundle();
         args.putSerializable(ARG_WEATHER_CURRENT, weatherCurrent);
         fragment.setArguments(args);
@@ -74,7 +74,7 @@ public class CurrentFragment extends Fragment {
 
             mTempTextView.setText(mWeatherCurrent.getMain().getTemp() + "°C");
 
-            mIconImageView.setImageResource(AppUtils.convertIconToResource(weather.getIcon()));
+            mIconImageView.setImageResource(WeatherUtils.convertIconToResource(weather.getIcon()));
 
             mWindSpeedTextView.setText(mWeatherCurrent.getWind().getSpeed() + "m/s");
 
