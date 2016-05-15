@@ -14,6 +14,7 @@ import org.junit.runners.MethodSorters;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.clearText;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.replaceText;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
@@ -44,8 +45,7 @@ public class MainActivityEspressoTest {
     }
 
     private void testWeatherResultForCity(String cityName) {
-        onView(withId(R.id.city)).perform(clearText());
-        onView(withId(R.id.city)).perform(typeText(cityName));
+        onView(withId(R.id.city)).perform(replaceText(cityName));
         onView(withId(R.id.go)).perform(click());
         onView(withId(R.id.name)).check(matches(withText(cityName)));
     }
