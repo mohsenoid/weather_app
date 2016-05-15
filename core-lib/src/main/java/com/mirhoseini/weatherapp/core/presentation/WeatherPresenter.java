@@ -9,8 +9,6 @@ public interface WeatherPresenter {
 
     void setView(MainView view);
 
-    void onDestroy();
-
     void loadWeather(String city, boolean isConnected);
 
     void loadWeatherHistory(String city, boolean isConnected);

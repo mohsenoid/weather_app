@@ -23,10 +23,9 @@ import com.mirhoseini.weatherapp.BaseActivity;
 import com.mirhoseini.weatherapp.R;
 import com.mirhoseini.weatherapp.WeatherApplication;
 import com.mirhoseini.weatherapp.core.presentation.WeatherPresenter;
+import com.mirhoseini.weatherapp.core.presentation.WeatherPresenterImpl;
 import com.mirhoseini.weatherapp.core.service.WeatherService;
-
-import org.openweathermap.model.WeatherHistory;
-import org.openweathermap.model.WeatherMix;
+import com.mirhoseini.weatherapp.core.service.WeatherServiceImpl;
 import com.mirhoseini.weatherapp.core.utils.CacheProvider;
 import com.mirhoseini.weatherapp.core.utils.Constants;
 import com.mirhoseini.weatherapp.core.utils.SchedulerProvider;
@@ -34,6 +33,9 @@ import com.mirhoseini.weatherapp.core.view.MainView;
 import com.mirhoseini.weatherapp.ui.fragment.CurrentWeatherFragment;
 import com.mirhoseini.weatherapp.ui.fragment.ForecastWeatherFragment;
 import com.mirhoseini.weatherapp.ui.fragment.HistoryWeatherFragment;
+
+import org.openweathermap.model.WeatherHistory;
+import org.openweathermap.model.WeatherMix;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -62,9 +64,9 @@ public class MainActivity extends BaseActivity implements MainView, ForecastWeat
     @Inject
     CacheProvider cacheProvider;
     @Inject
-    WeatherService weatherService;
+    WeatherServiceImpl weatherService;
     @Inject
-    WeatherPresenter weatherPresenter;
+    WeatherPresenterImpl weatherPresenter;
 
     //injecting views via Butterknife
     @BindView(R.id.progress_container)
@@ -140,6 +142,8 @@ public class MainActivity extends BaseActivity implements MainView, ForecastWeat
         Timber.d("Activity Resumed");
         super.onResume();
 
+        weatherPresenter.onResume();
+
         doubleBackToExitPressedOnce = false;
 
         // dismiss no internet connection dialog in case of getting back from setting and connection fixed
@@ -147,6 +151,12 @@ public class MainActivity extends BaseActivity implements MainView, ForecastWeat
             internetConnectionDialog.dismiss();
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        weatherPresenter.onPause();
+    }
 
     @Override
     protected void onDestroy() {

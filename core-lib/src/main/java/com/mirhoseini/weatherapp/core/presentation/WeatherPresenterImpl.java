@@ -18,10 +18,10 @@ import rx.subscriptions.Subscriptions;
 /**
  * Created by Mohsen on 30/04/16.
  */
-public class WeatherPresenterImpl implements WeatherPresenter {
+public class WeatherPresenterImpl implements WeatherPresenter,LifecyclePresenter {
 
 
-    WeatherInteractor weatherInteractor;
+    WeatherInteractorImpl weatherInteractor;
     private MainView mainView;
 
     private Subscription subscription = Subscriptions.empty();
@@ -42,6 +42,16 @@ public class WeatherPresenterImpl implements WeatherPresenter {
         if (view == null) {
             subscription.unsubscribe();
         }
+    }
+
+    @Override
+    public void onResume() {
+
+    }
+
+    @Override
+    public void onPause() {
+
     }
 
     @Override
