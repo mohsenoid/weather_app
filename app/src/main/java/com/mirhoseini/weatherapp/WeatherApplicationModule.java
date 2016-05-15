@@ -3,7 +3,9 @@ package com.mirhoseini.weatherapp;
 import android.content.Context;
 
 import com.mirhoseini.weatherapp.core.model.Clock;
+import com.mirhoseini.weatherapp.core.presentation.WeatherPresenter;
 import com.mirhoseini.weatherapp.core.presentation.WeatherPresenterImpl;
+import com.mirhoseini.weatherapp.core.service.WeatherService;
 import com.mirhoseini.weatherapp.core.service.WeatherServiceImpl;
 import com.mirhoseini.weatherapp.core.utils.CacheProvider;
 import com.mirhoseini.weatherapp.core.utils.SchedulerProvider;
@@ -50,13 +52,13 @@ public class WeatherApplicationModule {
     }
 
     @Provides
-    public WeatherPresenterImpl provideWeatherPresenter(CacheProvider cacheProvider, WeatherServiceImpl weatherService, SchedulerProvider schedulerProvider) {
+    public WeatherPresenter provideWeatherPresenter(CacheProvider cacheProvider, WeatherService weatherService, SchedulerProvider schedulerProvider) {
         return new WeatherPresenterImpl(cacheProvider, weatherService, schedulerProvider);
     }
 
     @Provides
     @Singleton
-    public WeatherServiceImpl provideWeatherNetworkService() {
+    public WeatherService provideWeatherNetworkService() {
         return new WeatherServiceImpl(BuildConfig.DEBUG);
     }
 }

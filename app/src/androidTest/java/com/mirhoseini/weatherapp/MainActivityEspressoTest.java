@@ -3,7 +3,7 @@ package com.mirhoseini.weatherapp;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
-import com.mirhoseini.weatherapp.ui.activity.MainViewActivity;
+import com.mirhoseini.weatherapp.ui.activity.MainActivity;
 
 import org.junit.FixMethodOrder;
 import org.junit.Rule;
@@ -28,8 +28,8 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 public class MainActivityEspressoTest {
 
     @Rule
-    public ActivityTestRule<MainViewActivity> mActivityRule = new ActivityTestRule<>(
-            MainViewActivity.class);
+    public ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule<>(
+            MainActivity.class);
 
     @Test
     public void stage1_testUiDisplayedCorrectly() {

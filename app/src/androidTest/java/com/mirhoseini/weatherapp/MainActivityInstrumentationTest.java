@@ -7,7 +7,7 @@ import android.widget.TextView;
 
 import com.mirhoseini.utils.Utils;
 import com.mirhoseini.weatherapp.core.utils.Constants;
-import com.mirhoseini.weatherapp.ui.activity.MainViewActivity;
+import com.mirhoseini.weatherapp.ui.activity.MainActivity;
 
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -18,14 +18,14 @@ import org.junit.runners.MethodSorters;
  * Created by Mohsen on 30/04/16.
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class MainActivityInstrumentationTest extends ActivityInstrumentationTestCase2<MainViewActivity> {
+public class MainActivityInstrumentationTest extends ActivityInstrumentationTestCase2<MainActivity> {
 
-    private MainViewActivity mActivity;
+    private MainActivity mActivity;
     private EditText mCityEditText;
     private Button mGoButton;
 
     public MainActivityInstrumentationTest() {
-        super(MainViewActivity.class);
+        super(MainActivity.class);
     }
 
     public void setUp() throws Exception {

@@ -5,7 +5,7 @@ import com.mirhoseini.weatherapp.core.view.MainView;
 /**
  * Created by Mohsen on 30/04/16.
  */
-public interface WeatherPresenter {
+public interface WeatherPresenter extends LifecyclePresenter {
 
     void setView(MainView view);
 
