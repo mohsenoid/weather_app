@@ -3,7 +3,7 @@ package com.mirhoseini.weatherapp;
 import com.mirhoseini.weatherapp.core.model.Clock;
 import com.mirhoseini.weatherapp.core.model.WeatherInteractorImpl;
 import com.mirhoseini.weatherapp.core.service.WeatherApiServiceImpl;
-import com.mirhoseini.weatherapp.core.utils.Constants;
+import com.mirhoseini.weatherapp.core.util.Constants;
 import com.mirhoseini.weatherapp.util.AppCacheProvider;
 import com.mirhoseini.weatherapp.util.AppSchedulerProvider;
 

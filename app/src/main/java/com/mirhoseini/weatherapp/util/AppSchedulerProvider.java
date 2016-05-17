@@ -1,6 +1,6 @@
 package com.mirhoseini.weatherapp.util;
 
-import com.mirhoseini.weatherapp.core.utils.SchedulerProvider;
+import com.mirhoseini.weatherapp.core.util.SchedulerProvider;
 
 import javax.inject.Inject;
 

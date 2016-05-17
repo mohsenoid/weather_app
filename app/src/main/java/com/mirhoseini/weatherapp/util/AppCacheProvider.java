@@ -4,8 +4,8 @@ import android.content.Context;
 
 import com.google.gson.Gson;
 import com.mirhoseini.appsettings.AppSettings;
-import com.mirhoseini.weatherapp.core.utils.CacheProvider;
-import com.mirhoseini.weatherapp.core.utils.Constants;
+import com.mirhoseini.weatherapp.core.util.CacheProvider;
+import com.mirhoseini.weatherapp.core.util.Constants;
 
 import org.openweathermap.model.WeatherMix;
 

@@ -6,7 +6,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.mirhoseini.utils.Utils;
-import com.mirhoseini.weatherapp.core.utils.Constants;
+import com.mirhoseini.weatherapp.core.util.Constants;
 import com.mirhoseini.weatherapp.ui.activity.MainActivity;
 
 import org.junit.FixMethodOrder;

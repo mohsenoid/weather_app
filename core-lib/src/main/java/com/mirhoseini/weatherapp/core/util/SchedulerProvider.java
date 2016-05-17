@@ -1,4 +1,4 @@
-package com.mirhoseini.weatherapp.core.utils;
+package com.mirhoseini.weatherapp.core.util;
 
 import rx.Scheduler;
 

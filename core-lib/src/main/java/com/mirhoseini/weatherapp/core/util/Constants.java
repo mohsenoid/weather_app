@@ -1,4 +1,4 @@
-package com.mirhoseini.weatherapp.core.utils;
+package com.mirhoseini.weatherapp.core.util;
 
 /**
  * Created by Mohsen on 30/04/16.

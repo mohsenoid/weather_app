@@ -1,4 +1,4 @@
-package com.mirhoseini.weatherapp.core.utils;
+package com.mirhoseini.weatherapp.core.util;
 
 import org.openweathermap.model.WeatherMix;
 

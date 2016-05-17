@@ -1,7 +1,7 @@
 package com.mirhoseini.weatherapp.core.service;
 
 
-import com.mirhoseini.weatherapp.core.utils.Constants;
+import com.mirhoseini.weatherapp.core.util.Constants;
 
 import org.openweathermap.model.WeatherHistory;
 import org.openweathermap.model.WeatherMix;

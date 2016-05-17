@@ -2,9 +2,9 @@ package com.mirhoseini.weatherapp.core.model;
 
 
 import com.mirhoseini.weatherapp.core.service.WeatherApiService;
-import com.mirhoseini.weatherapp.core.utils.CacheProvider;
-import com.mirhoseini.weatherapp.core.utils.Constants;
-import com.mirhoseini.weatherapp.core.utils.SchedulerProvider;
+import com.mirhoseini.weatherapp.core.util.CacheProvider;
+import com.mirhoseini.weatherapp.core.util.Constants;
+import com.mirhoseini.weatherapp.core.util.SchedulerProvider;
 
 import org.openweathermap.model.WeatherHistory;
 import org.openweathermap.model.WeatherMix;

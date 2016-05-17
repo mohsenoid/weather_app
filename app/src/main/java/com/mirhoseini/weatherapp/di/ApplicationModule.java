@@ -5,9 +5,9 @@ import android.content.Context;
 import com.mirhoseini.weatherapp.BuildConfig;
 import com.mirhoseini.weatherapp.WeatherApplication;
 import com.mirhoseini.weatherapp.core.model.Clock;
-import com.mirhoseini.weatherapp.core.utils.CacheProvider;
-import com.mirhoseini.weatherapp.core.utils.Constants;
-import com.mirhoseini.weatherapp.core.utils.SchedulerProvider;
+import com.mirhoseini.weatherapp.core.util.CacheProvider;
+import com.mirhoseini.weatherapp.core.util.Constants;
+import com.mirhoseini.weatherapp.core.util.SchedulerProvider;
 import com.mirhoseini.weatherapp.util.AppCacheProvider;
 import com.mirhoseini.weatherapp.util.AppSchedulerProvider;
 
