@@ -5,8 +5,6 @@ package com.mirhoseini.weatherapp.core.presentation;
  */
 public interface WeatherPresenter extends LifecyclePresenter {
 
-//    void setView(MainView view);
-
     void loadWeather(String city, boolean isConnected);
 
     void loadWeatherHistory(String city, boolean isConnected);

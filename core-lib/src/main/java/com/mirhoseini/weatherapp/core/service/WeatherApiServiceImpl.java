@@ -23,10 +23,11 @@ public class WeatherApiServiceImpl implements WeatherApiService {
     @Override
     public Observable<WeatherMix> loadWeather(String city) {
 
-        return Observable.combineLatest(
-                api.getWeather(city, Constants.API_KEY, Constants.WEATHER_UNITS),
-                api.getWeatherForecast(city, Constants.API_KEY, Constants.WEATHER_UNITS, Constants.FORECAST_DAY_COUNT),
-                (weatherCurrent, weatherForecast) -> new WeatherMix(weatherCurrent, weatherForecast));
+        return Observable
+                .combineLatest(
+                        api.getWeather(city, Constants.API_KEY, Constants.WEATHER_UNITS),
+                        api.getWeatherForecast(city, Constants.API_KEY, Constants.WEATHER_UNITS, Constants.FORECAST_DAY_COUNT),
+                        (weatherCurrent, weatherForecast) -> new WeatherMix(weatherCurrent, weatherForecast));
     }
 
     @Override

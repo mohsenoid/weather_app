@@ -21,39 +21,22 @@ public class WeatherPresenterImpl implements WeatherPresenter, LifecyclePresente
     private MainView view;
     private Subscription subscription = Subscriptions.empty();
 
-//    public WeatherPresenterImpl(CacheProvider cacheProvider, WeatherApiService weatherApiService, SchedulerProvider schedulerProvider) {
-//        interactor = new WeatherInteractorImpl(cacheProvider, weatherApiService, schedulerProvider, Clock.REAL);
-//    }
-
     @Inject
     public WeatherPresenterImpl(MainView view, WeatherInteractor interactor) {
-//        interactor = new WeatherInteractorImpl(cacheProvider, weatherApiService, schedulerProvider, Clock.REAL);
         this.view = view;
         this.interactor = interactor;
     }
 
-//    public MainView getView() {
-//        return view;
-//    }
-
-//    @Override
-//    public void setView(MainView view) {
-//
-//        this.view = view;
-//
-//        if (view == null) {
-//            subscription.unsubscribe();
-//        }
-//    }
-
     @Override
     public void onResume() {
-
+//        if (view != null) {
+//            view.hideProgress();
+//        }
     }
 
     @Override
     public void onPause() {
-
+//        subscription.unsubscribe();
     }
 
     @Override
@@ -93,7 +76,10 @@ public class WeatherPresenterImpl implements WeatherPresenter, LifecyclePresente
                             view.showConnectionError();
                         }
                     }
-                    view.hideProgress();
+
+                    if (view != null) {
+                        view.hideProgress();
+                    }
                 },
                 () -> {
                     if (view != null) {
@@ -137,7 +123,10 @@ public class WeatherPresenterImpl implements WeatherPresenter, LifecyclePresente
                             view.showConnectionError();
                         }
                     }
-                    view.hideProgress();
+
+                    if (view != null) {
+                        view.hideProgress();
+                    }
                 },
                 () -> {
                     if (view != null) {

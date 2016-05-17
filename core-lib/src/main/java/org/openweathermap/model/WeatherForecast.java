@@ -18,10 +18,10 @@ public class WeatherForecast implements Serializable {
     private City city;
     @SerializedName("cod")
     @Expose
-    private String cod;
+    private Integer cod;
     @SerializedName("message")
     @Expose
-    private Double message;
+    private String message;
     @SerializedName("cnt")
     @Expose
     private Integer cnt;
@@ -42,7 +42,7 @@ public class WeatherForecast implements Serializable {
      * @param list
      * @param city
      */
-    public WeatherForecast(City city, String cod, Double message, Integer cnt, List<org.openweathermap.model.Forecast> list) {
+    public WeatherForecast(City city, Integer cod, String message, Integer cnt, List<org.openweathermap.model.Forecast> list) {
         this.city = city;
         this.cod = cod;
         this.message = message;
@@ -67,28 +67,28 @@ public class WeatherForecast implements Serializable {
     /**
      * @return The cod
      */
-    public String getCod() {
+    public Integer getCod() {
         return cod;
     }
 
     /**
      * @param cod The cod
      */
-    public void setCod(String cod) {
+    public void setCod(Integer cod) {
         this.cod = cod;
     }
 
     /**
      * @return The message
      */
-    public Double getMessage() {
+    public String getMessage() {
         return message;
     }
 
     /**
      * @param message The message
      */
-    public void setMessage(Double message) {
+    public void setMessage(String message) {
         this.message = message;
     }
 

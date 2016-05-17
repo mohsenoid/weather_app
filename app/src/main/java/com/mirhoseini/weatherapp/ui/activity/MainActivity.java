@@ -87,7 +87,7 @@ public class MainActivity extends BaseActivity implements MainView, ForecastWeat
 
     @OnClick(R.id.go)
     public void submit(View view) {
-        Answers.getInstance().logCustom(new CustomEvent("Pressed Go Button").putCustomAttribute("City Name", city.getText().toString()));
+//        Answers.getInstance().logCustom(new CustomEvent("Pressed Go Button").putCustomAttribute("City Name", city.getText().toString()));
 
         //hide keyboard for better UX
         Utils.hideKeyboard(this, city);
