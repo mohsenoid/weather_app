@@ -1,4 +1,4 @@
-package com.mirhoseini.weatherapp.module;
+package com.mirhoseini.weatherapp.core.modules;
 
 import com.mirhoseini.weatherapp.core.service.Api;
 import com.mirhoseini.weatherapp.core.service.WeatherApiService;

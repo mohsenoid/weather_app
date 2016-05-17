@@ -1,12 +1,22 @@
 apply plugin: 'java'
 apply plugin: 'me.tatarka.retrolambda'
 
+configurations{
+    provided
+}
+
+sourceSets{
+    main{
+        compileClasspath += configurations.provided
+    }
+}
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile rootProject.ext.libraries.rxjava
 
-//    testCompile rootProject.ext.testLibraries.junit
-//    testCompile rootProject.ext.testLibraries.mockito
+    testCompile rootProject.ext.testLibraries.junit
+    testCompile rootProject.ext.testLibraries.mockito
 
     compile rootProject.ext.libraries.retrofit
     compile rootProject.ext.libraries.retrofitConverter
@@ -14,5 +24,8 @@ dependencies {
 
     compile rootProject.ext.libraries.okhttp
     compile rootProject.ext.libraries.okhttpLogging
+
+    compile rootProject.ext.libraries.dagger
+    provided rootProject.ext.aptLibraries.daggerCompiler
 
 }

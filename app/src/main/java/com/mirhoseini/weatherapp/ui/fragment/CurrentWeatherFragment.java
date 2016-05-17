@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.mirhoseini.weatherapp.R;
-import com.mirhoseini.weatherapp.utils.WeatherUtils;
+import com.mirhoseini.weatherapp.util.WeatherUtils;
 
 import org.openweathermap.model.Weather;
 import org.openweathermap.model.WeatherCurrent;

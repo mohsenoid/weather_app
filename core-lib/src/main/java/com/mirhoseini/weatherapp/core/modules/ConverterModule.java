@@ -1,4 +1,4 @@
-package com.mirhoseini.weatherapp.module;
+package com.mirhoseini.weatherapp.core.modules;
 
 import com.google.gson.Gson;
 

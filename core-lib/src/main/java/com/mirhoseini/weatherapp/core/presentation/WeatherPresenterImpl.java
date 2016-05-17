@@ -1,15 +1,13 @@
 package com.mirhoseini.weatherapp.core.presentation;
 
 
-import com.mirhoseini.weatherapp.core.model.Clock;
-import com.mirhoseini.weatherapp.core.model.WeatherInteractorImpl;
-import com.mirhoseini.weatherapp.core.service.WeatherApiService;
-import com.mirhoseini.weatherapp.core.utils.CacheProvider;
-import com.mirhoseini.weatherapp.core.utils.SchedulerProvider;
+import com.mirhoseini.weatherapp.core.model.WeatherInteractor;
 import com.mirhoseini.weatherapp.core.view.MainView;
 
 import java.util.Calendar;
 import java.util.NoSuchElementException;
+
+import javax.inject.Inject;
 
 import rx.Subscription;
 import rx.subscriptions.Subscriptions;
@@ -19,29 +17,34 @@ import rx.subscriptions.Subscriptions;
  */
 public class WeatherPresenterImpl implements WeatherPresenter, LifecyclePresenter {
 
-
-    WeatherInteractorImpl weatherInteractor;
-    private MainView mainView;
-
+    WeatherInteractor interactor;
+    private MainView view;
     private Subscription subscription = Subscriptions.empty();
 
-    public WeatherPresenterImpl(CacheProvider cacheProvider, WeatherApiService weatherApiService, SchedulerProvider schedulerProvider) {
-        weatherInteractor = new WeatherInteractorImpl(cacheProvider, weatherApiService, schedulerProvider, Clock.REAL);
+//    public WeatherPresenterImpl(CacheProvider cacheProvider, WeatherApiService weatherApiService, SchedulerProvider schedulerProvider) {
+//        interactor = new WeatherInteractorImpl(cacheProvider, weatherApiService, schedulerProvider, Clock.REAL);
+//    }
+
+    @Inject
+    public WeatherPresenterImpl(MainView view, WeatherInteractor interactor) {
+//        interactor = new WeatherInteractorImpl(cacheProvider, weatherApiService, schedulerProvider, Clock.REAL);
+        this.view = view;
+        this.interactor = interactor;
     }
 
-    public MainView getView() {
-        return mainView;
-    }
+//    public MainView getView() {
+//        return view;
+//    }
 
-    @Override
-    public void setView(MainView view) {
-
-        this.mainView = view;
-
-        if (view == null) {
-            subscription.unsubscribe();
-        }
-    }
+//    @Override
+//    public void setView(MainView view) {
+//
+//        this.view = view;
+//
+//        if (view == null) {
+//            subscription.unsubscribe();
+//        }
+//    }
 
     @Override
     public void onResume() {
@@ -56,45 +59,45 @@ public class WeatherPresenterImpl implements WeatherPresenter, LifecyclePresente
     @Override
     public void onDestroy() {
         //delete all references in case of UI destruction
-        mainView = null;
-        weatherInteractor.onDestroy();
-        weatherInteractor = null;
+        view = null;
+        interactor.onDestroy();
+        interactor = null;
     }
 
     @Override
     public void loadWeather(String city, boolean isConnected) {
 
-        if (mainView != null) {
-            mainView.showProgress();
-            mainView.showProgressMessage("Loading City Weather...");
+        if (view != null) {
+            view.showProgress();
+            view.showProgressMessage("Loading City Weather...");
         }
 
-        subscription = weatherInteractor.loadWeather(city).subscribe(
+        subscription = interactor.loadWeather(city).subscribe(
                 weatherMix -> {
-                    if (mainView != null) {
-                        mainView.setWeatherValues(weatherMix);
+                    if (view != null) {
+                        view.setWeatherValues(weatherMix);
                     }
                 },
                 throwable -> {
                     if (isConnected) {
-                        if (mainView != null) {
+                        if (view != null) {
                             if (throwable.getClass().equals(NoSuchElementException.class)) {
-                                mainView.showToastMessage("City not found!!!");
+                                view.showToastMessage("City not found!!!");
                             } else {
-                                mainView.showToastMessage(throwable.getMessage());
-                                mainView.showRetryMessage();
+                                view.showToastMessage(throwable.getMessage());
+                                view.showRetryMessage();
                             }
                         }
                     } else {
-                        if (mainView != null) {
-                            mainView.showConnectionError();
+                        if (view != null) {
+                            view.showConnectionError();
                         }
                     }
-                    mainView.hideProgress();
+                    view.hideProgress();
                 },
                 () -> {
-                    if (mainView != null) {
-                        mainView.hideProgress();
+                    if (view != null) {
+                        view.hideProgress();
                     }
                 });
 
@@ -110,35 +113,35 @@ public class WeatherPresenterImpl implements WeatherPresenter, LifecyclePresente
         calendar.add(Calendar.DATE, -7);
         long end = calendar.getTime().getTime();
 
-        if (mainView != null) {
-            mainView.showProgress();
-            mainView.showProgressMessage("Loading City Weather History...");
+        if (view != null) {
+            view.showProgress();
+            view.showProgressMessage("Loading City Weather History...");
         }
 
-        subscription = weatherInteractor.loadWeatherHistory(city, start / 1000, end / 100).subscribe(
+        subscription = interactor.loadWeatherHistory(city, start / 1000, end / 100).subscribe(
                 weatherHistory -> {
-                    if (mainView != null) {
-                        mainView.setWeatherHistoryValues(weatherHistory);
+                    if (view != null) {
+                        view.setWeatherHistoryValues(weatherHistory);
                     }
                 },
                 throwable -> {
                     if (isConnected) {
                         if (throwable.getClass().equals(NoSuchElementException.class)) {
-                            mainView.showToastMessage("City not found!!!");
+                            view.showToastMessage("City not found!!!");
                         } else {
-                            mainView.showToastMessage(throwable.getMessage());
-                            mainView.showRetryMessage();
+                            view.showToastMessage(throwable.getMessage());
+                            view.showRetryMessage();
                         }
                     } else {
-                        if (mainView != null) {
-                            mainView.showConnectionError();
+                        if (view != null) {
+                            view.showConnectionError();
                         }
                     }
-                    mainView.hideProgress();
+                    view.hideProgress();
                 },
                 () -> {
-                    if (mainView != null) {
-                        mainView.hideProgress();
+                    if (view != null) {
+                        view.hideProgress();
                     }
                 });
     }

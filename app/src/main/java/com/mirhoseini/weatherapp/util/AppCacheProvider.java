@@ -1,4 +1,4 @@
-package com.mirhoseini.weatherapp.utils;
+package com.mirhoseini.weatherapp.util;
 
 import android.content.Context;
 

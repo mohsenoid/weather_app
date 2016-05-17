@@ -1,13 +1,15 @@
 package com.mirhoseini.weatherapp.core.model;
 
 
-import org.openweathermap.model.WeatherHistory;
-import org.openweathermap.model.WeatherMix;
-
 import com.mirhoseini.weatherapp.core.service.WeatherApiService;
 import com.mirhoseini.weatherapp.core.utils.CacheProvider;
 import com.mirhoseini.weatherapp.core.utils.Constants;
 import com.mirhoseini.weatherapp.core.utils.SchedulerProvider;
+
+import org.openweathermap.model.WeatherHistory;
+import org.openweathermap.model.WeatherMix;
+
+import javax.inject.Inject;
 
 import rx.Observable;
 import rx.Subscription;
@@ -29,6 +31,7 @@ public class WeatherInteractorImpl implements WeatherInteractor {
     private ReplaySubject<WeatherHistory> weatherHistorySubject;
     private Subscription weatherSubscription, weatherHistorySubscription;
 
+    @Inject
     public WeatherInteractorImpl(CacheProvider diskCache, WeatherApiService weatherApiService, SchedulerProvider scheduler, Clock clock) {
         this.diskCache = diskCache;
         this.weatherApiService = weatherApiService;

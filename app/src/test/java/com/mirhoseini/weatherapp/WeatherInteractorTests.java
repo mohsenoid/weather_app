@@ -4,8 +4,8 @@ import com.mirhoseini.weatherapp.core.model.Clock;
 import com.mirhoseini.weatherapp.core.model.WeatherInteractorImpl;
 import com.mirhoseini.weatherapp.core.service.WeatherApiServiceImpl;
 import com.mirhoseini.weatherapp.core.utils.Constants;
-import com.mirhoseini.weatherapp.utils.AppCacheProvider;
-import com.mirhoseini.weatherapp.utils.AppSchedulerProvider;
+import com.mirhoseini.weatherapp.util.AppCacheProvider;
+import com.mirhoseini.weatherapp.util.AppSchedulerProvider;
 
 import org.junit.Before;
 import org.junit.FixMethodOrder;

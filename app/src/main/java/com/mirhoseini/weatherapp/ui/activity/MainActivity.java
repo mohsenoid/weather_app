@@ -20,13 +20,14 @@ import com.crashlytics.android.answers.CustomEvent;
 import com.mirhoseini.appsettings.AppSettings;
 import com.mirhoseini.utils.Utils;
 import com.mirhoseini.weatherapp.R;
-import com.mirhoseini.weatherapp.WeatherApplication;
 import com.mirhoseini.weatherapp.core.presentation.WeatherPresenter;
 import com.mirhoseini.weatherapp.core.service.WeatherApiService;
 import com.mirhoseini.weatherapp.core.utils.CacheProvider;
 import com.mirhoseini.weatherapp.core.utils.Constants;
 import com.mirhoseini.weatherapp.core.utils.SchedulerProvider;
 import com.mirhoseini.weatherapp.core.view.MainView;
+import com.mirhoseini.weatherapp.di.ApplicationComponent;
+import com.mirhoseini.weatherapp.di.WeatherModule;
 import com.mirhoseini.weatherapp.ui.fragment.CurrentWeatherFragment;
 import com.mirhoseini.weatherapp.ui.fragment.ForecastWeatherFragment;
 import com.mirhoseini.weatherapp.ui.fragment.HistoryWeatherFragment;
@@ -63,7 +64,7 @@ public class MainActivity extends BaseActivity implements MainView, ForecastWeat
     @Inject
     WeatherApiService weatherApiService;
     @Inject
-    WeatherPresenter weatherPresenter;
+    WeatherPresenter presenter;
 
     //injecting views via Butterknife
     @BindView(R.id.progress_container)
@@ -100,7 +101,7 @@ public class MainActivity extends BaseActivity implements MainView, ForecastWeat
             hideProgress();
         } else {
             //load city weather data
-            weatherPresenter.loadWeather(city, Utils.isConnected(this));
+            presenter.loadWeather(city, Utils.isConnected(this));
         }
     }
 
@@ -108,11 +109,6 @@ public class MainActivity extends BaseActivity implements MainView, ForecastWeat
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        WeatherApplication app = (WeatherApplication) getApplication();
-        app.getComponent().inject(this);
-
-        weatherPresenter.setView(this);
 
         // binding Views using ButterKnife
         ButterKnife.bind(this);
@@ -135,11 +131,18 @@ public class MainActivity extends BaseActivity implements MainView, ForecastWeat
     }
 
     @Override
+    protected void injectDependencies(ApplicationComponent component) {
+        component
+                .plus(new WeatherModule(this))
+                .inject(this);
+    }
+
+    @Override
     protected void onResume() {
         Timber.d("Activity Resumed");
         super.onResume();
 
-        weatherPresenter.onResume();
+        presenter.onResume();
 
         doubleBackToExitPressedOnce = false;
 
@@ -152,7 +155,7 @@ public class MainActivity extends BaseActivity implements MainView, ForecastWeat
     protected void onPause() {
         super.onPause();
 
-        weatherPresenter.onPause();
+        presenter.onPause();
     }
 
     @Override
@@ -160,7 +163,7 @@ public class MainActivity extends BaseActivity implements MainView, ForecastWeat
         Timber.d("Activity Destroyed");
 
         // call destroy to remove references to objects
-        weatherPresenter.onDestroy();
+        presenter.onDestroy();
         super.onDestroy();
     }
 
@@ -322,6 +325,6 @@ public class MainActivity extends BaseActivity implements MainView, ForecastWeat
     @Override
     public void onLoadHistory(String city) {
         // load city weather history, call from forecast fragment
-        weatherPresenter.loadWeatherHistory(city, Utils.isConnected(this));
+        presenter.loadWeatherHistory(city, Utils.isConnected(this));
     }
 }

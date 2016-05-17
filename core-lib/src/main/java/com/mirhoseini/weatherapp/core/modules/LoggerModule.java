@@ -1,4 +1,4 @@
-package com.mirhoseini.weatherapp.module;
+package com.mirhoseini.weatherapp.core.modules;
 
 import javax.inject.Singleton;
 
