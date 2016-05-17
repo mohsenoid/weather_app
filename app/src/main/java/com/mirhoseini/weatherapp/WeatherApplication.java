@@ -2,13 +2,9 @@ package com.mirhoseini.weatherapp;
 
 import android.app.Application;
 
-import com.crashlytics.android.Crashlytics;
-import com.crashlytics.android.answers.Answers;
 import com.mirhoseini.weatherapp.di.ApplicationComponent;
 import com.mirhoseini.weatherapp.di.ApplicationModule;
 import com.mirhoseini.weatherapp.di.DaggerApplicationComponent;
-
-import io.fabric.sdk.android.Fabric;
 
 /**
  * Created by Mohsen on 5/9/16.
