@@ -5,29 +5,28 @@ import android.content.Context;
 
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.answers.Answers;
+import com.mirhoseini.weatherapp.core.utils.Constants;
+import com.mirhoseini.weatherapp.module.ApplicationModule;
 
 import io.fabric.sdk.android.Fabric;
+import okhttp3.HttpUrl;
 
 /**
  * Created by Mohsen on 5/9/16.
  */
 public abstract class WeatherApplication extends Application {
-    private WeatherApplicationComponent component;
+    private ApplicationComponent component;
 
     public static WeatherApplication get(Context context) {
         return (WeatherApplication) context.getApplicationContext();
     }
 
-    protected WeatherApplicationModule getApplicationModule() {
-        return new WeatherApplicationModule(this);
+    protected ApplicationModule getApplicationModule() {
+        return new ApplicationModule(this, () -> HttpUrl.parse(Constants.BASE_URL), BuildConfig.DEBUG, 30);
     }
 
-    public WeatherApplicationComponent getComponent() {
+    public ApplicationComponent getComponent() {
         return component;
-    }
-
-    public void setComponent(WeatherApplicationComponent component) {
-        this.component = component;
     }
 
     @Override
@@ -39,8 +38,8 @@ public abstract class WeatherApplication extends Application {
         Fabric.with(this, new Crashlytics());
         Fabric.with(this, new Answers());
 
-        component = DaggerWeatherApplicationComponent.builder()
-                .weatherApplicationModule(getApplicationModule())
+        component = DaggerApplicationComponent.builder()
+                .applicationModule(getApplicationModule())
                 .build();
     }
 

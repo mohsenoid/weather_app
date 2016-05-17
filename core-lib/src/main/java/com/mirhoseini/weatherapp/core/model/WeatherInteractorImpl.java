@@ -1,9 +1,10 @@
 package com.mirhoseini.weatherapp.core.model;
 
 
-import com.mirhoseini.weatherapp.core.service.WeatherService;
 import org.openweathermap.model.WeatherHistory;
 import org.openweathermap.model.WeatherMix;
+
+import com.mirhoseini.weatherapp.core.service.WeatherApiService;
 import com.mirhoseini.weatherapp.core.utils.CacheProvider;
 import com.mirhoseini.weatherapp.core.utils.Constants;
 import com.mirhoseini.weatherapp.core.utils.SchedulerProvider;
@@ -18,7 +19,7 @@ import rx.subjects.ReplaySubject;
  */
 public class WeatherInteractorImpl implements WeatherInteractor {
     private CacheProvider diskCache;
-    private WeatherService weatherService;
+    private WeatherApiService weatherApiService;
     private SchedulerProvider scheduler;
     private Clock clock;
 
@@ -28,9 +29,9 @@ public class WeatherInteractorImpl implements WeatherInteractor {
     private ReplaySubject<WeatherHistory> weatherHistorySubject;
     private Subscription weatherSubscription, weatherHistorySubscription;
 
-    public WeatherInteractorImpl(CacheProvider diskCache, WeatherService weatherService, SchedulerProvider scheduler, Clock clock) {
+    public WeatherInteractorImpl(CacheProvider diskCache, WeatherApiService weatherApiService, SchedulerProvider scheduler, Clock clock) {
         this.diskCache = diskCache;
-        this.weatherService = weatherService;
+        this.weatherApiService = weatherApiService;
         this.scheduler = scheduler;
         this.clock = clock;
     }
@@ -64,7 +65,7 @@ public class WeatherInteractorImpl implements WeatherInteractor {
     }
 
     private Observable<WeatherMix> networkWeather(String city) {
-        return weatherService.loadWeather(city)
+        return weatherApiService.loadWeather(city)
                 .doOnNext(entity -> {
                     entity.setDt(clock.millis());
                     memoryCacheWeather = entity;
@@ -75,7 +76,7 @@ public class WeatherInteractorImpl implements WeatherInteractor {
     }
 
     private Observable<WeatherHistory> networkWeatherHistory(String city, long start, long end) {
-        return weatherService.loadWeatherHistory(city, start, end)
+        return weatherApiService.loadWeatherHistory(city, start, end)
                 .subscribeOn(scheduler.backgroundThread())
                 .observeOn(scheduler.mainThread());
     }
@@ -118,7 +119,7 @@ public class WeatherInteractorImpl implements WeatherInteractor {
             weatherHistorySubscription.unsubscribe();
         }
 
-        weatherService = null;
+        weatherApiService = null;
         diskCache = null;
         scheduler = null;
         clock = null;

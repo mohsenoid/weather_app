@@ -19,11 +19,10 @@ import com.crashlytics.android.answers.Answers;
 import com.crashlytics.android.answers.CustomEvent;
 import com.mirhoseini.appsettings.AppSettings;
 import com.mirhoseini.utils.Utils;
-import com.mirhoseini.weatherapp.BaseActivity;
 import com.mirhoseini.weatherapp.R;
 import com.mirhoseini.weatherapp.WeatherApplication;
 import com.mirhoseini.weatherapp.core.presentation.WeatherPresenter;
-import com.mirhoseini.weatherapp.core.service.WeatherService;
+import com.mirhoseini.weatherapp.core.service.WeatherApiService;
 import com.mirhoseini.weatherapp.core.utils.CacheProvider;
 import com.mirhoseini.weatherapp.core.utils.Constants;
 import com.mirhoseini.weatherapp.core.utils.SchedulerProvider;
@@ -62,7 +61,7 @@ public class MainActivity extends BaseActivity implements MainView, ForecastWeat
     @Inject
     CacheProvider cacheProvider;
     @Inject
-    WeatherService weatherService;
+    WeatherApiService weatherApiService;
     @Inject
     WeatherPresenter weatherPresenter;
 

@@ -1,10 +1,5 @@
 package com.mirhoseini.weatherapp;
 
-import com.facebook.stetho.Stetho;
-import com.facebook.stetho.timber.StethoTree;
-
-import java.util.Observable;
-
 import timber.log.Timber;
 
 /**
@@ -14,8 +9,6 @@ public class WeatherApplicationImpl extends WeatherApplication {
 
     @Override
     void initApplication() {
-        Stetho.initializeWithDefaults(this);
-
         Timber.plant(new Timber.DebugTree() {
             @Override
             protected String createStackElementTag(StackTraceElement element) {
@@ -23,6 +16,5 @@ public class WeatherApplicationImpl extends WeatherApplication {
                 return super.createStackElementTag(element) + ":" + element.getLineNumber();
             }
         });
-        Timber.plant(new StethoTree());
     }
 }

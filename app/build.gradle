@@ -77,10 +77,6 @@ dependencies {
     testCompile rootProject.ext.testLibraries.mockito
     testCompile rootProject.ext.testLibraries.robolectric
 
-//    androidTestCompile rootProject.ext.testLibraries.supportAnnotations
-//    androidTestCompile rootProject.ext.testLibraries.supportTestRunner
-//    androidTestCompile rootProject.ext.testLibraries.supportTestRules
-//    androidTestCompile rootProject.ext.testLibraries.hamcrest
     androidTestCompile rootProject.ext.testLibraries.espresso
 
     compile rootProject.ext.libraries.appCompat
@@ -103,10 +99,6 @@ dependencies {
 
     compile rootProject.ext.libraries.timber
 
-    compile rootProject.ext.libraries.stetho
-    compile(rootProject.ext.libraries.stethoTimber) {
-        exclude group: "com.jakewharton.timber", module: "timber"
-    }
     compile(rootProject.ext.libraries.crashlytics) {
         transitive = true;
     }

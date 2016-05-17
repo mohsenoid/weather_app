@@ -1,4 +1,4 @@
-package com.mirhoseini.weatherapp;
+package com.mirhoseini.weatherapp.ui.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;

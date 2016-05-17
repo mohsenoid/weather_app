@@ -2,9 +2,8 @@ package com.mirhoseini.weatherapp.core.presentation;
 
 
 import com.mirhoseini.weatherapp.core.model.Clock;
-import com.mirhoseini.weatherapp.core.model.WeatherInteractor;
 import com.mirhoseini.weatherapp.core.model.WeatherInteractorImpl;
-import com.mirhoseini.weatherapp.core.service.WeatherService;
+import com.mirhoseini.weatherapp.core.service.WeatherApiService;
 import com.mirhoseini.weatherapp.core.utils.CacheProvider;
 import com.mirhoseini.weatherapp.core.utils.SchedulerProvider;
 import com.mirhoseini.weatherapp.core.view.MainView;
@@ -18,7 +17,7 @@ import rx.subscriptions.Subscriptions;
 /**
  * Created by Mohsen on 30/04/16.
  */
-public class WeatherPresenterImpl implements WeatherPresenter,LifecyclePresenter {
+public class WeatherPresenterImpl implements WeatherPresenter, LifecyclePresenter {
 
 
     WeatherInteractorImpl weatherInteractor;
@@ -26,8 +25,8 @@ public class WeatherPresenterImpl implements WeatherPresenter,LifecyclePresenter
 
     private Subscription subscription = Subscriptions.empty();
 
-    public WeatherPresenterImpl(CacheProvider cacheProvider, WeatherService weatherService, SchedulerProvider schedulerProvider) {
-        weatherInteractor = new WeatherInteractorImpl(cacheProvider, weatherService, schedulerProvider, Clock.REAL);
+    public WeatherPresenterImpl(CacheProvider cacheProvider, WeatherApiService weatherApiService, SchedulerProvider schedulerProvider) {
+        weatherInteractor = new WeatherInteractorImpl(cacheProvider, weatherApiService, schedulerProvider, Clock.REAL);
     }
 
     public MainView getView() {
