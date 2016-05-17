@@ -34,3 +34,6 @@ proguard/
 # Log Files
 *.log
 gradle.properties
+
+# Keystore File
+keystore.properties
