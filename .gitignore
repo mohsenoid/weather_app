@@ -35,6 +35,6 @@ proguard/
 *.log
 gradle.properties
 
-# Keystore File
-keystore.jks
-keystore.properties
+# Keystore Files
+# keystore.jks
+# keystore.properties
