@@ -13,9 +13,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.mirhoseini.weatherapp.R;
+import com.mirhoseini.weatherapp.utils.WeatherUtils;
+
 import org.openweathermap.model.Forecast;
 import org.openweathermap.model.WeatherForecast;
-import com.mirhoseini.weatherapp.utils.WeatherUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

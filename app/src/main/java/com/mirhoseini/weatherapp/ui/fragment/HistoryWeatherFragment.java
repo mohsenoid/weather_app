@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.mirhoseini.weatherapp.R;
+
 import org.openweathermap.model.WeatherHistory;
 
 /**

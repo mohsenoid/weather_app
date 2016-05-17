@@ -4,13 +4,6 @@ import android.content.Context;
 
 import com.mirhoseini.weatherapp.WeatherApplication;
 import com.mirhoseini.weatherapp.core.model.Clock;
-import com.mirhoseini.weatherapp.core.presentation.WeatherPresenter;
-import com.mirhoseini.weatherapp.core.presentation.WeatherPresenterImpl;
-import com.mirhoseini.weatherapp.core.service.WeatherApiService;
-import com.mirhoseini.weatherapp.core.utils.CacheProvider;
-import com.mirhoseini.weatherapp.core.utils.SchedulerProvider;
-import com.mirhoseini.weatherapp.utils.AppCacheProvider;
-import com.mirhoseini.weatherapp.utils.AppSchedulerProvider;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -58,31 +51,13 @@ public class ApplicationModule {
 
     @Provides
     @Singleton
-    public BaseUrl provideEndpoint(){
+    public BaseUrl provideEndpoint() {
         return endpoint;
-    }
-
-    @Provides
-    @Singleton
-    public CacheProvider provideAppCache() {
-        return new AppCacheProvider(weatherApplication);
-    }
-
-    @Provides
-    @Singleton
-    public SchedulerProvider provideAppScheduler() {
-        return new AppSchedulerProvider();
     }
 
     @Provides
     public Clock provideClock() {
         return Clock.REAL;
     }
-
-    @Provides
-    public WeatherPresenter provideWeatherPresenter(CacheProvider cacheProvider, WeatherApiService weatherApiService, SchedulerProvider schedulerProvider) {
-        return new WeatherPresenterImpl(cacheProvider, weatherApiService, schedulerProvider);
-    }
-
 
 }
