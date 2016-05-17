@@ -66,7 +66,7 @@ public class MainActivity extends BaseActivity implements MainView, ForecastWeat
     @Inject
     WeatherPresenter presenter;
 
-    //injecting views via Butterknife
+    //injecting views via ButterKnife
     @BindView(R.id.progress_container)
     ViewGroup progressContainer;
     @BindView(R.id.progress_message)
@@ -117,7 +117,7 @@ public class MainActivity extends BaseActivity implements MainView, ForecastWeat
 
 
         //load last city from Memory using savedInstanceState or DiskCache using sharedPreferences
-        String lastCity = "";
+        String lastCity;
 
         if (savedInstanceState == null) { //load lastCity from sharePreferences
             lastCity = AppSettings.getString(this, Constants.KEY_LAST_CITY, Constants.CITY_DEFAULT_VALUE);
@@ -239,12 +239,9 @@ public class MainActivity extends BaseActivity implements MainView, ForecastWeat
         Timber.d("Showing Offline Message");
 
         Snackbar.make(city, R.string.offline_message, Snackbar.LENGTH_LONG)
-                .setAction(R.string.go_online, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        startActivity(new Intent(
-                                Settings.ACTION_WIFI_SETTINGS));
-                    }
+                .setAction(R.string.go_online, v -> {
+                    startActivity(new Intent(
+                            Settings.ACTION_WIFI_SETTINGS));
                 })
                 .setActionTextColor(Color.GREEN)
                 .show();
@@ -273,11 +270,8 @@ public class MainActivity extends BaseActivity implements MainView, ForecastWeat
         Timber.d("Showing Retry Message");
 
         Snackbar.make(city, R.string.retry_message, Snackbar.LENGTH_LONG)
-                .setAction(R.string.load_retry, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        getWeatherData(city.getText().toString());
-                    }
+                .setAction(R.string.load_retry, v -> {
+                    getWeatherData(city.getText().toString());
                 })
                 .setActionTextColor(Color.RED)
                 .show();

@@ -31,9 +31,7 @@ public class WeatherApiServiceImpl implements WeatherApiService {
 
     @Override
     public Observable<WeatherHistory> loadWeatherHistory(String city, long start, long end) {
-
         return api.getWeatherHistory(city, Constants.HISTORY_TYPE, start, end, Constants.API_KEY, Constants.WEATHER_UNITS);
-
     }
 
 }

@@ -7,6 +7,7 @@ public class WeatherApplicationImpl extends WeatherApplication {
 
     @Override
     void initApplication() {
-        //nothig to do in release version for now
+        Fabric.with(this, new Crashlytics());
+        Fabric.with(this, new Answers());
     }
 }

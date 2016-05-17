@@ -30,9 +30,6 @@ public abstract class WeatherApplication extends Application {
 
         initApplication();
 
-        Fabric.with(this, new Crashlytics());
-        Fabric.with(this, new Answers());
-
         component = DaggerApplicationComponent.builder()
                 .applicationModule(getApplicationModule())
                 .build();
