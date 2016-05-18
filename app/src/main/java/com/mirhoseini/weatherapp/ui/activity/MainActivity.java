@@ -15,8 +15,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.crashlytics.android.answers.Answers;
-import com.crashlytics.android.answers.CustomEvent;
 import com.mirhoseini.appsettings.AppSettings;
 import com.mirhoseini.utils.Utils;
 import com.mirhoseini.weatherapp.R;
