@@ -1,6 +1,7 @@
 package com.mirhoseini.weatherapp.core.presentation;
 
 
+import com.mirhoseini.weatherapp.core.di.WeatherScope;
 import com.mirhoseini.weatherapp.core.model.WeatherInteractor;
 import com.mirhoseini.weatherapp.core.view.MainView;
 
@@ -15,6 +16,7 @@ import rx.subscriptions.Subscriptions;
 /**
  * Created by Mohsen on 30/04/16.
  */
+@WeatherScope
 public class WeatherPresenterImpl implements WeatherPresenter, LifecyclePresenter {
 
     WeatherInteractor interactor;
@@ -22,9 +24,12 @@ public class WeatherPresenterImpl implements WeatherPresenter, LifecyclePresente
     private Subscription subscription = Subscriptions.empty();
 
     @Inject
-    public WeatherPresenterImpl(MainView view, WeatherInteractor interactor) {
-        this.view = view;
+    public WeatherPresenterImpl(WeatherInteractor interactor) {
         this.interactor = interactor;
+    }
+
+    public void setView(MainView view) {
+        this.view = view;
     }
 
     @Override
@@ -67,7 +72,7 @@ public class WeatherPresenterImpl implements WeatherPresenter, LifecyclePresente
                             if (throwable.getClass().equals(NoSuchElementException.class)) {
                                 view.showToastMessage("City not found!!!");
                             } else {
-                                view.showToastMessage(throwable.getMessage());
+//                                view.showToastMessage(throwable.getMessage());
                                 view.showRetryMessage();
                             }
                         }
@@ -112,11 +117,13 @@ public class WeatherPresenterImpl implements WeatherPresenter, LifecyclePresente
                 },
                 throwable -> {
                     if (isConnected) {
-                        if (throwable.getClass().equals(NoSuchElementException.class)) {
-                            view.showToastMessage("City not found!!!");
-                        } else {
-                            view.showToastMessage(throwable.getMessage());
-                            view.showRetryMessage();
+                        if (view != null) {
+                            if (throwable.getClass().equals(NoSuchElementException.class)) {
+                                view.showToastMessage("City not found!!!");
+                            } else {
+                                view.showToastMessage(throwable.getMessage());
+                                view.showRetryMessage();
+                            }
                         }
                     } else {
                         if (view != null) {

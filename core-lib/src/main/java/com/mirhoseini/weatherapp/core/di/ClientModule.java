@@ -1,4 +1,4 @@
-package com.mirhoseini.weatherapp.core.modules;
+package com.mirhoseini.weatherapp.core.di;
 
 import java.util.concurrent.TimeUnit;
 

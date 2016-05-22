@@ -3,8 +3,9 @@ package com.mirhoseini.weatherapp.di;
 import android.content.Context;
 
 import com.mirhoseini.weatherapp.BuildConfig;
-import com.mirhoseini.weatherapp.WeatherApplication;
 import com.mirhoseini.weatherapp.core.model.Clock;
+import com.mirhoseini.weatherapp.core.model.WeatherInteractorImpl;
+import com.mirhoseini.weatherapp.core.presentation.WeatherPresenterImpl;
 import com.mirhoseini.weatherapp.core.util.CacheProvider;
 import com.mirhoseini.weatherapp.core.util.Constants;
 import com.mirhoseini.weatherapp.core.util.SchedulerProvider;
@@ -24,18 +25,6 @@ import retrofit2.BaseUrl;
  */
 @Module
 public class ApplicationModule {
-    private WeatherApplication weatherApplication;
-
-    public ApplicationModule(WeatherApplication weatherApplication) {
-        this.weatherApplication = weatherApplication;
-    }
-
-    @Provides
-    @Singleton
-    public Context provideContext() {
-        return weatherApplication.getApplicationContext();
-    }
-
     @Provides
     @Singleton
     @Named("isDebug")

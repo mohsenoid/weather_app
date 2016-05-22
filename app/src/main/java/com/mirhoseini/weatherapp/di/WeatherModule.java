@@ -27,6 +27,7 @@ public class WeatherModule {
 
     @Provides
     public WeatherPresenter providePresenter(WeatherPresenterImpl presenter) {
+        presenter.setView(view);
         return presenter;
     }
 

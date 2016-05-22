@@ -2,8 +2,8 @@ package com.mirhoseini.weatherapp;
 
 import android.app.Application;
 
+import com.mirhoseini.weatherapp.di.AndroidModule;
 import com.mirhoseini.weatherapp.di.ApplicationComponent;
-import com.mirhoseini.weatherapp.di.ApplicationModule;
 import com.mirhoseini.weatherapp.di.DaggerApplicationComponent;
 
 /**
@@ -16,8 +16,8 @@ public abstract class WeatherApplication extends Application {
         return component;
     }
 
-    protected ApplicationModule getApplicationModule() {
-        return new ApplicationModule(this);
+    protected AndroidModule getAndroidModule() {
+        return new AndroidModule(this);
     }
 
     @Override
@@ -27,7 +27,7 @@ public abstract class WeatherApplication extends Application {
         initApplication();
 
         component = DaggerApplicationComponent.builder()
-                .applicationModule(getApplicationModule())
+                .androidModule(getAndroidModule())
                 .build();
     }
 

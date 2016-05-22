@@ -1,6 +1,7 @@
 package com.mirhoseini.weatherapp.core.model;
 
 
+import com.mirhoseini.weatherapp.core.di.WeatherScope;
 import com.mirhoseini.weatherapp.core.service.WeatherApiService;
 import com.mirhoseini.weatherapp.core.util.CacheProvider;
 import com.mirhoseini.weatherapp.core.util.Constants;
@@ -19,6 +20,7 @@ import rx.subjects.ReplaySubject;
 /**
  * Created by Mohsen on 30/04/16.
  */
+@WeatherScope
 public class WeatherInteractorImpl implements WeatherInteractor {
     private CacheProvider diskCache;
     private WeatherApiService weatherApiService;

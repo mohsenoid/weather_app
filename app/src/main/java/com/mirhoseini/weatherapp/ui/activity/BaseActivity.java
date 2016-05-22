@@ -19,7 +19,6 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         // can be used for general purpose in all Activities of Application
 
-
     }
 
     protected abstract void injectDependencies(ApplicationComponent component);
