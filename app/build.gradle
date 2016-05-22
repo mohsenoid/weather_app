@@ -113,3 +113,57 @@ dependencies {
     }
 
 }
+
+apply plugin: BumpReadMePlugin
+
+class BumpReadMePlugin implements Plugin<Project> {
+    @Override
+    void apply(Project project) {
+        project.task('bumpReadMe', type: BumpReadMe) {
+            readMe = new File(project.rootDir.absolutePath + "/README.md")
+            versionName = project.android.defaultConfig.versionName
+        }
+    }
+
+}
+
+class BumpReadMe extends DefaultTask {
+    def readMe
+    def versionName
+
+    File getReadMe() {
+        project.file(readMe)
+    }
+
+    BumpReadMe() {
+        group = 'plugin basics'
+
+    }
+
+    @TaskAction
+    def bumpVersion() {
+        description = 'Update the ReadMe file to App latest version'
+
+        File readMe = getReadMe()
+        String contents = readMe.getText('UTF-8')
+        contents = contents.replaceAll("Version:.*", " Version:  $versionName")
+        readMe.write(contents, 'UTF-8')
+    }
+
+    @TaskAction
+    def bumpLastUpdate() {
+        description = 'Update the ReadMe file Last Update'
+
+        File readMe = getReadMe()
+        String contents = readMe.getText('UTF-8')
+        contents = contents.replaceAll("Last Update:.*", "Last Update: ${getDate()}")
+        readMe.write(contents, 'UTF-8')
+    }
+
+    def getDate() {
+        def date = new Date()
+        def formattedDate = date.format('EEE MMM dd, yyyy')//Sun May 1, 2016
+        return formattedDate
+    }
+
+}

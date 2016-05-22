@@ -7,8 +7,8 @@ This application was created by [Mohsen Mirhoseini Argi](http://mirhoseini.com),
 ### What is this repository for? ###
 
 * Weather Android Application
-* v1.0
-* Last Update : Sun May 1, 2016
+*       Version:  1.0
+* Last Update: Sun May 22, 2016
 
 --------------------
 ### Development Tools ###
