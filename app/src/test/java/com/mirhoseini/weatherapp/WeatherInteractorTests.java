@@ -32,9 +32,7 @@ import static org.mockito.Mockito.when;
  */
 @RunWith(RobolectricGradleTestRunner.class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-@Config(constants = BuildConfig.class,
-        application = WeatherApplication.class,
-        sdk = 21)
+@Config(constants = BuildConfig.class, sdk = 21)
 public class WeatherInteractorTests {
     private WeatherInteractorImpl weatherInteractorImpl;
     private WeatherApiServiceImpl weatherApiNetworkServiceImpl;
