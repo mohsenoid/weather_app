@@ -10,6 +10,8 @@ This application was created by [Mohsen Mirhoseini Argi](http://mirhoseini.com),
 *       Version:  1.0
 * Last Update: Sun May 22, 2016
 
+![Screenshot](screenshot.png)
+
 --------------------
 ### Development Tools ###
 
