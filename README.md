@@ -1,4 +1,5 @@
-### Weather Android Application ### [![Circle CI](https://circleci.com/gh/mmirhoseini/weather_app.svg?style=svg)](https://circleci.com/gh/mmirhoseini/weather_app)
+Weather Android Application [![Circle CI](https://circleci.com/gh/mmirhoseini/weather_app.svg?style=svg)](https://circleci.com/gh/mmirhoseini/weather_app)
+===========================
 
 This repository holds the source code of the Weather Application, a simple Android client for the [Open Weather Map](http://openweathermap.org).
 This application was created by [Mohsen Mirhoseini Argi](http://mirhoseini.com), as part of the technical assessment by the [FriendSurance](http://friendsurance.de) team.
