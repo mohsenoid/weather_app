@@ -1,10 +1,11 @@
 package com.mirhoseini.weatherapp.core.model;
 
-import com.mirhoseini.weatherapp.core.service.WeatherApiServiceImpl;
+import com.mirhoseini.weatherapp.core.service.WeatherApiService;
 import com.mirhoseini.weatherapp.core.util.CacheProvider;
 import com.mirhoseini.weatherapp.core.util.Constants;
 import com.mirhoseini.weatherapp.core.util.SchedulerProvider;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -28,8 +29,8 @@ import static org.mockito.Mockito.when;
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class WeatherInteractorTests {
-    private WeatherInteractorImpl weatherInteractorImpl;
-    private WeatherApiServiceImpl weatherApiNetworkServiceImpl;
+    private WeatherInteractor weatherInteractor;
+    private WeatherApiService weatherApiService;
     private CacheProvider cacheProvider;
     private SchedulerProvider schedulerProvider;
     private Clock clock;
@@ -39,7 +40,7 @@ public class WeatherInteractorTests {
 
     @Before
     public void setup() {
-        weatherApiNetworkServiceImpl = mock(WeatherApiServiceImpl.class);
+        weatherApiService = mock(WeatherApiService.class);
         cacheProvider = mock(CacheProvider.class);
         schedulerProvider = mock(SchedulerProvider.class);
         clock = mock(Clock.class);
@@ -61,63 +62,64 @@ public class WeatherInteractorTests {
         when(schedulerProvider.mainThread()).thenReturn(Schedulers.immediate());
         when(schedulerProvider.backgroundThread()).thenReturn(Schedulers.immediate());
 
-        weatherInteractorImpl = new WeatherInteractorImpl(cacheProvider, weatherApiNetworkServiceImpl, schedulerProvider, clock);
+        weatherInteractor = new WeatherInteractorImpl(cacheProvider, weatherApiService, schedulerProvider, clock);
+        weatherInteractor.clearMemoryAndDiskCache();
     }
 
     @Test
     public void stage1_testHitsMemoryCache() {
-        when(weatherApiNetworkServiceImpl.loadWeather(any(String.class))).thenReturn(Observable.just(expectedResult));
+        when(weatherApiService.loadWeather(any(String.class))).thenReturn(Observable.just(expectedResult));
         when(cacheProvider.getWeather()).thenReturn(Observable.just(null));
         when(clock.millis()).thenReturn(0L);
 
         // must load data from Network, cause Memory and disk cache are null
         TestSubscriber<WeatherMix> testSubscriberFirst = new TestSubscriber<>();
-        weatherInteractorImpl.loadWeather("Berlin").subscribe(testSubscriberFirst);
+        weatherInteractor.loadWeather("Berlin").subscribe(testSubscriberFirst);
         testSubscriberFirst.assertNoErrors();
         testSubscriberFirst.assertReceivedOnNext(Collections.singletonList(expectedResult));
 
         when(cacheProvider.getWeather()).thenReturn(Observable.just(nonExpectedResult));
-        when(weatherApiNetworkServiceImpl.loadWeather(any(String.class))).thenReturn(Observable.just(nonExpectedResult));
+        when(weatherApiService.loadWeather(any(String.class))).thenReturn(Observable.just(nonExpectedResult));
 
         // must load data from Memory before checking cache or Network, cause the answer is there
         TestSubscriber<WeatherMix> testSubscriberSecond = new TestSubscriber<>();
-        weatherInteractorImpl.loadWeather("Berlin").subscribe(testSubscriberSecond);
+        weatherInteractor.loadWeather("Berlin").subscribe(testSubscriberSecond);
         testSubscriberSecond.assertNoErrors();
         testSubscriberSecond.assertReceivedOnNext(Collections.singletonList(expectedResult));
     }
 
     @Test
     public void stage2_testHitsDiskCache() {
-        when(weatherApiNetworkServiceImpl.loadWeather(any(String.class))).thenReturn(Observable.just(expectedResult));
+        when(weatherApiService.loadWeather(any(String.class))).thenReturn(Observable.just(expectedResult));
         when(cacheProvider.getWeather()).thenReturn(Observable.just(null));
         when(clock.millis()).thenReturn(0L);
 
         // must load data from Network, cause Memory and disk cache are null
         TestSubscriber<WeatherMix> testSubscriberFirst = new TestSubscriber<>();
-        weatherInteractorImpl.loadWeather("Berlin").subscribe(testSubscriberFirst);
+        weatherInteractor.loadWeather("Berlin").subscribe(testSubscriberFirst);
         testSubscriberFirst.assertNoErrors();
         testSubscriberFirst.assertReceivedOnNext(Collections.singletonList(expectedResult));
 
-        weatherInteractorImpl.clearMemoryCache();
+        weatherInteractor.clearMemoryCache();
         when(cacheProvider.getWeather()).thenReturn(Observable.just(expectedResult));
-        when(weatherApiNetworkServiceImpl.loadWeather(any(String.class))).thenReturn(Observable.just(nonExpectedResult));
+        when(weatherApiService.loadWeather(any(String.class))).thenReturn(Observable.just(nonExpectedResult));
 
         // must load data from Cache after checking Memory which is null
         TestSubscriber<WeatherMix> testSubscriberSecond = new TestSubscriber<>();
-        weatherInteractorImpl.loadWeather("Berlin").subscribe(testSubscriberSecond);
+        weatherInteractor.loadWeather("Berlin").subscribe(testSubscriberSecond);
         testSubscriberSecond.assertNoErrors();
         testSubscriberSecond.assertReceivedOnNext(Collections.singletonList(expectedResult));
     }
 
     @Test
     public void stage3_testCacheExpiry() {
-        when(weatherApiNetworkServiceImpl.loadWeather(any(String.class))).thenReturn(Observable.just(newExpectedResult));
+        when(weatherApiService.loadWeather(any(String.class))).thenReturn(Observable.just(newExpectedResult));
         when(cacheProvider.getWeather()).thenReturn(Observable.just(expectedResult));
         when(clock.millis()).thenReturn(0L);
 
         // load weather from Cache but is not expired yet
         TestSubscriber<WeatherMix> testSubscriberFirst = new TestSubscriber<>();
-        weatherInteractorImpl.loadWeather("Berlin").subscribe(testSubscriberFirst);
+        weatherInteractor.loadWeather("Berlin").subscribe(testSubscriberFirst);
         testSubscriberFirst.assertNoErrors();
         testSubscriberFirst.assertReceivedOnNext(Collections.singletonList(expectedResult));
 
@@ -125,7 +127,7 @@ public class WeatherInteractorTests {
 
         // load weather from Memory but is not expired yet
         TestSubscriber<WeatherMix> testSubscriberSecond = new TestSubscriber<>();
-        weatherInteractorImpl.loadWeather("Berlin").subscribe(testSubscriberSecond);
+        weatherInteractor.loadWeather("Berlin").subscribe(testSubscriberSecond);
         testSubscriberSecond.assertNoErrors();
         testSubscriberSecond.assertReceivedOnNext(Collections.singletonList(expectedResult));
 
@@ -133,8 +135,13 @@ public class WeatherInteractorTests {
 
         // load weather from Memory but is not expired yet
         TestSubscriber<WeatherMix> testSubscriberThird = new TestSubscriber<>();
-        weatherInteractorImpl.loadWeather("Berlin").subscribe(testSubscriberThird);
+        weatherInteractor.loadWeather("Berlin").subscribe(testSubscriberThird);
         testSubscriberThird.assertNoErrors();
         testSubscriberThird.assertReceivedOnNext(Collections.singletonList(newExpectedResult));
+    }
+
+    @After
+    public void tearDown() {
+        weatherInteractor.onDestroy();
     }
 }

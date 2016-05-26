@@ -97,11 +97,13 @@ public class WeatherInteractorImpl implements WeatherInteractor {
         return Observable.just(memoryCacheWeather);
     }
 
+    @Override
     public void clearMemoryAndDiskCache() {
         diskCache.clear();
         clearMemoryCache();
     }
 
+    @Override
     public void clearMemoryCache() {
         memoryCacheWeather = null;
     }

@@ -15,6 +15,10 @@ public interface WeatherInteractor {
 
     Observable<WeatherHistory> loadWeatherHistory(String city, long start, long end);
 
+    void clearMemoryAndDiskCache();
+
+    void clearMemoryCache();
+
     void onDestroy();
 
 }
