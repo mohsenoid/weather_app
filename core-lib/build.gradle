@@ -1,12 +1,12 @@
 apply plugin: 'java'
 apply plugin: 'me.tatarka.retrolambda'
 
-configurations{
+configurations {
     provided
 }
 
-sourceSets{
-    main{
+sourceSets {
+    main {
         compileClasspath += configurations.provided
     }
 }
@@ -28,4 +28,9 @@ dependencies {
     compile rootProject.ext.libraries.dagger
     provided rootProject.ext.aptLibraries.daggerCompiler
 
+}
+
+task tt() {
+    println("JAVA7_HOME is= " + System.getenv('JAVA7_HOME'))
+    println("JAVA_HOME is= " + System.getenv('JAVA_HOME'))
 }
