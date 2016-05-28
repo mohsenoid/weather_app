@@ -23,15 +23,12 @@ dependencies:
         - echo /usr/lib/jvm/java-7-openjdk-amd64/bin/java -version
 
         - echo y | android update sdk --no-ui --all --filter tools,platform-tools,build-tools-23.0.3,android-23,extra-google-m2repository,extra-google-google_play_services,extra-android-support
-        - ANDROID_HOME=/usr/local/android-sdk-linux ./gradlew dependencies
+        - ANDROID_HOME=/usr/local
 
         - echo $ANDROID_HOME
 
-        - TST=/usr/local/android-sdk-linux ./gradlew dependencies
-        - echo $TST
-
-        - JAVA7_HOME=/usr/lib/jvm/java-7-openjdk-amd64
-        - echo $JAVA7_HOME
+        - JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64
+        - echo $JAVA_HOME
 
 
 
