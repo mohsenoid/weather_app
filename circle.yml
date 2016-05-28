@@ -19,7 +19,7 @@ dependencies:
         - echo y | sudo apt-get install libpango-1.0-0
         - echo y | sudo apt-get install openjdk-7-jre
 
-        - TST=/usr
+        - TST=/usr/local/android-sdk-linux
         - echo $TST
 
         - ls /usr/lib/jvm/java-7-openjdk-amd64
