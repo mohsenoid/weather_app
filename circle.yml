@@ -19,6 +19,12 @@ dependencies:
         - echo y | sudo apt-get install libpango-1.0-0
         - echo y | sudo apt-get install openjdk-7-jre
         - JAVA7_HOME=/usr/lib/jvm/java-7-openjdk-amd64/bin
+        - echo $JAVA_HOME
+        - echo $JAVA7_HOME
+
+        - ls /usr/local/
+        - ls /usr/lib/jvm/java-7-openjdk-amd64/bin
+        - echo /usr/lib/jvm/java-7-openjdk-amd64/bin/java -version
 
         - echo y | android update sdk --no-ui --all --filter tools,platform-tools,build-tools-23.0.3,android-23,extra-google-m2repository,extra-google-google_play_services,extra-android-support
         - ANDROID_HOME=/usr/local/android-sdk-linux ./gradlew dependencies
@@ -27,8 +33,8 @@ dependencies:
 
 test:
     override:
-        - (./gradlew assemble):
-            timeout: 360
+#        - (./gradlew assemble):
+#            timeout: 360
 
-        - (./gradlew test):
-            timeout: 360
+#        - (./gradlew test):
+#            timeout: 360
