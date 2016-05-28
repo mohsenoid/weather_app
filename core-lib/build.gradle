@@ -29,8 +29,3 @@ dependencies {
     provided rootProject.ext.aptLibraries.daggerCompiler
 
 }
-
-task tt() {
-    println("JAVA7_HOME is= " + System.getenv('JAVA7_HOME'))
-    println("JAVA_HOME is= " + System.getenv('JAVA_HOME'))
-}

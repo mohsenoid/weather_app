@@ -142,8 +142,6 @@ public class WeatherInteractorTests {
 
     @After
     public void tearDown() {
-        weatherInteractor.onDestroy();
-
-        assert(false);
+//        weatherInteractor.onDestroy();
     }
 }
