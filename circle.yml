@@ -20,6 +20,9 @@ dependencies:
 
         - echo y | sudo apt-get install openjdk-7-jre
         - JAVA7_HOME=/usr/lib/jvm/java-7-openjdk-amd64/bin/java
+        - echo $JAVA7_HOME
+        - cd $JAVA7_HOME
+        - ls
 
         - ls /usr/lib/jvm/java-7-openjdk-amd64
 
