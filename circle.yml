@@ -19,8 +19,8 @@ dependencies:
         - echo y | sudo apt-get install libpango-1.0-0
 
         - echo y | sudo apt-get install openjdk-7-jre
-        - ls /usr/lib/jvm/java-7-openjdk-amd64/bin/java
-        - export JAVA7_HOME=/usr/lib/jvm/java-7-openjdk-amd64/bin/java
+        - ls /usr/lib/jvm/java-7-openjdk-amd64/bin
+        - export JAVA7_HOME=/usr/lib/jvm/java-7-openjdk-amd64/bin
         - echo $JAVA7_HOME
         - cd $JAVA7_HOME
         - ls
