@@ -1,9 +1,13 @@
 package com.mirhoseini.weatherapp.core.presentation;
 
+import com.mirhoseini.weatherapp.core.view.MainView;
+
 /**
  * Created by Mohsen on 30/04/16.
  */
-public interface WeatherPresenter extends LifecyclePresenter {
+public interface WeatherPresenter {
+
+    void setView(MainView view);
 
     void loadWeather(String city, boolean isConnected);
 

@@ -5,7 +5,6 @@ import com.mirhoseini.weatherapp.core.util.CacheProvider;
 import com.mirhoseini.weatherapp.core.util.Constants;
 import com.mirhoseini.weatherapp.core.util.SchedulerProvider;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -140,8 +139,4 @@ public class WeatherInteractorTests {
         testSubscriberThird.assertReceivedOnNext(Collections.singletonList(newExpectedResult));
     }
 
-    @After
-    public void tearDown() {
-//        weatherInteractor.onDestroy();
-    }
 }

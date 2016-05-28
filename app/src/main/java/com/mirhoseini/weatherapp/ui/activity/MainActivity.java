@@ -147,8 +147,6 @@ public class MainActivity extends BaseActivity implements MainView, ForecastWeat
         Timber.d("Activity Resumed");
         super.onResume();
 
-        presenter.onResume();
-
         FragmentManager fragmentManager = getSupportFragmentManager();
         currentWeatherFragment = (CurrentWeatherFragment) fragmentManager.findFragmentByTag(TAG_CURRENT_FRAGMENT);
         forecastWeatherFragment = (ForecastWeatherFragment) fragmentManager.findFragmentByTag(TAG_FORECAST_FRAGMENT);
@@ -170,18 +168,13 @@ public class MainActivity extends BaseActivity implements MainView, ForecastWeat
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
-
-        presenter.onPause();
-    }
-
-    @Override
     protected void onDestroy() {
         Timber.d("Activity Destroyed");
 
         // call destroy to remove references to objects
-        presenter.onDestroy();
+        presenter.setView(null);
+        presenter = null;
+
         super.onDestroy();
     }
 

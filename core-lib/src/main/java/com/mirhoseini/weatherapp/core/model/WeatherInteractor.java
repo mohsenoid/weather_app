@@ -19,6 +19,4 @@ public interface WeatherInteractor {
 
     void clearMemoryCache();
 
-    void onDestroy();
-
 }

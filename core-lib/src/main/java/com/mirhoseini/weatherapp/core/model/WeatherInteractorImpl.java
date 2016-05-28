@@ -116,20 +116,4 @@ public class WeatherInteractorImpl implements WeatherInteractor {
         return entity.getWeatherCurrent().getName().equalsIgnoreCase(city);
     }
 
-    @Override
-    public void onDestroy() {
-        if (weatherSubscription != null && !weatherSubscription.isUnsubscribed()) {
-            weatherSubscription.unsubscribe();
-        }
-
-        if (weatherHistorySubscription != null && !weatherHistorySubscription.isUnsubscribed()) {
-            weatherHistorySubscription.unsubscribe();
-        }
-
-        weatherApiService = null;
-        diskCache = null;
-        scheduler = null;
-        clock = null;
-    }
-
 }

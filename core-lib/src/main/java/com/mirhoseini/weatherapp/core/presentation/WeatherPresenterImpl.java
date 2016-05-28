@@ -17,7 +17,7 @@ import rx.subscriptions.Subscriptions;
  * Created by Mohsen on 30/04/16.
  */
 @WeatherScope
-public class WeatherPresenterImpl implements WeatherPresenter, LifecyclePresenter {
+public class WeatherPresenterImpl implements WeatherPresenter {
 
     WeatherInteractor interactor;
     private MainView view;
@@ -28,28 +28,9 @@ public class WeatherPresenterImpl implements WeatherPresenter, LifecyclePresente
         this.interactor = interactor;
     }
 
+    @Override
     public void setView(MainView view) {
         this.view = view;
-    }
-
-    @Override
-    public void onResume() {
-//        if (view != null) {
-//            view.hideProgress();
-//        }
-    }
-
-    @Override
-    public void onPause() {
-//        subscription.unsubscribe();
-    }
-
-    @Override
-    public void onDestroy() {
-        //delete all references in case of UI destruction
-        view = null;
-        interactor.onDestroy();
-        interactor = null;
     }
 
     @Override
