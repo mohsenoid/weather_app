@@ -5,13 +5,11 @@
 general:
     artifacts:
         - /home/ubuntu/weather_app/app/build/outputs/apk/
-        - /usr/lib/jvm/
 
 machine:
     environment:
         ANDROID_HOME: /usr/local/android-sdk-linux
         JAVA6_HOME: /usr/lib/jvm/java-6-openjdk-amd64
-
 
     java:
       version: openjdk8
