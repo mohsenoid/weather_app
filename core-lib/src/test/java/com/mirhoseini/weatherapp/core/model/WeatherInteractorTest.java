@@ -26,7 +26,6 @@ import static org.mockito.Mockito.when;
 /**
  * Created by Mohsen on 30/04/16.
  */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class WeatherInteractorTest {
     private WeatherInteractor weatherInteractor;
     private WeatherApiService weatherApiService;
@@ -66,7 +65,7 @@ public class WeatherInteractorTest {
     }
 
     @Test
-    public void stage1_testHitsMemoryCache() {
+    public void testHitsMemoryCache() {
         when(weatherApiService.loadWeather(any(String.class))).thenReturn(Observable.just(expectedResult));
         when(cacheProvider.getWeather()).thenReturn(Observable.just(null));
         when(clock.millis()).thenReturn(0L);
@@ -88,7 +87,7 @@ public class WeatherInteractorTest {
     }
 
     @Test
-    public void stage2_testHitsDiskCache() {
+    public void testHitsDiskCache() {
         when(weatherApiService.loadWeather(any(String.class))).thenReturn(Observable.just(expectedResult));
         when(cacheProvider.getWeather()).thenReturn(Observable.just(null));
         when(clock.millis()).thenReturn(0L);
@@ -111,7 +110,7 @@ public class WeatherInteractorTest {
     }
 
     @Test
-    public void stage3_testCacheExpiry() {
+    public void testCacheExpiry() {
         when(weatherApiService.loadWeather(any(String.class))).thenReturn(Observable.just(newExpectedResult));
         when(cacheProvider.getWeather()).thenReturn(Observable.just(expectedResult));
         when(clock.millis()).thenReturn(0L);

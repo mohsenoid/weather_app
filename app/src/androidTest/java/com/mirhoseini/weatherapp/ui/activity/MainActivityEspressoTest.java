@@ -24,7 +24,6 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
  * Created by Mohsen on 5/10/16.
  */
 @RunWith(AndroidJUnit4.class)
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class MainActivityEspressoTest {
 
     @Rule
@@ -32,13 +31,13 @@ public class MainActivityEspressoTest {
             MainActivity.class);
 
     @Test
-    public void stage1_testUiDisplayedCorrectly() {
+    public void testUiDisplayedCorrectly() {
         onView(ViewMatchers.withId(R.id.city)).check(matches(isDisplayed()));
         onView(withId(R.id.go)).check(matches(isDisplayed()));
     }
 
     @Test
-    public void stage2_testUiFunctionality() {
+    public void testUiFunctionality() {
         testWeatherResultForCity("Tehran");
         testWeatherResultForCity("Berlin");
     }

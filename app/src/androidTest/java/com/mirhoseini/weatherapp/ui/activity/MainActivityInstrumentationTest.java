@@ -18,7 +18,6 @@ import org.junit.runners.MethodSorters;
 /**
  * Created by Mohsen on 30/04/16.
  */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class MainActivityInstrumentationTest extends ActivityInstrumentationTestCase2<MainActivity> {
 
     private MainActivity mActivity;
@@ -39,13 +38,13 @@ public class MainActivityInstrumentationTest extends ActivityInstrumentationTest
     }
 
     @Test
-    public void stage1_testPreConditions() {
+    public void testPreConditions() {
         assertNotNull("city EditText not displayed", mCityEditText);
         assertNotNull("go Button not displayed", mGoButton);
     }
 
     @Test
-    public void stage2_testWeatherValue() throws InterruptedException {
+    public void testWeatherValue() throws InterruptedException {
         assertTrue("no internet connection", Utils.isConnected(mActivity));
 
         mActivity.runOnUiThread(new Runnable() {
