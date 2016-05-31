@@ -6,7 +6,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.1.0'
+        classpath 'com.android.tools.build:gradle:2.2.0-alpha2'
         classpath 'me.tatarka:gradle-retrolambda:3.2.5'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
 
@@ -18,11 +18,6 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
-
-        // required to find the DBFlow's artifacts
-        maven {
-            url = 'https://jitpack.io'
-        }
     }
 }
 
