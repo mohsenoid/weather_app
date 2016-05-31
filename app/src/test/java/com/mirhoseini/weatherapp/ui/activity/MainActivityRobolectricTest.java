@@ -16,6 +16,10 @@ import org.robolectric.RobolectricGradleTestRunner;
 import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowToast;
 
+import static com.mirhoseini.weatherapp.support.Assert.assertViewIsNotVisible;
+import static com.mirhoseini.weatherapp.support.Assert.assertViewIsVisible;
+import static com.mirhoseini.weatherapp.support.ViewLocator.getTextView;
+import static com.mirhoseini.weatherapp.support.ViewLocator.getView;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertNotNull;
@@ -47,34 +51,22 @@ public class MainActivityRobolectricTest {
     public void testShowProgress() {
         activity.showProgress();
 
-        View progressContainer = activity.findViewById(R.id.progress_container);
-        assertNotNull(progressContainer);
-        assertThat(progressContainer.getVisibility(), equalTo(View.VISIBLE));
+        View progressContainer = getView(activity, R.id.progress_container);
+        assertViewIsVisible(progressContainer);
 
-        View fragmentContainer = activity.findViewById(R.id.fragment_container);
-        assertNotNull(fragmentContainer);
-        assertThat(fragmentContainer.getVisibility(), equalTo(View.INVISIBLE));
+        View fragmentContainer = getView(activity, R.id.fragment_container);
+        assertViewIsNotVisible(fragmentContainer);
 
-        View errorContainer = activity.findViewById(R.id.error_container);
-        assertNotNull(errorContainer);
-        assertThat(errorContainer.getVisibility(), equalTo(View.INVISIBLE));
+        View errorContainer = getView(activity, R.id.error_container);
+        assertViewIsNotVisible(errorContainer);
     }
 
     @Test
     public void testHideProgress() {
         activity.hideProgress();
 
-        View progressContainer = activity.findViewById(R.id.progress_container);
-        assertNotNull(progressContainer);
-        assertThat(progressContainer.getVisibility(), equalTo(View.INVISIBLE));
-
-        View fragmentContainer = activity.findViewById(R.id.fragment_container);
-        assertNotNull(fragmentContainer);
-        assertThat(fragmentContainer.getVisibility(), equalTo(View.VISIBLE));
-
-        View errorContainer = activity.findViewById(R.id.error_container);
-        assertNotNull(errorContainer);
-        assertThat(errorContainer.getVisibility(), equalTo(View.INVISIBLE));
+        View progressContainer = getView(activity, R.id.progress_container);
+        assertViewIsNotVisible(progressContainer);
     }
 
     @Test
@@ -89,21 +81,18 @@ public class MainActivityRobolectricTest {
         activity.showProgress();
         activity.updateProgressMessage(TEST_TEXT);
 
-        View progressContainer = activity.findViewById(R.id.progress_container);
-        assertNotNull(progressContainer);
-        assertThat(progressContainer.getVisibility(), equalTo(View.VISIBLE));
+        View progressContainer = getView(activity, R.id.progress_container);
+        assertViewIsVisible(progressContainer);
 
-        View fragmentContainer = activity.findViewById(R.id.fragment_container);
-        assertNotNull(fragmentContainer);
-        assertThat(fragmentContainer.getVisibility(), equalTo(View.INVISIBLE));
+        View fragmentContainer = getView(activity, R.id.fragment_container);
+        assertViewIsNotVisible(fragmentContainer);
 
-        View errorContainer = activity.findViewById(R.id.error_container);
-        assertNotNull(errorContainer);
-        assertThat(errorContainer.getVisibility(), equalTo(View.INVISIBLE));
+        View errorContainer = getView(activity, R.id.error_container);
+        assertViewIsNotVisible(errorContainer);
 
-        TextView progressMessage = (TextView) activity.findViewById(R.id.progress_message);
-        assertNotNull(progressMessage);
-        Assert.assertThat(TEST_TEXT, equalTo(progressMessage.getText()));
+        TextView progressMessage = getTextView(activity, R.id.progress_message);
+        assertViewIsVisible(progressMessage);
+        Assert.assertThat(TEST_TEXT, equalTo(progressMessage.getText().toString()));
     }
 
     @Test
