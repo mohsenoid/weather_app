@@ -27,7 +27,7 @@ import static org.mockito.Mockito.when;
  * Created by Mohsen on 30/04/16.
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class WeatherInteractorTests {
+public class WeatherInteractorTest {
     private WeatherInteractor weatherInteractor;
     private WeatherApiService weatherApiService;
     private CacheProvider cacheProvider;

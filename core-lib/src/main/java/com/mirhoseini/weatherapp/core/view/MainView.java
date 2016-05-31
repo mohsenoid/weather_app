@@ -14,7 +14,7 @@ public interface MainView {
 
     void showToastMessage(String message);
 
-    void showProgressMessage(String message);
+    void updateProgressMessage(String newMessage);
 
     void showOfflineMessage();
 

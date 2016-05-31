@@ -38,7 +38,7 @@ public class WeatherPresenterImpl implements WeatherPresenter {
 
         if (view != null) {
             view.showProgress();
-            view.showProgressMessage("Loading City Weather...");
+            view.updateProgressMessage("Loading City Weather...");
         }
 
         subscription = interactor.loadWeather(city).subscribe(
@@ -87,7 +87,7 @@ public class WeatherPresenterImpl implements WeatherPresenter {
 
         if (view != null) {
             view.showProgress();
-            view.showProgressMessage("Loading City Weather History...");
+            view.updateProgressMessage("Loading City Weather History...");
         }
 
         subscription = interactor.loadWeatherHistory(city, start / 1000, end / 100).subscribe(

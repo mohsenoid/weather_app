@@ -244,10 +244,10 @@ public class MainActivity extends BaseActivity implements MainView, ForecastWeat
     }
 
     @Override
-    public void showProgressMessage(String message) {
-        Timber.d("Showing Progress Message: %s", message);
+    public void updateProgressMessage(String newMessage) {
+        Timber.d("Showing Progress Message: %s", newMessage);
 
-        progressMessage.setText(message);
+        progressMessage.setText(newMessage);
     }
 
     @Override
