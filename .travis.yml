@@ -7,9 +7,10 @@ env:
   - JAVA6_HOME = /usr/lib/jvm/java-6-oracle
 
 before_script:
-  - echo y | sudo apt-get update
-  - echo y | sudo apt-get install libpango-1.0-0
+#  - echo y | sudo apt-get update
+#  - echo y | sudo apt-get install libpango-1.0-0
   - echo y | sudo apt-get install openjdk-6-jre
+  - echo $JAVA6_HOME
 
 android:
   components:
