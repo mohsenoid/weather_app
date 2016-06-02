@@ -25,8 +25,10 @@ import static com.mirhoseini.weatherapp.support.ViewLocator.getTextView;
 import static com.mirhoseini.weatherapp.support.ViewLocator.getView;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 
 /**
@@ -149,5 +151,31 @@ public class MainActivityRobolectricTest {
         activity.onDestroy();
 
         assertNull(activity.presenter);
+    }
+
+    @Test
+    public void testDoubleOnBackPressed() throws InterruptedException {
+        activity.onBackPressed();
+
+        assertThat(getString(R.string.msg_exit), equalTo(ShadowToast.getTextOfLatestToast()));
+
+        activity.onBackPressed();
+
+        assertTrue(activity.isFinishing());
+
+    }
+
+    @Test
+    public void testSingleOnBackPressed() throws InterruptedException {
+        activity.onBackPressed();
+
+        assertThat(getString(R.string.msg_exit), equalTo(ShadowToast.getTextOfLatestToast()));
+
+        Thread.sleep(activity.DOUBLE_BACK_PRESSED_DELAY + 1);
+
+        activity.onBackPressed();
+
+        assertFalse(activity.isFinishing());
+
     }
 }

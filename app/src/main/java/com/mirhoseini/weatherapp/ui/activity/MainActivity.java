@@ -52,6 +52,7 @@ public class MainActivity extends BaseActivity implements MainView, ForecastWeat
 
     public static final String TAG_CURRENT_FRAGMENT = "current_fragment";
     public static final String TAG_FORECAST_FRAGMENT = "forecast_fragment";
+    public static final int DOUBLE_BACK_PRESSED_DELAY = 2500;
     static boolean doubleBackToExitPressedOnce;
 
 
@@ -306,7 +307,7 @@ public class MainActivity extends BaseActivity implements MainView, ForecastWeat
         if (doubleBackToExitPressedOnce) {
             Timber.d("Exiting");
 
-            Utils.exit(this);
+            super.onBackPressed();
         } else {
 
             doubleBackToExitPressedOnce = true;
@@ -321,7 +322,7 @@ public class MainActivity extends BaseActivity implements MainView, ForecastWeat
                     doubleBackToExitPressedOnce = false;
                 }
 
-            }, 2500);
+            }, DOUBLE_BACK_PRESSED_DELAY);
         }
     }
 
