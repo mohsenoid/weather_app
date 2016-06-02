@@ -1,6 +1,16 @@
 language: android
+
 jdk:
   - oraclejdk8
+
+env:
+  - JAVA6_HOME = /usr/lib/jvm/java-6-oracle
+
+before_script:
+  - echo y | sudo apt-get update
+  - echo y | sudo apt-get install libpango-1.0-0
+  - echo y | sudo apt-get install openjdk-6-jre
+
 android:
   components:
     # Uncomment the lines below if you want to
@@ -18,9 +28,9 @@ android:
     - extra-google-google_play_services
     - extra-google-m2repository
     - extra-android-m2repository
-    - addon-google_apis-google-19
+    - addon-google_apis-google-23
 
     # Specify at least one system image,
     # if you need to run emulator(s) during your tests
-    - sys-img-armeabi-v7a-android-19
-    - sys-img-x86-android-17
+    # - sys-img-armeabi-v7a-android-19
+    # - sys-img-x86-android-17
