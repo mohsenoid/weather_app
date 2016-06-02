@@ -4,16 +4,8 @@ jdk:
   - oraclejdk8
 
 env:
-  global:
-    - JAVA6_HOME = /usr/lib/jvm/java-6-openjdk-amd64
-
-before_script:
-#  - echo y | sudo apt-get update
-#  - echo y | sudo apt-get install libpango-1.0-0
-  - java -version
-  - echo y | sudo apt-get install openjdk-6-jre
-  - echo $JAVA6_HOME
-  - ./$JAVA6_HOME/bin/java -version
+  matrix:
+    - ANDROID_TARGET=android-23  ANDROID_ABI=armeabi-v7a JAVA6_HOME=/usr/lib/jvm/java-6-openjdk-amd64 JAVA7_HOME=/usr/lib/jvm/java-7-openjdk-amd64 JAVA8_HOME=/usr/lib/jvm/java-8-oracle
 
 android:
   components:
