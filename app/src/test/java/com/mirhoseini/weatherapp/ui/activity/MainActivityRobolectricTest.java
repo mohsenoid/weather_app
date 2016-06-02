@@ -55,7 +55,7 @@ public class MainActivityRobolectricTest {
     }
 
     @Test
-    public void testShowProgress() {
+    public void testShowProgress() throws Exception {
         activity.showProgress();
 
         View progressContainer = getView(activity, R.id.progress_container);
@@ -69,7 +69,7 @@ public class MainActivityRobolectricTest {
     }
 
     @Test
-    public void testHideProgress() {
+    public void testHideProgress() throws Exception {
         activity.hideProgress();
 
         View progressContainer = getView(activity, R.id.progress_container);
@@ -77,14 +77,13 @@ public class MainActivityRobolectricTest {
     }
 
     @Test
-    public void testShowToastMessage() {
-
+    public void testShowToastMessage() throws Exception {
         activity.showToastMessage(TEST_TEXT);
         assertThat(TEST_TEXT, equalTo(ShadowToast.getTextOfLatestToast()));
     }
 
     @Test
-    public void testShowProgressMessage() {
+    public void testShowProgressMessage() throws Exception {
         activity.showProgress();
         activity.updateProgressMessage(TEST_TEXT);
 
@@ -103,21 +102,21 @@ public class MainActivityRobolectricTest {
     }
 
     @Test
-    public void testShowOfflineMessage() {
+    public void testShowOfflineMessage() throws Exception {
         activity.showOfflineMessage();
 
         assertSnackbarIsShown(R.string.offline_message);
     }
 
     @Test
-    public void testShowExitMessage() {
+    public void testShowExitMessage() throws Exception {
         activity.showExitMessage();
 
         assertThat(getString(R.string.msg_exit), equalTo(ShadowToast.getTextOfLatestToast()));
     }
 
     @Test
-    public void testShowConnectionError() {
+    public void testShowConnectionError() throws Exception {
         activity.showConnectionError();
 
         assertAlertDialogIsShown(R.string.no_connection_title, R.string.no_connection);
@@ -127,7 +126,7 @@ public class MainActivityRobolectricTest {
     }
 
     @Test
-    public void testShowDoubleConnectionError() {
+    public void testShowDoubleConnectionError() throws Exception {
         activity.showConnectionError();
         activity.showConnectionError();
 
@@ -139,14 +138,14 @@ public class MainActivityRobolectricTest {
 
 
     @Test
-    public void testShowRetryMessage() {
+    public void testShowRetryMessage() throws Exception {
         activity.showRetryMessage();
 
         assertSnackbarIsShown(R.string.retry_message);
     }
 
     @Test
-    public void testOnDestroy() {
+    public void testOnDestroy() throws Exception {
 //        activity.finish();
         activity.onDestroy();
 
@@ -154,7 +153,7 @@ public class MainActivityRobolectricTest {
     }
 
     @Test
-    public void testDoubleOnBackPressed() throws InterruptedException {
+    public void testDoubleOnBackPressed() throws Exception {
         activity.onBackPressed();
 
         assertThat(getString(R.string.msg_exit), equalTo(ShadowToast.getTextOfLatestToast()));
@@ -166,7 +165,7 @@ public class MainActivityRobolectricTest {
     }
 
     @Test
-    public void testSingleOnBackPressed() throws InterruptedException {
+    public void testSingleOnBackPressed() throws Exception {
         activity.onBackPressed();
 
         assertThat(getString(R.string.msg_exit), equalTo(ShadowToast.getTextOfLatestToast()));
