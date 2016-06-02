@@ -72,7 +72,6 @@ android {
             force rootProject.ext.testLibraries.supportAnnotations
         }
     }
-    buildToolsVersion '23.0.3'
 }
 
 dependencies {
