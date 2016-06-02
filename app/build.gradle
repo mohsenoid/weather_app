@@ -72,6 +72,10 @@ android {
             force rootProject.ext.testLibraries.supportAnnotations
         }
     }
+
+    lintOptions {
+        abortOnError false
+    }
 }
 
 dependencies {
