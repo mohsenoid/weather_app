@@ -9,8 +9,10 @@ env:
 before_script:
 #  - echo y | sudo apt-get update
 #  - echo y | sudo apt-get install libpango-1.0-0
+  - echo java -version
   - echo y | sudo apt-get install openjdk-6-jre
   - echo $JAVA6_HOME
+  - echo ./$JAVA6_HOME/bin/java -version
 
 android:
   components:
