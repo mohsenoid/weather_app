@@ -1,6 +1,7 @@
 package com.mirhoseini.weatherapp;
 
 import android.app.Application;
+import android.support.v7.app.AppCompatDelegate;
 
 import com.mirhoseini.weatherapp.di.AndroidModule;
 import com.mirhoseini.weatherapp.di.ApplicationComponent;
@@ -23,6 +24,8 @@ public abstract class WeatherApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO);
 
         initApplication();
 
