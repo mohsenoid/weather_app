@@ -121,17 +121,11 @@ public class MainActivity extends BaseActivity implements MainView, ForecastWeat
 
 
         //load last city from Memory using savedInstanceState or DiskCache using sharedPreferences
-        String lastCity;
-
         if (savedInstanceState == null) { //load lastCity from sharePreferences
-            lastCity = AppSettings.getString(this, Constants.KEY_LAST_CITY, Constants.CITY_DEFAULT_VALUE);
-
-            getWeatherData(lastCity);
+            loadLastLoadedCity();
         } else { //load lastCity from saved state before UI change
-            lastCity = savedInstanceState.getString(Constants.KEY_LAST_CITY);
+            city.setText(savedInstanceState.getString(Constants.KEY_LAST_CITY));
         }
-
-        city.setText(lastCity);
     }
 
     @Override
@@ -157,7 +151,6 @@ public class MainActivity extends BaseActivity implements MainView, ForecastWeat
         } else {
             showFragments();
         }
-
 
         doubleBackToExitPressedOnce = false;
 
@@ -199,6 +192,7 @@ public class MainActivity extends BaseActivity implements MainView, ForecastWeat
 
         saveLastLoadedCity(weatherMix.getWeatherCurrent().getName());
         createFragments(weatherMix);
+
         showFragments();
     }
 
@@ -210,6 +204,16 @@ public class MainActivity extends BaseActivity implements MainView, ForecastWeat
         city.setText(cityName);
     }
 
+    // save user last city
+    private String loadLastLoadedCity() {
+        Timber.d("Loading Last City");
+
+        String cityName = AppSettings.getString(this, Constants.KEY_LAST_CITY, Constants.CITY_DEFAULT_VALUE);
+        city.setText(cityName);
+
+        return cityName;
+    }
+
     private void createFragments(WeatherMix weatherMix) {
         currentWeatherFragment = CurrentWeatherFragment.newInstance(weatherMix.getWeatherCurrent());
         forecastWeatherFragment = ForecastWeatherFragment.newInstance(weatherMix.getWeatherForecast());
@@ -217,6 +221,7 @@ public class MainActivity extends BaseActivity implements MainView, ForecastWeat
 
     private void showFragments() {
         fragmentContainer.setVisibility(View.VISIBLE);
+        errorContainer.setVisibility(View.INVISIBLE);
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.current_fragment, currentWeatherFragment, TAG_CURRENT_FRAGMENT);
