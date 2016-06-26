@@ -1,6 +1,7 @@
-package com.mirhoseini.weatherapp.ui.activity;
+package com.mirhoseini.weatherapp.view.activity;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 import com.mirhoseini.appsettings.AppSettings;
 import com.mirhoseini.utils.Utils;
 import com.mirhoseini.weatherapp.R;
+import com.mirhoseini.weatherapp.core.di.WeatherModule;
 import com.mirhoseini.weatherapp.core.presentation.WeatherPresenter;
 import com.mirhoseini.weatherapp.core.service.WeatherApiService;
 import com.mirhoseini.weatherapp.core.util.CacheProvider;
@@ -26,10 +28,9 @@ import com.mirhoseini.weatherapp.core.util.Constants;
 import com.mirhoseini.weatherapp.core.util.SchedulerProvider;
 import com.mirhoseini.weatherapp.core.view.MainView;
 import com.mirhoseini.weatherapp.di.ApplicationComponent;
-import com.mirhoseini.weatherapp.core.di.WeatherModule;
-import com.mirhoseini.weatherapp.ui.fragment.CurrentWeatherFragment;
-import com.mirhoseini.weatherapp.ui.fragment.ForecastWeatherFragment;
-import com.mirhoseini.weatherapp.ui.fragment.HistoryWeatherFragment;
+import com.mirhoseini.weatherapp.view.fragment.CurrentWeatherFragment;
+import com.mirhoseini.weatherapp.view.fragment.ForecastWeatherFragment;
+import com.mirhoseini.weatherapp.view.fragment.HistoryWeatherFragment;
 
 import org.openweathermap.model.WeatherHistory;
 import org.openweathermap.model.WeatherMix;
@@ -133,6 +134,10 @@ public class MainActivity extends BaseActivity implements MainView, ForecastWeat
         component
                 .plus(new WeatherModule(this))
                 .inject(this);
+    }
+
+    public static Intent newIntent(Context context) {
+        return new Intent(context, MainActivity.class);
     }
 
     @Override

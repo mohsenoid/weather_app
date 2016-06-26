@@ -1,4 +1,4 @@
-package com.mirhoseini.weatherapp.ui.activity;
+package com.mirhoseini.weatherapp.view.activity;
 
 import android.test.ActivityInstrumentationTestCase2;
 import android.widget.Button;
@@ -8,11 +8,8 @@ import android.widget.TextView;
 import com.mirhoseini.utils.Utils;
 import com.mirhoseini.weatherapp.R;
 import com.mirhoseini.weatherapp.core.util.Constants;
-import com.mirhoseini.weatherapp.ui.activity.MainActivity;
 
-import org.junit.FixMethodOrder;
 import org.junit.Test;
-import org.junit.runners.MethodSorters;
 
 
 /**

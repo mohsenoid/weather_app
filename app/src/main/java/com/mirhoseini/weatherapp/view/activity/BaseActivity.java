@@ -1,5 +1,7 @@
-package com.mirhoseini.weatherapp.ui.activity;
+package com.mirhoseini.weatherapp.view.activity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 

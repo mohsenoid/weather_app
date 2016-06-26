@@ -1,4 +1,4 @@
-package com.mirhoseini.weatherapp.ui.fragment;
+package com.mirhoseini.weatherapp.view.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

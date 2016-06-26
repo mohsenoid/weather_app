@@ -1,4 +1,4 @@
-package com.mirhoseini.weatherapp.ui.activity;
+package com.mirhoseini.weatherapp.view.activity;
 
 import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.rule.ActivityTestRule;
@@ -6,11 +6,9 @@ import android.support.test.runner.AndroidJUnit4;
 
 import com.mirhoseini.weatherapp.R;
 
-import org.junit.FixMethodOrder;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.junit.runners.MethodSorters;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;

@@ -1,4 +1,4 @@
-package com.mirhoseini.weatherapp.ui.activity;
+package com.mirhoseini.weatherapp.view.activity;
 
 import android.view.View;
 import android.widget.TextView;
