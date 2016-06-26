@@ -74,5 +74,5 @@ Whole projects Dependencies are placed in "libraries.gradle" to avoid version co
 API provide some icons for different weather conditions, which was converting to in app Vector assets for a better UI.
 
 A part of the application feature was last 7-Day weather history which has been disabled because of openweather payment policy, and the [API was not free](http://openweathermap.org/price).
- 
-Chachin data to Disk using share preferences was perform by converting weather model to json using Gson, to reach a fast response but it is better to use Parcelable for transfering objects in Android. 
+
+Caching data to Disk using share preferences was perform by converting weather model to json using Gson, to reach a fast response but it is better to use Parcelable for transfering objects in Android. 

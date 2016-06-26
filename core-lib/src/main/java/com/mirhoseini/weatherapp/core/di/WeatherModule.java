@@ -1,4 +1,4 @@
-package com.mirhoseini.weatherapp.di;
+package com.mirhoseini.weatherapp.core.di;
 
 import com.mirhoseini.weatherapp.core.model.WeatherInteractor;
 import com.mirhoseini.weatherapp.core.model.WeatherInteractorImpl;

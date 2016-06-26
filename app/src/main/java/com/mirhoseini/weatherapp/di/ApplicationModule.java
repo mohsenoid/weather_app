@@ -2,15 +2,16 @@ package com.mirhoseini.weatherapp.di;
 
 import android.content.Context;
 
+import com.mirhoseini.utils.Utils;
 import com.mirhoseini.weatherapp.BuildConfig;
 import com.mirhoseini.weatherapp.core.model.Clock;
-import com.mirhoseini.weatherapp.core.model.WeatherInteractorImpl;
-import com.mirhoseini.weatherapp.core.presentation.WeatherPresenterImpl;
 import com.mirhoseini.weatherapp.core.util.CacheProvider;
 import com.mirhoseini.weatherapp.core.util.Constants;
 import com.mirhoseini.weatherapp.core.util.SchedulerProvider;
 import com.mirhoseini.weatherapp.util.AppCacheProvider;
 import com.mirhoseini.weatherapp.util.AppSchedulerProvider;
+
+import java.io.File;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -60,6 +61,26 @@ public class ApplicationModule {
     @Singleton
     public SchedulerProvider provideAppScheduler() {
         return new AppSchedulerProvider();
+    }
+
+    @Provides
+    @Singleton
+    @Named("cacheSize")
+    public long provideCacheSize() {
+        return 10 * 1024 * 1024; // 10 MB
+    }
+
+    @Provides
+    @Singleton
+    @Named("cacheDir")
+    public File provideCacheDir(Context context) {
+        return context.getCacheDir();
+    }
+
+    @Provides
+    @Named("isConnected")
+    public boolean provideIsConnected(Context context) {
+        return Utils.isConnected(context);
     }
 
 }

@@ -26,7 +26,7 @@ import com.mirhoseini.weatherapp.core.util.Constants;
 import com.mirhoseini.weatherapp.core.util.SchedulerProvider;
 import com.mirhoseini.weatherapp.core.view.MainView;
 import com.mirhoseini.weatherapp.di.ApplicationComponent;
-import com.mirhoseini.weatherapp.di.WeatherModule;
+import com.mirhoseini.weatherapp.core.di.WeatherModule;
 import com.mirhoseini.weatherapp.ui.fragment.CurrentWeatherFragment;
 import com.mirhoseini.weatherapp.ui.fragment.ForecastWeatherFragment;
 import com.mirhoseini.weatherapp.ui.fragment.HistoryWeatherFragment;
