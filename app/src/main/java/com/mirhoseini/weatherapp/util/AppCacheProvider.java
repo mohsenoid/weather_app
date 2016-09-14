@@ -17,6 +17,7 @@ import rx.Observable;
  * Created by Mohsen on 30/04/16.
  */
 public class AppCacheProvider implements CacheProvider {
+
     Context mContext;
 
     @Inject

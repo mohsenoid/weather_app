@@ -63,7 +63,6 @@ ext {
             robolectric       : "org.robolectric:robolectric:${robolectricVersion}",
             dexmaker          : "com.google.dexmaker:dexmaker:${dexmakerVersion}",
             dexmakerMockito   : "com.google.dexmaker:dexmaker-mockito:${dexmakerVersion}",
-            supportTest       : "com.android.support:support-annotations:${androidSupportVersion}",
             supportAnnotations: "com.android.support:support-annotations:${androidSupportVersion}",
             supportTestRunner : "com.android.support.test:runner:${supportTestVesion}",
             supportTestRules  : "com.android.support.test:rules:${supportTestVesion}",

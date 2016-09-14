@@ -61,6 +61,8 @@ android {
             applicationIdSuffix '.debug'
         }
     }
+
+    // allow using java 8 lambda
     compileOptions {
         targetCompatibility JavaVersion.VERSION_1_8
         sourceCompatibility JavaVersion.VERSION_1_8

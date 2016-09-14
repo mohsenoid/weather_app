@@ -25,7 +25,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 public class MainActivityEspressoTest {
 
     @Rule
-    public ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule<>(
+    public ActivityTestRule<MainActivity> activityRule = new ActivityTestRule<>(
             MainActivity.class);
 
     @Test

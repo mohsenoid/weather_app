@@ -12,7 +12,7 @@ public class WeatherApplicationImpl extends WeatherApplication {
         Timber.plant(new Timber.DebugTree() {
             @Override
             protected String createStackElementTag(StackTraceElement element) {
-                //adding line number to tag
+                //adding line number to logs
                 return super.createStackElementTag(element) + ":" + element.getLineNumber();
             }
         });

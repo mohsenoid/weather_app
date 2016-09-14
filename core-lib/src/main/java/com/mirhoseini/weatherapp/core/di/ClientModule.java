@@ -27,7 +27,7 @@ public class ClientModule {
                                             @Named("offlineInterceptor") Interceptor offlineCacheInterceptor) {
 
         OkHttpClient.Builder okHttpClient = new OkHttpClient.Builder()
-                .addInterceptor(cacheInterceptor)
+                .addNetworkInterceptor(cacheInterceptor)
                 .addInterceptor(offlineCacheInterceptor)
                 .cache(cache)
                 .connectTimeout(networkTimeoutInSeconds, TimeUnit.SECONDS);
